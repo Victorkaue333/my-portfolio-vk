@@ -1,0 +1,95 @@
+/* Infinite Moving Cards — faixa em loop contínuo.
+   Adaptado de https://ui.aceternity.com/components/infinite-moving-cards */
+
+.moving-row {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* Fade nas duas pontas, direto na transparência: independe da cor de
+       fundo da seção que hospeda a faixa. */
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        #000 8rem,
+        #000 calc(100% - 8rem),
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        #000 8rem,
+        #000 calc(100% - 8rem),
+        transparent 100%
+    );
+}
+
+.moving-marquee {
+    display: flex;
+    width: max-content;
+    animation: moving-scroll var(--moving-duration, 75s) linear infinite;
+    animation-direction: var(--moving-direction, normal);
+    will-change: transform;
+}
+
+.moving-track {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0.5rem 0.375rem;
+    list-style: none;
+}
+
+.moving-item {
+    flex-shrink: 0;
+}
+
+@keyframes moving-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+.moving-row.pause-on-hover:hover .moving-marquee {
+    animation-play-state: paused;
+}
+
+/* Também pausa quando o foco do teclado entra na faixa — quem navega por Tab
+   precisa conseguir ler o item focado parado. */
+.moving-row:focus-within .moving-marquee {
+    animation-play-state: paused;
+}
+
+/* A faixa para por completo: os itens continuam todos no DOM e legíveis. */
+@media (prefers-reduced-motion: reduce) {
+    .moving-marquee {
+        animation: none;
+        /* Sem a animação a segunda cópia seria só ruído visual repetido. */
+        width: 100%;
+    }
+    .moving-marquee > [aria-hidden='true'] {
+        display: none;
+    }
+    .moving-track {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .moving-row {
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            #000 3rem,
+            #000 calc(100% - 3rem),
+            transparent 100%
+        );
+        mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            #000 3rem,
+            #000 calc(100% - 3rem),
+            transparent 100%
+        );
+    }
+}

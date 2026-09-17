@@ -533,10 +533,6 @@ html.light .contact-card.github:hover svg { background: #24292f; color: #fff; }
 
 /* ===================== Diversos ===================== */
 
-html.light .marquee-item:hover .tech-icon {
-    filter: drop-shadow(0 0 10px rgba(15, 23, 42, 0.12));
-}
-
 html.light .notfound-suggestions a { border-color: var(--border-strong); }
 html.light .notfound-suggestions a:hover,
 html.light .notfound-suggestions a:focus-visible {

@@ -7,6 +7,7 @@ const common = {
     send: 'Enviar',
     email: 'E-mail',
     location: 'Localização',
+    techStack: 'Stack de tecnologias',
     at: 'em',
   },
 };

@@ -8,6 +8,7 @@ const common: typeof base = {
     send: 'Send',
     email: 'Email',
     location: 'Location',
+    techStack: 'Technology stack',
     at: 'at',
   },
 };

@@ -1,3 +1,6 @@
+/* Faixa de tecnologias — a rolagem em si vem do Infinite Moving Cards
+   (components/ui/InfiniteMovingCards). Aqui fica só a aparência dos chips. */
+
 .tech-marquee-section {
     padding: 2rem 0;
     overflow: hidden;
@@ -9,129 +12,50 @@
 .marquee-container {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.75rem;
     position: relative;
     width: 100%;
-    /* Fade nas bordas direto na transparência — independe da cor de fundo */
-    -webkit-mask-image: linear-gradient(
-        to right,
-        transparent 0,
-        #000 8rem,
-        #000 calc(100% - 8rem),
-        transparent 100%
-    );
-    mask-image: linear-gradient(
-        to right,
-        transparent 0,
-        #000 8rem,
-        #000 calc(100% - 8rem),
-        transparent 100%
-    );
 }
 
-.marquee-row {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-}
-
-.marquee-track {
-    display: flex;
-    flex-shrink: 0;
-    width: max-content;
-    gap: 3rem;
-    padding: 0.5rem 0;
-    white-space: nowrap;
-    animation: marquee-scroll 40s linear infinite;
-    will-change: transform;
-}
-
-/* linha de cima: esquerda -> direita (sentido normal, -50%) */
-.marquee-track--ltr {
-    animation-direction: normal;
-}
-
-/* linha de baixo: direita -> esquerda (sentido inverso) */
-.marquee-track--rtl {
-    animation-direction: reverse;
-}
-
-/* pausa ao passar o mouse */
-.marquee-row:hover .marquee-track {
-    animation-play-state: paused;
-}
-
-@keyframes marquee-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .marquee-track {
-        animation: none;
-    }
-}
-
-.marquee-item {
-    display: flex;
+.tech-chip {
+    display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 1rem;
-    transition: transform 0.3s ease;
+    gap: 0.6rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--surface-color) 60%, transparent);
+    white-space: nowrap;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
 }
 
-.marquee-item:hover {
-    transform: scale(1.1);
+.tech-chip:hover {
+    border-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
+    background: color-mix(in srgb, var(--accent-color) 8%, transparent);
 }
 
-.tech-icon {
-    font-size: 2.8rem;
-    transition: transform 0.3s ease, filter 0.3s ease;
+.tech-chip-icon {
+    flex-shrink: 0;
 }
 
-.marquee-item:hover .tech-icon {
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.15));
-}
-
-.tech-name {
-    font-size: 0.95rem;
+.tech-chip-name {
+    font-size: 0.85rem;
     font-weight: 600;
-    color: var(--text-dim-color);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    color: var(--text-muted-color);
+    letter-spacing: 0.01em;
 }
 
 @media (max-width: 768px) {
     .tech-marquee-section {
         padding: 1.5rem 0;
     }
-    
-    .marquee-container {
-        -webkit-mask-image: linear-gradient(
-            to right,
-            transparent 0,
-            #000 3rem,
-            #000 calc(100% - 3rem),
-            transparent 100%
-        );
-        mask-image: linear-gradient(
-            to right,
-            transparent 0,
-            #000 3rem,
-            #000 calc(100% - 3rem),
-            transparent 100%
-        );
+
+    .tech-chip {
+        padding: 0.45rem 0.8rem;
+        gap: 0.45rem;
     }
 
-    .tech-icon {
-        font-size: 1.5rem;
-    }
-
-    .tech-name {
-        font-size: 0.8rem;
-    }
-
-    .marquee-track {
-        gap: 2rem;
+    .tech-chip-name {
+        font-size: 0.78rem;
     }
 }
