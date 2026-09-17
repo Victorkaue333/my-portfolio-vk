@@ -89,10 +89,32 @@
     margin-top: 0.35rem;
 }
 
-.submit-btn {
-    width: 100%;
+.submit-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
     margin-top: 0.5rem;
 }
+
+.submit-btn {
+    width: 100%;
+}
+
+@media (max-width: 560px) {
+    .submit-actions { grid-template-columns: 1fr; }
+}
+
+.response-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.85rem;
+    font-size: 0.85rem;
+    color: var(--text-dim-color);
+}
+
+.response-time svg { color: var(--accent-color); }
 
 .form-success {
     margin-top: 1rem;
@@ -117,6 +139,80 @@
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
+}
+
+/* ---------- Localização (mapa largo, embaixo do formulário) ---------- */
+.contact-location {
+    margin-top: 3.5rem;
+}
+
+.contact-location-head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.1rem;
+}
+
+.contact-location-head > svg {
+    flex-shrink: 0;
+    color: var(--accent-color);
+}
+
+.contact-location-head h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.contact-location-head span {
+    font-size: 0.9rem;
+    color: var(--text-dim-color);
+}
+
+/* Altura reservada: o iframe é lazy e não pode empurrar o layout ao carregar. */
+.contact-map {
+    position: relative;
+    height: clamp(280px, 45vh, 440px);
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    background: #111;
+}
+
+.contact-map iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    /* Google Maps só tem tema claro no embed: inverter + girar o matiz dá um
+       mapa escuro com água/verde em tons próximos do original. */
+    filter: invert(0.9) hue-rotate(180deg) saturate(0.7) brightness(0.95);
+}
+
+html.light .contact-map { background: var(--bg-alt); }
+html.light .contact-map iframe { filter: none; }
+
+.contact-map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: auto;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    white-space: nowrap;
+}
+
+.contact-map-link:hover,
+.contact-map-link:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+    .contact-location { margin-top: 2.5rem; }
+    .contact-location-head { flex-wrap: wrap; }
+    .contact-map-link { margin-left: 0; width: 100%; }
 }
 
 .contact-card {
