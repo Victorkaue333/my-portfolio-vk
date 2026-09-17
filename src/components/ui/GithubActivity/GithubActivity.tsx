@@ -4,60 +4,29 @@ import { FiStar } from 'react-icons/fi';
 import { SiGithub } from 'react-icons/si';
 import { useLanguage, type Language } from '../../../hooks/useLanguage';
 import { languageMeta } from '../../../locales/languages';
-import { readStorage, writeStorage } from '../../../hooks/useLocalStorage';
+import {
+  cachedContributions,
+  cachedRepos,
+  fetchContributions,
+  fetchRepos,
+  GITHUB_PROFILE_URL,
+  GITHUB_REPOS_URL,
+  REPO_LIMIT,
+  type ContributionData,
+  type ContributionDay,
+  type Repo,
+} from '../../../utils/github';
 import { Button } from '../Button/Button';
 import { hasTechIcon, TechGlyph } from '../TechIcon/TechIcon';
 import './GithubActivity.css';
 
-const GITHUB_USER = 'Victorkaue333';
-const PROFILE_URL = `https://github.com/${GITHUB_USER}`;
-const CONTRIB_URL = `https://github-contributions-api.jogruber.de/v4/${GITHUB_USER}?y=last`;
-const CONTRIB_CACHE_KEY = 'vk_github_contributions';
-const CONTRIB_TTL_MS = 60 * 60 * 1000;
-const REPOS_URL = `https://api.github.com/users/${GITHUB_USER}/repos?sort=pushed&per_page=12`;
-const CACHE_KEY = 'vk_github_repos';
-const CACHE_TTL_MS = 30 * 60 * 1000;
-const REPO_LIMIT = 6;
-
-interface Repo {
-  id: number;
-  name: string;
-  html_url: string;
-  description: string | null;
-  language: string | null;
-  stargazers_count: number;
-  pushed_at: string;
-}
-
-interface CachedRepos {
-  ts: number;
-  repos: Repo[];
-}
+/* As chamadas à API, o cache de sessão e os tipos moram em `utils/github.ts`:
+   o terminal interativo de /sobre responde `github` com os mesmos dados e
+   duas integrações paralelas para a mesma API divergiriam. */
 
 type ReposState =
   | { status: 'idle' | 'loading' | 'error' }
   | { status: 'ready'; repos: Repo[] };
-
-function safeSession(): Storage | null {
-  try { return window.sessionStorage; } catch { return null; }
-}
-
-/** Mantém só os campos usados — cache menor e sem depender do shape completo da API. */
-function pickRepos(raw: unknown): Repo[] {
-  if (!Array.isArray(raw)) return [];
-  return raw
-    .filter((r) => r && !r.fork && r.name !== GITHUB_USER)
-    .slice(0, REPO_LIMIT)
-    .map((r) => ({
-      id: r.id,
-      name: r.name,
-      html_url: r.html_url,
-      description: r.description ?? null,
-      language: r.language ?? null,
-      stargazers_count: r.stargazers_count ?? 0,
-      pushed_at: r.pushed_at,
-    }));
-}
 
 /** Liga `true` (uma vez) quando o elemento chega perto da viewport. */
 function useNearViewport<T extends Element>(rootMargin = '300px') {
@@ -91,10 +60,8 @@ function useNearViewport<T extends Element>(rootMargin = '300px') {
 /** Busca os repositórios recentes só quando `enabled`; cache de 30 min no sessionStorage. */
 function useRecentRepos(enabled: boolean): ReposState {
   const [state, setState] = useState<ReposState>(() => {
-    const cached = readStorage<CachedRepos>(CACHE_KEY, safeSession());
-    return cached && Date.now() - cached.ts < CACHE_TTL_MS && Array.isArray(cached.repos)
-      ? { status: 'ready', repos: cached.repos }
-      : { status: 'idle' };
+    const cached = cachedRepos();
+    return cached ? { status: 'ready', repos: cached } : { status: 'idle' };
   });
 
   // Veio do cache (ou já buscou com sucesso) — não volta à rede.
@@ -105,22 +72,13 @@ function useRecentRepos(enabled: boolean): ReposState {
     const controller = new AbortController();
     setState({ status: 'loading' });
 
-    fetch(REPOS_URL, {
-      signal: controller.signal,
-      headers: { Accept: 'application/vnd.github+json' },
-    })
-      .then((res) => {
-        // 403/429 = rate limit da API pública; qualquer não-2xx cai no fallback.
-        if (!res.ok) throw new Error(`GitHub API ${res.status}`);
-        return res.json();
-      })
-      .then((raw: unknown) => {
-        const repos = pickRepos(raw);
+    fetchRepos(controller.signal)
+      .then((repos) => {
         doneRef.current = true;
-        writeStorage(CACHE_KEY, { ts: Date.now(), repos } satisfies CachedRepos, safeSession());
         setState({ status: 'ready', repos });
       })
       .catch((err: unknown) => {
+        // 403/429 = limite da API pública; qualquer não-2xx cai no fallback.
         if (controller.signal.aborted) return;
         if (import.meta.env.DEV) console.warn('[GithubActivity]', err);
         setState({ status: 'error' });
@@ -157,7 +115,7 @@ function FallbackCard() {
   return (
     <div className="github-fallback-card">
       <p>{t('github.fallback.text')}</p>
-      <Button href={PROFILE_URL} variant="outline" external>
+      <Button href={GITHUB_PROFILE_URL} variant="outline" external>
         <SiGithub size={18} aria-hidden="true" />
         {t('github.fallback.cta')}
       </Button>
@@ -171,17 +129,6 @@ function FallbackCard() {
  * github-contributions-api (mesmo total do perfil, `level` 0–4 igual ao do
  * GitHub) e o grid é um SVG que segue o tema via CSS. */
 
-interface ContributionDay {
-  date: string;
-  count: number;
-  level: 0 | 1 | 2 | 3 | 4;
-}
-
-interface ContributionData {
-  total: number;
-  days: ContributionDay[];
-}
-
 type ChartState =
   | { status: 'idle' | 'loading' | 'error' }
   | { status: 'ready'; data: ContributionData };
@@ -194,21 +141,10 @@ const STEP = CELL + GAP;
 const LEFT = 32; // coluna dos dias da semana
 const TOP = 20; // linha dos meses
 
-function pickContributions(raw: unknown): ContributionData | null {
-  const r = raw as { total?: { lastYear?: unknown }; contributions?: unknown };
-  if (!r || !Array.isArray(r.contributions) || typeof r.total?.lastYear !== 'number') return null;
-  const days = (r.contributions as ContributionDay[]).filter(
-    (d) => typeof d?.date === 'string' && typeof d.count === 'number',
-  );
-  return days.length > 0 ? { total: r.total.lastYear, days } : null;
-}
-
 function useContributions(enabled: boolean): ChartState {
   const [state, setState] = useState<ChartState>(() => {
-    const cached = readStorage<{ ts: number; data: ContributionData }>(CONTRIB_CACHE_KEY, safeSession());
-    return cached && Date.now() - cached.ts < CONTRIB_TTL_MS && Array.isArray(cached.data?.days)
-      ? { status: 'ready', data: cached.data }
-      : { status: 'idle' };
+    const cached = cachedContributions();
+    return cached ? { status: 'ready', data: cached } : { status: 'idle' };
   });
   const doneRef = useRef(state.status === 'ready');
 
@@ -217,16 +153,9 @@ function useContributions(enabled: boolean): ChartState {
     const controller = new AbortController();
     setState({ status: 'loading' });
 
-    fetch(CONTRIB_URL, { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error(`contributions API ${res.status}`);
-        return res.json();
-      })
-      .then((raw: unknown) => {
-        const data = pickContributions(raw);
-        if (!data) throw new Error('contributions API: formato inesperado');
+    fetchContributions(controller.signal)
+      .then((data) => {
         doneRef.current = true;
-        writeStorage(CONTRIB_CACHE_KEY, { ts: Date.now(), data }, safeSession());
         setState({ status: 'ready', data });
       })
       .catch((err: unknown) => {
@@ -275,7 +204,7 @@ function ContributionChart({ enabled }: { enabled: boolean }) {
     return (
       <p className="gh-chart-error">
         {t('github.contributions.error')}{' '}
-        <a href={PROFILE_URL} target="_blank" rel="noopener noreferrer">
+        <a href={GITHUB_PROFILE_URL} target="_blank" rel="noopener noreferrer">
           {t('github.contributions.errorLink')}
         </a>
       </p>
@@ -386,7 +315,7 @@ function ContributionChart({ enabled }: { enabled: boolean }) {
         </div>
 
         <div className="gh-chart-footer">
-          <a href={PROFILE_URL} target="_blank" rel="noopener noreferrer" className="gh-chart-profile">
+          <a href={GITHUB_PROFILE_URL} target="_blank" rel="noopener noreferrer" className="gh-chart-profile">
             {t('github.contributions.errorLink')}
           </a>
           <span className="gh-chart-legend" aria-hidden="true">
@@ -479,7 +408,7 @@ export function GithubActivity({ showRepos = true }: GithubActivityProps) {
                 </li>
               ))}
             </ul>
-            <a href={`${PROFILE_URL}?tab=repositories`} target="_blank" rel="noopener noreferrer" className="gh-view-all">
+            <a href={GITHUB_REPOS_URL} target="_blank" rel="noopener noreferrer" className="gh-view-all">
               <SiGithub size={14} aria-hidden="true" />
               {t('github.viewAll')}
             </a>
