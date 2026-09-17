@@ -23,7 +23,8 @@
 
 /* Suspense fallback — vazio, só reserva altura */
 .page-placeholder {
-  min-height: 60vh;
+  flex: 1;
+  min-height: 100vh;
 }
 
 #root {

@@ -17,9 +17,9 @@ import {
 } from './routes';
 import './App.css';
 
-/* Sem spinner: loaders davam sensação de site lento. O chunk da rota já é
-   pré-carregado no hover/foco (prefetchRoute), então o fallback quase nunca
-   aparece — quando aparece, só reserva altura para o footer não pular. */
+/* Sem spinner: loaders davam sensação de site lento. Na navegação a página
+   antiga fica na tela até a nova carregar; o fallback só aparece no primeiro
+   carregamento e reserva a altura da tela para o footer não subir. */
 function PagePlaceholder() {
   return <div className="page-placeholder" aria-hidden="true" />;
 }
@@ -34,8 +34,13 @@ function AppRoutes() {
           `mode="wait"`, ainda segurava a página nova até a antiga terminar de
           sair — atraso somado ao download do chunk lazy. Trocar a chave
           remonta o wrapper e o CSS toca `page-enter` sozinho. */}
-      <div key={location.pathname} className="page-motion-wrapper">
-        <Suspense fallback={<PagePlaceholder />}>
+      {/* Suspense FORA do wrapper com key: o BrowserRouter navega dentro de
+          `startTransition`, então um boundary que já existe mantém a página
+          antiga na tela até o chunk da nova chegar. Dentro do wrapper, cada
+          troca de key criava um boundary novo, que sempre mostra o fallback —
+          a tela ficava vazia e o footer subia. */}
+      <Suspense fallback={<PagePlaceholder />}>
+        <div key={location.pathname} className="page-motion-wrapper">
           <Routes location={location}>
             <Route path="/" element={<Home />} />
             <Route path="/sobre" element={<Sobre />} />
@@ -46,8 +51,8 @@ function AppRoutes() {
             <Route path="/contato" element={<Contato />} />
             <Route path="*" element={<NaoEncontrado />} />
           </Routes>
-        </Suspense>
-      </div>
+        </div>
+      </Suspense>
     </>
   );
 }
