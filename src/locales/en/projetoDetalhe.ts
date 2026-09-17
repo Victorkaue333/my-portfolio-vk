@@ -1,0 +1,48 @@
+/* Detalhe de projeto (/projetos/:id). */
+import type base from '../pt-BR/projetoDetalhe';
+
+const projetoDetalhe: typeof base = {
+  projectDetail: {
+    back: 'Back to Projects',
+    notFoundTitle: 'Project not found',
+    notFoundText: 'The project you are looking for does not exist or has been moved.',
+    challenge: 'Challenge',
+    solution: 'Solution',
+    impact: 'Impact',
+    architecture: 'Architecture',
+    decisions: 'Key Decisions',
+    techUsed: 'Technologies Used',
+    zoomHint: 'Click to enlarge',
+    viewCode: 'View Code',
+    viewOnline: 'View Online',
+    categoryPersonal: 'Personal Project',
+    categoryReal: 'Real / Company Project',
+    detailedDesc: 'Detailed Description',
+    features: 'Features',
+    projectDetails: 'Project Details',
+    frontend: 'Frontend',
+    apiBackend: 'API / Backend',
+    database: 'Database',
+    stackDecisions: 'Stack & Decisions',
+    authLabel: 'Authentication',
+    backendLabel: 'Back-end',
+    deployLabel: 'Deploy',
+    dbLabel: 'Database',
+    summaryTitle: 'Project Summary',
+    problem: 'Problem',
+    stackLabel: 'Stack',
+    mainFeatures: 'Main Features',
+    accessFull: 'Access Full Project',
+    talkAbout: "Let's talk about this project",
+    myRole: 'My role',
+    roleMine: 'What I did',
+    roleTeam: 'What the team did',
+    team: 'Team',
+    teamSize_one: 'Solo project',
+    teamSize_other: '{{count}} people',
+    duration: 'Duration',
+    nextProject: 'Next project',
+  },
+};
+
+export default projetoDetalhe;

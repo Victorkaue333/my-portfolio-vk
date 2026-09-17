@@ -1,0 +1,48 @@
+/* Detalhe de projeto (/projetos/:id). */
+import type base from '../pt-BR/projetoDetalhe';
+
+const projetoDetalhe: typeof base = {
+  projectDetail: {
+    back: 'Voltar aos Projetos',
+    notFoundTitle: 'Projeto não encontrado',
+    notFoundText: 'O projeto que procura não existe ou foi movido.',
+    challenge: 'Desafio',
+    solution: 'Solução',
+    impact: 'Impacto',
+    architecture: 'Arquitetura',
+    decisions: 'Principais Decisões',
+    techUsed: 'Tecnologias Utilizadas',
+    zoomHint: 'Clique para ampliar',
+    viewCode: 'Ver Código',
+    viewOnline: 'Ver Online',
+    categoryPersonal: 'Projeto Pessoal',
+    categoryReal: 'Projeto Real / Empresa',
+    detailedDesc: 'Descrição Detalhada',
+    features: 'Funcionalidades',
+    projectDetails: 'Detalhes do Projeto',
+    frontend: 'Frontend',
+    apiBackend: 'API / Backend',
+    database: 'Base de Dados',
+    stackDecisions: 'Stack e Decisões',
+    authLabel: 'Autenticação',
+    backendLabel: 'Back-end',
+    deployLabel: 'Deploy',
+    dbLabel: 'Base de dados',
+    summaryTitle: 'Resumo do Projeto',
+    problem: 'Problema',
+    stackLabel: 'Stack',
+    mainFeatures: 'Funcionalidades Principais',
+    accessFull: 'Aceder ao Projeto Completo',
+    talkAbout: 'Fale comigo sobre este projeto',
+    myRole: 'O meu papel',
+    roleMine: 'O que eu fiz',
+    roleTeam: 'O que ficou a cargo da equipa',
+    team: 'Equipa',
+    teamSize_one: 'Projeto a solo',
+    teamSize_other: '{{count}} pessoas',
+    duration: 'Duração',
+    nextProject: 'Próximo projeto',
+  },
+};
+
+export default projetoDetalhe;
