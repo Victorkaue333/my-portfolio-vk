@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import {
   FiArrowRight,
   FiMail,
@@ -61,36 +62,36 @@ export default function Home() {
               <span className="title-gray">{t('hero.tech')}</span>
             </h1>
 
-            <Reveal delay={0.3}>
-              <p className="hero-description">
-                {t('hero.description')}
-              </p>
-            </Reveal>
+            {/* Parágrafo = elemento LCP no mobile. Era um <Reveal>: esperava o
+                IntersectionObserver, um re-render e mais 0,55s de atraso antes
+                de ficar visível (~3,5s de "atraso de renderização" no PageSpeed).
+                A entrada agora é só CSS e começa na primeira pintura. */}
+            <p className="hero-description hero-enter">
+              {t('hero.description')}
+            </p>
 
             <div className="hero-actions">
-              <Reveal delay={0.5}>
+              <div className="hero-enter" style={{ '--hero-enter-delay': '0.15s' } as CSSProperties}>
                 <Button href="/sobre" variant="primary">
                   {t('hero.cta')}
                   <FiArrowRight size={18} />
                 </Button>
-              </Reveal>
-              <Reveal delay={0.6}>
+              </div>
+              <div className="hero-enter" style={{ '--hero-enter-delay': '0.25s' } as CSSProperties}>
                 <Button href="/projetos" variant="outline">
                   {t('hero.cta2')}
                 </Button>
-              </Reveal>
-              <Reveal delay={0.7}>
-                <div className="hero-socials">
-                  <a href="https://github.com/Victorkaue333" target="_blank" rel="noopener noreferrer" className="social-icon github" aria-label="GitHub"><SiGithub size={20} aria-hidden="true" /></a>
-                  <a href="https://linkedin.com/in/victorkaue" target="_blank" rel="noopener noreferrer" className="social-icon linkedin" aria-label="LinkedIn"><FaLinkedin size={20} aria-hidden="true" /></a>
-                  <a href="mailto:kaue.alves.pg@gmail.com" className="social-icon email" aria-label="Email"><FiMail size={20} /></a>
-                </div>
-              </Reveal>
+              </div>
+              <div className="hero-socials hero-enter" style={{ '--hero-enter-delay': '0.35s' } as CSSProperties}>
+                <a href="https://github.com/Victorkaue333" target="_blank" rel="noopener noreferrer" className="social-icon github" aria-label="GitHub"><SiGithub size={20} aria-hidden="true" /></a>
+                <a href="https://linkedin.com/in/victorkaue" target="_blank" rel="noopener noreferrer" className="social-icon linkedin" aria-label="LinkedIn"><FaLinkedin size={20} aria-hidden="true" /></a>
+                <a href="mailto:kaue.alves.pg@gmail.com" className="social-icon email" aria-label="Email"><FiMail size={20} /></a>
+              </div>
             </div>
           </div>
 
           <div className="hero-visual">
-            <div className="photo-container reveal-on-scroll">
+            <div className="photo-container hero-enter">
               <div className="photo-ring" />
               <div className="photo-ring inner" />
               <div className="glass-overlay" />

@@ -56,6 +56,24 @@
     font-family: var(--font-secondary);
 }
 
+/* Entrada do resto do Hero (texto, CTAs, foto). Só CSS, sem esperar JS nem
+   IntersectionObserver: está sempre na primeira dobra. Sem translate grande e
+   sem atraso no parágrafo — ele é o elemento LCP no mobile e só conta a partir
+   do primeiro quadro com opacidade > 0. */
+.hero-enter {
+    animation: hero-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--hero-enter-delay, 0s) both;
+}
+
+@keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-title-main,
+    .hero-enter { animation: none; }
+}
+
 .title-white { color: #ffffff; }
 .title-gray { color: #808080; }
 
