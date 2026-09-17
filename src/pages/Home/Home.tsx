@@ -8,6 +8,9 @@ import {
   FiZap,
   FiLayout,
   FiTrendingUp,
+  FiBriefcase,
+  FiUsers,
+  FiClock,
 } from 'react-icons/fi';
 import { FaLinkedin } from 'react-icons/fa6';
 import { SiGithub } from 'react-icons/si';
@@ -15,24 +18,20 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { featuredProjects } from '../../data/projects';
 import { homeMetrics } from '../../data/profile';
-import { useSeo } from '../../hooks/useSeo';
+import { usePageSeo } from '../../hooks/useSeo';
 import { Button } from '../../components/ui/Button/Button';
 import { Reveal } from '../../components/ui/Reveal/Reveal';
-import { ProjectCard } from '../../components/ui/ProjectCard/ProjectCard';
 import { Counter } from '../../components/ui/Counter/Counter';
+import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { FloatingLines } from '../../components/ui/FloatingLines/FloatingLines';
 import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivity';
+import { srcFor, srcSetFor } from '../../utils/imageSrcSet';
 import './Home.css';
 
 export default function Home() {
   const { t } = useTranslation();
-
-  useSeo({
-    title: t('seo.homeTitle'),
-    description: t('seo.homeDesc'),
-    path: '/',
-  });
+  usePageSeo('home');
 
   const services = [
     { id: 'backend', icon: <FiDatabase size={24} />, title: t('about.highlights.backend'), desc: t('about.highlights.backendDesc') },
@@ -105,7 +104,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
       </section>
 
       {/* ========== NÚMEROS — derivados de data/ (profile.ts), cada um com contexto e link ========== */}
@@ -178,14 +176,75 @@ export default function Home() {
             <p className="section-subtitle">{t('home.featuredSubtitle')}</p>
           </div>
 
-          <div className="projects-marquee">
-            <div className="projects-marquee-track">
-              {[...featuredProjects, ...featuredProjects].map((project, i) => (
-                <div key={`${project.id}-${i}`} className="projects-marquee-item">
-                  <ProjectCard project={project} withReveal={false} />
-                </div>
-              ))}
-            </div>
+          {/* Destaques fixos (featured: true nos dados). Era um carrossel
+              automático — quem avalia prefere poucos projetos parados, com
+              contexto, do que cards passando sozinhos. */}
+          <div className="featured-grid">
+            {featuredProjects.map((project, i) => {
+              const techs = (project.technologies ?? []).slice(0, 4);
+              const meta = [
+                project.role?.title && { icon: <FiBriefcase size={13} />, text: project.role.title },
+                project.teamSize && {
+                  icon: <FiUsers size={13} />,
+                  text: t('home.featuredTeam', { count: project.teamSize }),
+                },
+                project.duration && { icon: <FiClock size={13} />, text: project.duration },
+              ].filter(Boolean) as { icon: React.ReactNode; text: string }[];
+
+              return (
+                <Reveal key={project.id} delay={i * 0.1} width="100%" height="100%">
+                  <Link to={project.detailPath} className="featured-card">
+                    <div className="featured-image">
+                      <img
+                        src={srcFor(project.image, 800)}
+                        srcSet={srcSetFor(project.image)}
+                        sizes="(max-width: 900px) calc(100vw - 2rem), 33vw"
+                        alt=""
+                        width={800}
+                        height={500}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="featured-body">
+                      <span className="featured-kicker">
+                        {project.category === 'real' ? t('projectDetail.categoryReal') : t('projectDetail.categoryPersonal')}
+                      </span>
+                      <h3 className="featured-title">{project.title}</h3>
+                      <p className="featured-desc">{project.shortDescription || project.description}</p>
+
+                      {project.metrics && project.metrics.length > 0 && (
+                        <dl className="featured-metrics">
+                          {project.metrics.slice(0, 3).map((metric) => (
+                            <div key={metric.label}>
+                              <dt>{metric.value}</dt>
+                              <dd>{metric.label}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
+
+                      {meta.length > 0 && (
+                        <ul className="featured-meta">
+                          {meta.map((m) => (
+                            <li key={m.text}>{m.icon}<span>{m.text}</span></li>
+                          ))}
+                        </ul>
+                      )}
+
+                      <div className="featured-footer">
+                        <span className="featured-techs" aria-label={techs.join(', ')}>
+                          {techs.map((tech) => <TechGlyph key={tech} name={tech} size={18} />)}
+                        </span>
+                        <span className="featured-cta">
+                          {t('home.featuredCta')} <FiArrowRight size={15} aria-hidden="true" />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>

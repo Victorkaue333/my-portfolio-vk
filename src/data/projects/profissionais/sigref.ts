@@ -15,6 +15,7 @@ export const sigref: Project = {
   stack: ['Python', 'Django', 'MySQL'],
   features: ['Gestão escolar', 'Fluxo administrativo', 'Sistema web corporativo'],
   category: 'real',
+  featured: true,
   summary: {
     problema: 'Processos administrativos escolares descentralizados e manuais',
     solucao: 'Sistema web centralizado para gestão de demandas e fluxos educacionais',

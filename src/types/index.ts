@@ -67,6 +67,8 @@ export interface Project {
   teamSize?: number;
   /** Ex.: "3 meses" ou "ago 2025 – fev 2026". */
   duration?: string;
+  /** Destaque fixo na Home (usar em 2–3 projetos). */
+  featured?: boolean;
 }
 
 /** Um cargo (posição) — modelo estilo LinkedIn. */

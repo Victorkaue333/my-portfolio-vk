@@ -15,6 +15,7 @@ export const ntidi: Project = {
   stack: ['Python', 'Django', 'Bootstrap'],
   features: ['Site institucional', 'SEO técnico', 'Sistemas internos'],
   category: 'real',
+  featured: true,
   summary: {
     problema: 'Necessidade de presença digital e ferramentas de gestão interna',
     solucao: 'Ecossistema web completo com site institucional e sistemas administrativos',

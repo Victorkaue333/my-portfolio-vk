@@ -57,5 +57,9 @@ function normalizeProject(project: Project): Project {
 }
 
 export const projects: Project[] = rawProjects.map(normalizeProject);
-export const featuredProjects = projects.filter((p) => p.category === 'pessoal').slice(0, 6);
+/** Destaques fixos da Home: `featured: true` no arquivo do projeto (2–3). */
+export const featuredProjects = (() => {
+  const marked = projects.filter((p) => p.featured);
+  return (marked.length > 0 ? marked : projects.filter((p) => p.category === 'real')).slice(0, 3);
+})();
 

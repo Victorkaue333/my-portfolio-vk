@@ -15,6 +15,7 @@ export const maratonatech: Project = {
   stack: ['Python', 'Django'],
   features: ['Cadastro de pitch', 'Gestão de eventos', 'Votação online'],
   category: 'real',
+  featured: true,
   summary: {
     problema: 'Dificuldade em organizar votações e pitches em tempo real em eventos',
     solucao: 'Plataforma digital para cadastro de apresentações e sistema de votação online',
