@@ -45,7 +45,9 @@
     <!-- Imagem LCP da Home. Sem isto o browser só a descobre depois de baixar e
          executar o JS (a Home é um chunk lazy). O prerender remove este bloco
          nas outras rotas — ver scripts/prerender-meta.mjs. -->
-    <link rel="preload" as="image" href="/images/eu/victorkaue.webp" fetchpriority="high" />
+    <!-- imagesrcset/imagesizes iguais ao <img> em src/pages/Home/Home.tsx: sem
+         eles o preload baixava o original, que o <img> nem usa (download duplo). -->
+    <link rel="preload" as="image" href="/images/eu/victorkaue-450.webp" imagesrcset="/images/eu/victorkaue-280.webp 280w, /images/eu/victorkaue-450.webp 450w, /images/eu/victorkaue-560.webp 560w, /images/eu/victorkaue-900.webp 900w" imagesizes="(max-width: 480px) 65vw, (max-width: 768px) 70vw, 450px" fetchpriority="high" />
     <!-- /preload:home -->
 
     <link rel="icon" type="image/webp" href="/images/fotos-projetos-pessoais/vk-portifolio/logotipo-vk.webp" />

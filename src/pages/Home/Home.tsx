@@ -95,8 +95,8 @@ export default function Home() {
               <div className="photo-ring" />
               <div className="photo-ring inner" />
               <div className="glass-overlay" />
-              {/* LCP: variantes + preload injetado no <head> por scripts/prerender-meta.mjs.
-                  Manter src/srcSet/sizes em sincronia com HERO_LCP nesse script. */}
+              {/* LCP no desktop: preload no <head> de index.html (bloco preload:home).
+                  Manter src/srcSet/sizes em sincronia com imagesrcset/imagesizes de lá. */}
               <img
                 src="/images/eu/victorkaue-450.webp"
                 srcSet="/images/eu/victorkaue-280.webp 280w, /images/eu/victorkaue-450.webp 450w, /images/eu/victorkaue-560.webp 560w, /images/eu/victorkaue-900.webp 900w"
