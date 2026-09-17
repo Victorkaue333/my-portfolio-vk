@@ -9,7 +9,9 @@
     "build": "tsc -b && vite build && node scripts/prerender-meta.mjs",
     "prerender": "node scripts/prerender-meta.mjs",
     "preview": "vite preview",
-    "images:optimize": "node scripts/optimize-images.mjs"
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "test:e2e": "npm run build && playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
