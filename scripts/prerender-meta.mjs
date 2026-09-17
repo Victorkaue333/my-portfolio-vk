@@ -6,7 +6,7 @@
 //
 // Sem dependências: puro Node (fs/path). Roda no build local e no Vercel.
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,36 +19,42 @@ const DEFAULT_IMAGE = `${SITE}/images/fotos-projetos-pessoais/vk-portifolio/vict
 const routes = [
   {
     path: '/',
+    entry: 'src/pages/Home/Home.tsx',
     title: 'Victor Kauê | Desenvolvedor Full Stack',
     description:
       'Portfólio de Victor Kauê — desenvolvedor backend/full-stack com foco em Python, Django, APIs escaláveis e sistemas web modernos, da ideia ao deploy.',
   },
   {
     path: '/sobre',
+    entry: 'src/pages/Sobre/Sobre.tsx',
     title: 'Sobre — Victor Kauê',
     description:
       'Conheça Victor Kauê: desenvolvedor backend/full-stack — trajetória técnica, experiência profissional, formação e stack de tecnologias.',
   },
   {
     path: '/projetos',
+    entry: 'src/pages/Projetos/Projetos.tsx',
     title: 'Projetos — Victor Kauê',
     description:
       'Projetos selecionados de Victor Kauê: sistemas web, APIs REST, dashboards e aplicações feitas com Python, Django, React e TypeScript.',
   },
   {
     path: '/servicos',
+    entry: 'src/pages/Servicos/Servicos.tsx',
     title: 'Serviços — Victor Kauê',
     description:
       'Serviços de Victor Kauê: sistemas customizados, desenvolvimento web, APIs REST e consultoria tech — robustos, escaláveis e de alta performance.',
   },
   {
     path: '/certificados',
+    entry: 'src/pages/Certificados/Certificados.tsx',
     title: 'Certificados — Victor Kauê',
     description:
       'Certificações e cursos concluídos por Victor Kauê em backend, frontend e engenharia de software.',
   },
   {
     path: '/contato',
+    entry: 'src/pages/Contato/Contato.tsx',
     title: 'Contato — Victor Kauê',
     description:
       'Vamos conversar sobre seu projeto. Fale com Victor Kauê e transforme sua ideia em um produto digital robusto e escalável.',
@@ -72,7 +78,87 @@ function stripHomePreload(html) {
   return html.replace(/[ \t]*<!-- preload:home -->[\s\S]*?<!-- \/preload:home -->\n?/, '');
 }
 
-function applyMeta(html, { path, title, description }) {
+/** Lê dist/.vite/manifest.json (build.manifest em vite.config.ts). */
+function loadManifest() {
+  const manifestPath = join(DIST, '.vite', 'manifest.json');
+  if (!existsSync(manifestPath)) {
+    console.warn('[prerender-meta] manifest ausente — modulepreload não será injetado.');
+    return null;
+  }
+  try {
+    return JSON.parse(readFileSync(manifestPath, 'utf8'));
+  } catch (err) {
+    console.warn(`[prerender-meta] manifest ilegível (${err.message}) — seguindo sem preload.`);
+    return null;
+  }
+}
+
+/**
+ * Pré-carregamento do chunk da rota: o próprio chunk e os que ele importa
+ * estaticamente (modulepreload) + o CSS dele (preload as=style). As páginas são
+ * `lazy()` em src/routes.ts, então sem isto o browser só descobre esses arquivos
+ * depois de baixar e executar index.js — o PageSpeed mostrava a cadeia parando
+ * no index.js e ~3,5s de atraso até o elemento LCP.
+ */
+function routePreloadLinks(manifest, entry) {
+  if (!manifest || !entry) return [];
+
+  const seen = new Set();
+  const scripts = [];
+  const styles = new Set();
+
+  const visit = (key) => {
+    if (seen.has(key)) return;
+    seen.add(key);
+    const chunk = manifest[key];
+    // O entry (index.html) já está no HTML: script próprio e CSS inline.
+    if (!chunk || chunk.isEntry) return;
+    if (chunk.file) scripts.push(chunk.file);
+    for (const css of chunk.css ?? []) styles.add(css);
+    for (const dep of chunk.imports ?? []) visit(dep);
+  };
+  visit(entry);
+
+  if (scripts.length === 0) {
+    console.warn(`[prerender-meta] entry "${entry}" não encontrado no manifest.`);
+    return [];
+  }
+
+  return [
+    ...scripts.map((file) => `<link rel="modulepreload" crossorigin href="/${file}" />`),
+    ...[...styles].map((file) => `<link rel="preload" as="style" href="/${file}" />`),
+  ];
+}
+
+function injectHeadLinks(html, links) {
+  // O Vite já emite modulepreload dos chunks do entry — não repetir.
+  const novos = links.filter((link) => {
+    const href = link.match(/href="([^"]+)"/)?.[1];
+    return href ? !html.includes(`"${href}"`) : true;
+  });
+  if (novos.length === 0) return html;
+  return html.replace('</head>', `    ${novos.join('\n    ')}\n</head>`);
+}
+
+/**
+ * CSS global (index-*.css) inline no <head>. Como <link rel=stylesheet> ele
+ * bloqueava a renderização (~150ms no mobile) por ~9 KiB comprimidos. Numa SPA
+ * o HTML é baixado uma vez só, então perder o cache separado do CSS custa pouco.
+ */
+function inlineEntryCss(html) {
+  return html.replace(
+    /<link rel="stylesheet"(?: crossorigin)? href="\/(assets\/index-[^"]+\.css)">/,
+    (tag, file) => {
+      const cssPath = join(DIST, file);
+      if (!existsSync(cssPath)) return tag;
+      // `</style` dentro do CSS fecharia a tag antes da hora.
+      const css = readFileSync(cssPath, 'utf8').replace(/<\/style/gi, '<\\/style');
+      return `<style>${css}</style>`;
+    }
+  );
+}
+
+function applyMeta(html, { path, title, description, entry }, manifest) {
   const url = `${SITE}${path === '/' ? '/' : path}`;
   let out = path === '/' ? html : stripHomePreload(html);
 
@@ -90,6 +176,8 @@ function applyMeta(html, { path, title, description }) {
   out = setMetaContent(out, 'name', 'twitter:url', url);
   out = setMetaContent(out, 'name', 'twitter:image', DEFAULT_IMAGE);
 
+  out = injectHeadLinks(out, routePreloadLinks(manifest, entry));
+
   return out;
 }
 
@@ -103,8 +191,13 @@ function run() {
     process.exit(1);
   }
 
+  // Base lida uma vez; rodar o script de novo sobre um dist/ já processado não
+  // duplica nada (CSS já inline não casa o regex; links repetidos são filtrados).
+  base = inlineEntryCss(base);
+  const manifest = loadManifest();
+
   for (const route of routes) {
-    const html = applyMeta(base, route);
+    const html = applyMeta(base, route, manifest);
     const outPath =
       route.path === '/' ? indexPath : join(DIST, route.path.replace(/^\//, ''), 'index.html');
     mkdirSync(dirname(outPath), { recursive: true });
