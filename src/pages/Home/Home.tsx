@@ -8,7 +8,6 @@ import {
   FiZap,
   FiLayout,
   FiTrendingUp,
-  FiChevronDown
 } from 'react-icons/fi';
 import { FaLinkedin } from 'react-icons/fa6';
 import { SiGithub } from 'react-icons/si';
@@ -112,18 +111,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll Down Indicator */}
-        <button
-          type="button"
-          className="scroll-indicator-wrapper"
-          aria-label="Rolar para a próxima seção"
-          onClick={() => document.getElementById('servicos')?.scrollIntoView({ behavior: 'smooth' })}
-        >
-          <div className="scroll-mouse">
-            <div className="scroll-dot" />
-          </div>
-          <FiChevronDown className="scroll-arrow" />
-        </button>
       </section>
 
       {/* ========== RESULTS STRIP (PRO MAX) ========== */}

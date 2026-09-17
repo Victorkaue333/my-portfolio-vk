@@ -5,9 +5,13 @@
 }
 
 /* ========== HERO SECTION (PRO MAX) ========== */
+/* Ocupa a tela inteira em qualquer tamanho: a primeira dobra é só o hero.
+   `svh` = altura com as barras do navegador mobile visíveis (sem cortar
+   conteúdo); `vh` fica de fallback para navegadores antigos. */
 .hero {
     min-height: 100vh;
-    padding: 10rem 0 5rem;
+    min-height: 100svh;
+    padding: 9rem 0 3.5rem;
     display: flex;
     align-items: center;
     position: relative;
@@ -168,88 +172,6 @@
     inset: -45px;
     border: 1px dashed rgba(255, 255, 255, 0.08);
     animation: rotate 40s linear reverse infinite;
-}
-
-/* ========== SCROLL INDICATOR (PRO MAX) ========== */
-.scroll-indicator-wrapper {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    z-index: 10;
-    transition: transform 0.3s ease;
-    /* `backwards`, não `both`: segura o estado inicial durante o atraso de 1,5s
-       e depois devolve o controle às regras normais — com `both` o transform
-       final da animação ficaria grudado e mataria o :hover abaixo. */
-    animation: scroll-indicator-in 1s ease-out 1.5s backwards;
-}
-
-@keyframes scroll-indicator-in {
-    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-    to { opacity: 1; transform: translateX(-50%); }
-}
-
-/* Sobe via transform, não via `bottom`: `bottom` é propriedade de layout e
-   com `transition: all` o navegador recalculava posição a cada quadro do hover. */
-.scroll-indicator-wrapper:hover {
-    transform: translateX(-50%) translateY(-0.5rem);
-}
-
-.scroll-mouse {
-    width: 24px;
-    height: 40px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-.scroll-dot {
-    width: 4px;
-    height: 8px;
-    background: var(--accent-color);
-    border-radius: 2px;
-    margin-top: 6px;
-    animation: mouseScroll 2s infinite ease-in-out;
-}
-
-.scroll-arrow {
-    color: var(--accent-color);
-    font-size: 1.25rem;
-    animation: arrowBounce 2s infinite ease-in-out;
-}
-
-@keyframes mouseScroll {
-    0% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(8px); opacity: 0.5; }
-    100% { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes arrowBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(5px); }
-}
-
-@media (max-width: 768px) {
-    .scroll-indicator-wrapper {
-        bottom: 1.2rem;
-        gap: 0.5rem;
-    }
-    
-    .scroll-mouse {
-        width: 18px;
-        height: 30px;
-    }
-    
-    .scroll-text {
-        font-size: 0.6rem;
-    }
 }
 
 /* ========== RESULTS STRIP (PRO MAX) ========== */
