@@ -31,7 +31,13 @@ export function Button({
   type = 'button',
   external
 }: ButtonProps) {
-  const cls = `btn btn-${variant} ${className}`.trim();
+  // Hover Border Gradient (regra 8): só nos botões sem preenchimento sólido.
+  // O `primary` já é um bloco laranja — uma borda laranja girando ali
+  // competiria com o próprio estado, em vez de reforçar a hierarquia.
+  // A classe `hbg` mora em styles/interactions.css.
+  const cls = `btn btn-${variant} ${variant === 'primary' ? '' : 'hbg'} ${className}`
+    .replace(/\s+/g, ' ')
+    .trim();
 
   if (href) {
     const isExternal = external || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:');

@@ -202,7 +202,7 @@ export default function Sobre() {
 
           <div className="about-main-content">
             <div className="content-header reveal-on-scroll">
-              <a href="https://wa.me/5587981774951" target="_blank" rel="noopener noreferrer" className="header-cta">
+              <a href="https://wa.me/5587981774951" target="_blank" rel="noopener noreferrer" className="header-cta hbg">
                 <FiCalendar size={16} />
                 Agendar uma chamada
                 <FiChevronRight size={16} />
@@ -212,7 +212,7 @@ export default function Sobre() {
 
               <div className="socials-list">
                 {socialLinks.filter((s) => ['GitHub', 'LinkedIn', 'Email'].includes(s.name)).map((link) => (
-                  <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="social-btn">
+                  <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="social-btn hbg">
                     {link.name === 'GitHub' && <SiGithub size={16} aria-hidden="true" />}
                     {link.name === 'LinkedIn' && <FaLinkedin size={16} aria-hidden="true" />}
                     {link.name === 'Email' && <FiMail size={16} />}

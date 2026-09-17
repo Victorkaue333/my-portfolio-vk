@@ -34,6 +34,12 @@
 
 .btn:hover::before { left: 100%; }
 
+/* Botões com Hover Border Gradient trocam o shimmer pela borda animada —
+   os dois juntos seriam duas animações disputando o mesmo hover (regra 18).
+   `padding: 2px` casa o anel com a espessura da borda do .btn. */
+.btn.hbg::before { display: none; }
+.btn.hbg::after { padding: 2px; }
+
 .btn-primary {
     background: #ff7a00;
     color: #FFFFFF;

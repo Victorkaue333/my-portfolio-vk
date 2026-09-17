@@ -194,7 +194,7 @@ export default function Contato() {
               <h3>{t('contato.otherWays')}</h3>
               <div className="contact-cards">
                 {socialLinks.map((s) => (
-                  <a key={s.name} href={s.url} className={`contact-card ${s.name.toLowerCase()}`} target="_blank" rel="noopener noreferrer">
+                  <a key={s.name} href={s.url} className={`contact-card hbg ${s.name.toLowerCase()}`} target="_blank" rel="noopener noreferrer">
                     {(() => {
                       const Icon = socialIconMap[s.icon as keyof typeof socialIconMap] || FiMail;
                       return <Icon size={20} aria-hidden="true" />;
