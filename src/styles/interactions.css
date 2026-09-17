@@ -1,0 +1,86 @@
+/* ==========================================================================
+   Camada de interação — Hover Border Gradient
+   Adaptado de https://ui.aceternity.com/components/hover-border-gradient
+
+   O componente oficial é um <Tag> que envolve o conteúdo em três camadas
+   (moldura, fundo opaco e um motion.div com `background` animado por JS) e
+   troca o gradiente a cada `duration` segundos, mesmo parado. Aqui os alvos
+   são botões e links que JÁ existem — trocar o JSX deles quebraria layout,
+   foco e as classes do design system (regra 8/24 do briefing). Então só o
+   mecanismo foi portado: uma luz percorrendo a borda, neutro -> laranja ->
+   neutro, desenhada num ::after com a mesma máscara de anel que o projeto já
+   usa nos cards.
+
+   Em CSS puro de propósito: a navbar entra no bundle inicial de toda rota e
+   a versão com framer-motion arrastaria o pacote de animação junto.
+
+   Uso: acrescente `hbg` à classe do elemento (ele precisa de
+   `position: relative`, que todos os alvos já têm).
+   ========================================================================== */
+
+@property --hbg-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes hbg-spin {
+    to { --hbg-angle: 360deg; }
+}
+
+.hbg {
+    position: relative;
+}
+
+.hbg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+        from var(--hbg-angle),
+        transparent 0deg,
+        color-mix(in srgb, var(--text-dim-color) 45%, transparent) 55deg,
+        var(--accent-color) 100deg,
+        color-mix(in srgb, var(--text-dim-color) 45%, transparent) 145deg,
+        transparent 200deg
+    );
+    /* Anel: pinta a moldura e recorta o miolo — o conteúdo do botão continua
+       clicável e legível por cima. */
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Só gira enquanto há interação — animação parada custa quadro à toa. */
+.hbg:hover::after,
+.hbg:focus-visible::after,
+.hbg:focus-within::after {
+    opacity: 1;
+    animation: hbg-spin 1.6s linear infinite;
+}
+
+/* Sem hover (toque): o estado de foco/ativo continua dando o retorno visual
+   e o botão funciona igual — a borda é enfeite, nunca requisito. */
+@media (hover: none) {
+    .hbg::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hbg::after {
+        transition: none;
+        background: color-mix(in srgb, var(--accent-color) 60%, transparent);
+    }
+    .hbg:hover::after,
+    .hbg:focus-visible::after,
+    .hbg:focus-within::after {
+        animation: none;
+    }
+}

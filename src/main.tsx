@@ -7,6 +7,7 @@ import './styles/variables.css';
 import './styles/reset.css';
 import './styles/global.css';
 import './styles/animations.css';
+import './styles/interactions.css';
 import './styles/light-overrides.css';
 
 const root = document.getElementById('root');
