@@ -12,7 +12,9 @@ import {
 import { FaLinkedin } from 'react-icons/fa6';
 import { SiGithub } from 'react-icons/si';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { featuredProjects } from '../../data/projects';
+import { homeMetrics } from '../../data/profile';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useSeo } from '../../hooks/useSeo';
 import { Button } from '../../components/ui/Button/Button';
@@ -32,12 +34,6 @@ export default function Home() {
     description: t('seo.homeDesc'),
     path: '/',
   });
-
-  const results = [
-    { value: 30, suffix: '%', label: t('home.result1') },
-    { value: 25, suffix: '+', label: t('home.result2') },
-    { value: 10, suffix: '+', label: t('home.result3') },
-  ];
 
   const services = [
     { id: 'backend', icon: <FiDatabase size={24} />, title: t('about.highlights.backend'), desc: t('about.highlights.backendDesc') },
@@ -113,25 +109,27 @@ export default function Home() {
 
       </section>
 
-      {/* ========== RESULTS STRIP (PRO MAX) ========== */}
-      <section className="results-strip">
+      {/* ========== NÚMEROS — derivados de data/ (profile.ts), cada um com contexto e link ========== */}
+      <section className="results-strip" aria-labelledby="results-title">
         <div className="container">
           <div className="results-inner">
-            <div className="results-badge">
-              <FiTrendingUp size={16} /> {t('home.impactTitle')}
-            </div>
-            <div className="results-grid">
-              {results.map((res, i) => (
-                <Reveal key={i} delay={i * 0.1} yOffset={20}>
-                  <div className="result-item">
-                    <span className="result-value">
-                      <Counter value={res.value} suffix={res.suffix} />
-                    </span>
-                    <span className="result-label">{res.label}</span>
-                  </div>
-                </Reveal>
+            <h2 id="results-title" className="results-badge">
+              <FiTrendingUp size={16} aria-hidden="true" /> {t('home.impactTitle')}
+            </h2>
+            <ul className="results-grid">
+              {homeMetrics.map((m, i) => (
+                <li key={m.key}>
+                  <Reveal delay={i * 0.1} yOffset={20}>
+                    <Link to={m.href} className="result-item" title={t(`home.metrics.${m.key}Context`)}>
+                      <span className="result-value">
+                        <Counter value={m.value} suffix={m.suffix} />
+                      </span>
+                      <span className="result-label">{t(`home.metrics.${m.key}Label`)}</span>
+                    </Link>
+                  </Reveal>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </section>

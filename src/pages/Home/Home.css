@@ -174,13 +174,14 @@
     animation: rotate 40s linear reverse infinite;
 }
 
-/* ========== RESULTS STRIP (PRO MAX) ========== */
+/* ========== NÚMEROS ==========
+   Selo à esquerda, números alinhados à esquerda, rótulo em caixa alta.
+   Cada item é link (contexto no title); o hover só acende o número. */
 .results-strip {
-    background: #080808; /* Darker near black */
+    background: #080808;
     border-top: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
     padding: 2.5rem 0;
-    backdrop-filter: blur(8px);
     overflow: hidden;
 }
 
@@ -195,11 +196,14 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    margin: 0;
+    font-family: inherit;
     font-size: 0.85rem;
     font-weight: 700;
     color: var(--accent-color);
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    white-space: nowrap;
 }
 
 .results-grid {
@@ -207,23 +211,27 @@
     display: flex;
     justify-content: space-around;
     gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .result-item {
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
-    background: transparent;
-    border: none;
+    color: inherit;
 }
 
 .result-value {
     font-size: 3.5rem;
     font-weight: 800;
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: var(--font-secondary);
     line-height: 1;
     margin-bottom: 0.5rem;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.2s ease;
 }
 
 .result-label {
@@ -232,6 +240,35 @@
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-weight: 600;
+}
+
+.result-item:hover .result-value,
+.result-item:focus-visible .result-value {
+    color: var(--accent-color);
+}
+
+.result-item:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+    border-radius: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+    .results-inner {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .results-grid {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .results-grid { gap: 0.8rem; }
+    .results-grid > li { width: 100%; }
 }
 
 /* ========== SERVICES (PRO MAX) ========== */
@@ -442,16 +479,6 @@
         justify-content: center;
     }
     
-    .results-inner {
-        flex-direction: column;
-        gap: 2rem;
-    }
-    
-    .results-grid {
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
 }
 
 @media (max-width: 768px) {
@@ -534,14 +561,6 @@
 
     .photo-container {
         width: min(220px, 65vw);
-    }
-
-    .results-grid {
-        gap: 0.8rem;
-    }
-
-    .result-item {
-        width: 100%;
     }
 }
 
