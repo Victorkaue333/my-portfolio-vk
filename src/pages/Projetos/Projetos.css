@@ -16,11 +16,48 @@
 }
 
 .projects-section-header {
+    margin: 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: inherit;
+}
+
+.projects-section-toggle {
     display: flex;
     align-items: center;
     gap: 0.85rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.projects-section-toggle:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+.projects-section-chevron {
+    margin-left: auto;
+    color: var(--text-muted-color);
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.projects-section-toggle:hover .projects-section-chevron {
+    color: var(--color-primary-500);
+}
+
+.projects-section.is-collapsed .projects-section-chevron {
+    transform: rotate(-90deg);
+}
+
+.projects-grid[hidden] {
+    display: none;
 }
 
 .projects-section-icon {
@@ -97,6 +134,62 @@
     box-shadow: 0 5px 15px rgba(255, 122, 0, 0.3);
 }
 
+/* Filtro por tecnologia — chips menores, abaixo das categorias */
+.projects-tech-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin: -1.5rem 0 3rem;
+}
+
+.projects-tech-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+}
+
+.projects-tech-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.tech-filter-chip,
+.tech-filter-clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.tech-filter-chip:hover {
+    border-color: rgba(255, 122, 0, 0.4);
+    color: var(--text-color);
+}
+
+.tech-filter-chip.active {
+    border-color: var(--accent-color);
+    background: rgba(255, 122, 0, 0.12);
+    color: var(--text-color);
+}
+
+.tech-filter-clear {
+    border-style: dashed;
+    color: var(--accent-color);
+}
+
 .no-projects-found {
     display: flex;
     flex-direction: column;
@@ -141,6 +234,23 @@
     .projects-section-icon {
         width: 34px;
         height: 34px;
+    }
+
+    .projects-tech-filter {
+        align-items: flex-start;
+    }
+
+    .projects-tech-options {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        padding-bottom: 0.3rem;
+    }
+
+    .tech-filter-chip,
+    .tech-filter-clear {
+        flex-shrink: 0;
     }
 
     .projects-filter-container {

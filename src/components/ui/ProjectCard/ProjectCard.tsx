@@ -3,6 +3,7 @@ import {
     FiExternalLink,
     FiGithub,
 } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import type { Project } from '../../../types';
 import { TechIcon } from '../TechIcon/TechIcon';
@@ -12,10 +13,13 @@ import './ProjectCard.css';
 interface ProjectCardProps {
   project: Project;
   withReveal?: boolean;
+  /** Último projeto aberto pelo visitante (vem do localStorage). */
+  lastViewed?: boolean;
 }
 
 
-export function ProjectCard({ project, withReveal = true }: ProjectCardProps) {
+export function ProjectCard({ project, withReveal = true, lastViewed = false }: ProjectCardProps) {
+  const { t } = useTranslation();
   const projectTitle = project.title || 'Projeto em atualização';
   const projectDescription =
     project.description || project.shortDescription || 'Descrição em atualização.';
@@ -30,9 +34,13 @@ export function ProjectCard({ project, withReveal = true }: ProjectCardProps) {
   const githubUrl = project.github || 'https://github.com/Victorkaue333';
 
   return (
-    <div className={`project-card ${withReveal ? 'reveal-on-scroll' : ''}`} id={`project-${project.id}`}>
+    <div
+      className={`project-card ${withReveal ? 'reveal-on-scroll' : ''} ${lastViewed ? 'is-last-viewed' : ''}`}
+      id={`project-${project.id}`}
+    >
       <Link to={detailPath} className="project-card-link">
         <div className="project-image">
+          {lastViewed && <span className="project-last-viewed">{t('projects.lastViewed')}</span>}
           <img
             src={srcFor(imageSrc, 800)}
             srcSet={srcSetFor(imageSrc)}

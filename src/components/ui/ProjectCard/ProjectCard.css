@@ -18,6 +18,26 @@
     box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 122, 0, 0.1);
 }
 
+.project-card.is-last-viewed {
+    border-color: rgba(255, 122, 0, 0.35);
+}
+
+.project-last-viewed {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 2;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-full);
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(255, 122, 0, 0.4);
+    color: var(--color-primary-500);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+}
+
 .project-card-link {
     text-decoration: none;
     color: inherit;

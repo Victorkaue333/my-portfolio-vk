@@ -8,6 +8,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Button } from '../../components/ui/Button/Button';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { projects } from '../../data/projects';
+import { LAST_PROJECT_KEY, writeStorage } from '../../hooks/useLocalStorage';
 import { useSeo } from '../../hooks/useSeo';
 import { projectOgImage, projectSeoDescription, projectSeoTitle } from '../../utils/projectSeo';
 import { ProjectCarousel } from '../../components/ui/ProjectCarousel/ProjectCarousel';
@@ -32,9 +33,11 @@ export default function ProjetoDetalhe() {
     noindex: !project,
   });
 
+  // Rolagem ao trocar de projeto fica com o ScrollToTop (topo ou posição salva ao voltar).
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
+    if (project) writeStorage(LAST_PROJECT_KEY, project.id);
+  }, [project]);
 
   if (!project) {
     return (
