@@ -1,0 +1,22 @@
+.tg-word {
+    display: inline;
+    opacity: 0;
+    filter: blur(8px);
+    animation: tg-word-in var(--tg-duration, 0.45s) cubic-bezier(0.16, 1, 0.3, 1)
+        calc(var(--tg-index, 0) * var(--tg-stagger, 0.07s)) both;
+}
+
+@keyframes tg-word-in {
+    from { opacity: 0; filter: blur(8px); }
+    to   { opacity: 1; filter: blur(0); }
+}
+
+/* Sem movimento: o texto simplesmente está lá (regra 20 — nada de conteúdo
+   que depende da animação para aparecer). */
+@media (prefers-reduced-motion: reduce) {
+    .tg-word {
+        animation: none;
+        opacity: 1;
+        filter: none;
+    }
+}

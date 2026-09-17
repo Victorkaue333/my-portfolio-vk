@@ -26,6 +26,8 @@ import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { FloatingLines } from '../../components/ui/FloatingLines/FloatingLines';
 import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivity';
+import { TextGenerate } from '../../components/ui/TextGenerate/TextGenerate';
+import { Spotlight } from '../../components/ui/Spotlight/Spotlight';
 import { srcFor, srcSetFor } from '../../utils/imageSrcSet';
 import './Home.css';
 
@@ -45,14 +47,25 @@ export default function Home() {
       {/* ========== HERO SECTION (PRO MAX) ========== */}
       <section id="inicio" className="hero">
         <FloatingLines />
+        {/* Spotlight New — iluminação laranja discreta atrás do conteúdo, entre
+            o canvas das linhas (z-index 0) e o texto (z-index 2). */}
+        <Spotlight />
         <div className="container hero-container">
           <div className="hero-content">
-            {/* Entrada em CSS (keyframes `hero-title-in`): era um motion.h1 que
-                só animava na montagem — não valia arrastar o framer-motion
-                inteiro para a página de entrada por causa disso. */}
+            {/* Text Generate Effect: cada palavra sai do desfoque em sequência,
+                ~600ms no total. Em CSS (ver TextGenerate) — era um motion.h1 e
+                não valia arrastar o framer-motion inteiro para a rota de
+                entrada por causa disso. */}
             <h1 className="hero-title-main">
-              <span className="title-white">{t('hero.role')}</span>
-              <span className="title-gray">{t('hero.tech')}</span>
+              <TextGenerate as="span" className="title-white" text={t('hero.role')} />
+              <TextGenerate
+                as="span"
+                className="title-gray"
+                text={t('hero.tech')}
+                // Continua a contagem da primeira linha para as duas lerem
+                // como uma frase só, e não como dois blocos concorrentes.
+                startIndex={t('hero.role').split(' ').length}
+              />
             </h1>
 
             {/* Parágrafo = elemento LCP no mobile. Era um <Reveal>: esperava o

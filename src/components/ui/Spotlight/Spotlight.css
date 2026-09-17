@@ -1,0 +1,126 @@
+.spotlight {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+    /* Entrada lenta: o feixe não deve "piscar" junto com o texto do hero. */
+    animation: spotlight-in 1.2s ease-out both;
+
+    /* Geometria do componente oficial (width 560 / height 1380 / small 240),
+       em rem para acompanhar a escala de fonte e encolher no mobile. */
+    --spot-w: 35rem;
+    --spot-h: 86rem;
+    --spot-w-sm: 15rem;
+    --spot-shift: 6rem;
+
+    /* Intensidade — teto do briefing: perceptível, nunca uma mancha. */
+    --spot-strong: color-mix(in srgb, var(--accent-color) 7%, transparent);
+    --spot-soft: color-mix(in srgb, var(--accent-color) 4%, transparent);
+    --spot-faint: color-mix(in srgb, var(--accent-color) 3%, transparent);
+}
+
+@keyframes spotlight-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.spotlight-side {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    animation: spotlight-drift 9s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+.spotlight-side.is-left { left: 0; }
+.spotlight-side.is-right { right: 0; animation-direction: alternate-reverse; }
+
+@keyframes spotlight-drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(var(--spot-shift)); }
+}
+
+.spotlight-beam {
+    position: absolute;
+    top: 0;
+    display: block;
+    height: var(--spot-h);
+}
+
+/* ── Feixe principal: sai do canto e atravessa o hero em diagonal ── */
+.is-left .spotlight-beam.is-main {
+    left: 0;
+    width: var(--spot-w);
+    transform: translateY(-22rem) rotate(-45deg);
+    background: radial-gradient(
+        68.54% 68.72% at 55.02% 31.46%,
+        var(--spot-strong) 0,
+        var(--spot-soft) 50%,
+        transparent 80%
+    );
+}
+
+.is-right .spotlight-beam.is-main {
+    right: 0;
+    width: var(--spot-w);
+    transform: translateY(-22rem) rotate(45deg);
+    background: radial-gradient(
+        68.54% 68.72% at 44.98% 31.46%,
+        var(--spot-strong) 0,
+        var(--spot-soft) 50%,
+        transparent 80%
+    );
+}
+
+/* ── Feixes de apoio: dão volume sem acrescentar cor ── */
+.is-left .spotlight-beam.is-mid,
+.is-left .spotlight-beam.is-far {
+    left: 0;
+    width: var(--spot-w-sm);
+    transform-origin: top left;
+}
+
+.is-right .spotlight-beam.is-mid,
+.is-right .spotlight-beam.is-far {
+    right: 0;
+    width: var(--spot-w-sm);
+    transform-origin: top right;
+}
+
+.is-left .spotlight-beam.is-mid { transform: rotate(-45deg) translate(5%, -50%); }
+.is-right .spotlight-beam.is-mid { transform: rotate(45deg) translate(-5%, -50%); }
+.is-left .spotlight-beam.is-far { transform: rotate(-45deg) translate(-180%, -70%); }
+.is-right .spotlight-beam.is-far { transform: rotate(45deg) translate(180%, -70%); }
+
+.spotlight-beam.is-mid {
+    background: radial-gradient(50% 50% at 50% 50%, var(--spot-soft) 0, var(--spot-faint) 80%, transparent 100%);
+}
+
+.spotlight-beam.is-far {
+    background: radial-gradient(50% 50% at 50% 50%, var(--spot-faint) 0, var(--spot-faint) 80%, transparent 100%);
+}
+
+/* Tema claro: mesmo laranja, metade da força — em fundo quase branco a
+   mesma opacidade já leria como cor de fundo, não como luz. */
+html.light .spotlight {
+    --spot-strong: color-mix(in srgb, var(--accent-color) 4%, transparent);
+    --spot-soft: color-mix(in srgb, var(--accent-color) 2.5%, transparent);
+    --spot-faint: color-mix(in srgb, var(--accent-color) 2%, transparent);
+}
+
+@media (max-width: 768px) {
+    .spotlight {
+        --spot-w: 20rem;
+        --spot-h: 50rem;
+        --spot-w-sm: 9rem;
+        --spot-shift: 2.5rem;
+    }
+}
+
+/* A luz continua — o que para é o vaivém (regra 20). */
+@media (prefers-reduced-motion: reduce) {
+    .spotlight { animation: none; }
+    .spotlight-side { animation: none; }
+}
