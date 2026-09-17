@@ -7,6 +7,32 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 
 ---
 
+## ADR-0011 — 4 idiomas e textos i18n organizados por tela
+
+- **Data:** 2026-09-17
+- **Contexto:** Todo o texto PT/EN vivia num único `src/i18n.ts` (~500 linhas),
+  com alguns blocos soltos em `src/locales/{seo,github,uses}.ts`. O seletor da
+  navbar só alternava PT ↔ EN. Pedido: suportar pt-BR, pt-PT, en e es, com
+  bandeiras.
+- **Decisão:** `src/locales/languages.ts` é a fonte única dos idiomas (código,
+  rótulo, país da bandeira, locale do `Intl`) e do `normalizeLanguage` (`pt`
+  antigo no `localStorage` → `pt-BR`). Textos em `src/locales/<idioma>/<tela>.ts`
+  (layout, common, home, sobre, projetos, projetoDetalhe, servicos,
+  certificados, contato, uses, naoEncontrado, seo), montados no `index.ts` de
+  cada idioma. Os nomes das chaves não mudaram (`t('servicos.heroMain')`). Os
+  arquivos pt-BR são a base de tipos: os outros são `typeof base`. Seletor em
+  `components/ui/LanguageSwitcher` (dropdown na navbar, grade na sidebar do
+  Sobre) com `country-flag-icons` (SVG, só as bandeiras importadas entram no
+  bundle — o Windows não renderiza emoji de bandeira).
+- **Alternativas consideradas:** namespaces do i18next por tela (exigiria trocar
+  todos os `t()` e `useTranslation(ns)`); JSON por idioma (perde a checagem de
+  chaves pelo `tsc`); `flag-icons` via CSS (carrega todas as bandeiras).
+- **Consequências:** Chave faltando em qualquer idioma quebra o build. Dados com
+  `Record<Language, string>` (`uses.ts`, `testimonials.ts`) precisam dos 4
+  idiomas. O prerender continua indexando só pt-BR.
+
+---
+
 ## ADR-0007 — Variantes de imagem geradas por `sharp` e commitadas
 
 - **Data:** 2026-07-23

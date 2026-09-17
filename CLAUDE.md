@@ -6,7 +6,7 @@ Regras para IA atuar neste repositório. Objetivo, conciso.
 
 Portfólio pessoal de **Victor Kauê** — SPA front-end, sem backend. Conteúdo
 (projetos, experiências, certificados) vive como dados TypeScript em
-`src/data/`. Idioma do produto: PT-BR (com EN via i18n). Idioma dos docs: PT-BR.
+`src/data/`. Idioma do produto: PT-BR (com PT-PT, EN e ES via i18n). Idioma dos docs: PT-BR.
 
 ## Stack
 
@@ -15,7 +15,7 @@ Portfólio pessoal de **Victor Kauê** — SPA front-end, sem backend. Conteúdo
 - Estilo: Tailwind CSS 4 + CSS por componente + design tokens em `src/styles/variables.css`
 - Animação: framer-motion (transições de página e reveals); background do Hero é Canvas 2D (`FloatingLines`) — three.js/R3F foi removido
 - Tema claro/escuro: `src/theme/ThemeProvider.tsx` (persistido em `localStorage`)
-- i18n: i18next + react-i18next (PT/EN), detecção via `localStorage` (`portfolio-lang`)
+- i18n: i18next + react-i18next (`pt-BR`, `pt-PT`, `en`, `es`), detecção via `localStorage` (`portfolio-lang`). Idiomas em `src/locales/languages.ts`; textos por tela em `src/locales/<idioma>/<tela>.ts`; bandeiras via `country-flag-icons` no `LanguageSwitcher`
 - Ícones: react-icons (Simple Icons + Feather), resolvidos por nome em `src/components/ui/TechIcon/TechIcon.tsx` (`TECH_ICONS`); devicon foi removido
 - Deploy: Vercel
 
@@ -49,7 +49,7 @@ erro de tipo + validação visual manual (`dev`/`preview`).
 - Componentes: PascalCase, uma pasta por componente com `.tsx` + `.css` de mesmo nome.
 - Import alias: `@/` → `src/` (ver `vite.config.ts` e `tsconfig`). Prefira caminhos relativos existentes ao editar arquivos que já os usam.
 - Novos projetos do portfólio: criar arquivo em `src/data/projects/{pessoais|profissionais}/` e registrar em `src/data/projects.ts`. Seguir a interface `Project` em `src/types/index.ts`.
-- Textos visíveis: PT como padrão; adicionar chave EN correspondente em `src/i18n.ts` quando o texto passar pelo `t()`.
+- Textos visíveis: pt-BR é a base de tipos. Chave nova vai no arquivo da tela em `src/locales/pt-BR/` **e** nos mesmos arquivos de `pt-PT/`, `en/` e `es/` (o `tsc` falha se faltar). Tela nova = arquivo novo nas 4 pastas + spread no `index.ts` de cada idioma. Dados com texto por idioma usam `Record<Language, string>`.
 - Imagens: `.webp` em `public/images/...`, referenciadas por caminho absoluto (`/images/...`).
 - Commits: Conventional Commits (`feat:`, `fix:`, `docs:`, ...).
 
