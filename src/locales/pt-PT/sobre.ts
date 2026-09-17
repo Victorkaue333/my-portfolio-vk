@@ -17,6 +17,7 @@ const sobre: typeof base = {
       enterprise: 'Sistemas Empresariais',
       enterpriseDesc: 'Experiência em projetos reais com entrega de ponta a ponta, do planeamento ao deploy em produção.',
     },
+    skillsLabel: 'Stacks utilizadas',
   },
   expertise: {
     title: 'Competências técnicas',

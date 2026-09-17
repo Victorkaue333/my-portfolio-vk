@@ -17,6 +17,7 @@ const sobre: typeof base = {
       enterprise: 'Sistemas Empresariales',
       enterpriseDesc: 'Experiencia en proyectos reales con entrega de principio a fin, desde la planificación hasta producción.',
     },
+    skillsLabel: 'Stacks utilizadas',
   },
   expertise: {
     title: 'Experiencia técnica',

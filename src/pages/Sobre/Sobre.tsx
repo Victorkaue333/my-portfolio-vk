@@ -48,8 +48,10 @@ function companyInitials(name: string): string {
   return (words.slice(0, 2).map((w) => w[0]).join('') || name[0] || '?').toUpperCase();
 }
 
-/** Corpo de um cargo: descrição + atividades + chips de skills. */
+/** Corpo de um cargo: descrição + atividades + stacks utilizadas. */
 function ExperienceBody({ role }: { role: ExperienceRole }) {
+  const { t } = useTranslation();
+
   return (
     <>
       {role.description && <p className="li-exp-desc">{role.description}</p>}
@@ -61,13 +63,16 @@ function ExperienceBody({ role }: { role: ExperienceRole }) {
         </ul>
       )}
       {role.skills && role.skills.length > 0 && (
-        <div className="li-exp-skills">
-          {role.skills.map((s) => (
-            <span className="li-exp-skill" key={s}>
-              <TechGlyph name={s} size={13} className="li-exp-skill-icon" />
-              {s}
-            </span>
-          ))}
+        <div className="li-exp-stack">
+          <p className="li-exp-stack-label">{t('about.skillsLabel')}</p>
+          <div className="li-exp-skills">
+            {role.skills.map((s) => (
+              <span className="li-exp-skill" key={s}>
+                <TechGlyph name={s} size={13} className="li-exp-skill-icon" />
+                {s}
+              </span>
+            ))}
+          </div>
         </div>
       )}
     </>

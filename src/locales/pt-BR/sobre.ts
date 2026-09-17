@@ -16,6 +16,7 @@ const sobre = {
       enterprise: 'Sistemas Empresariais',
       enterpriseDesc: 'Experiência em projetos reais com entrega ponta a ponta, do planejamento ao deploy em produção.',
     },
+    skillsLabel: 'Stacks utilizadas',
   },
   expertise: {
     title: 'Expertise técnica',

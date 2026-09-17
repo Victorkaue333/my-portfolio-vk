@@ -17,6 +17,7 @@ const sobre: typeof base = {
       enterprise: 'Enterprise Systems',
       enterpriseDesc: 'Experience in real projects with end-to-end delivery, from planning to production.',
     },
+    skillsLabel: 'Stack used',
   },
   expertise: {
     title: 'Technical Expertise',

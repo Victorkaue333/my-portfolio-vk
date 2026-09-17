@@ -487,13 +487,27 @@
     font-weight: 600;
 }
 
+.li-exp-stack {
+    margin-top: 0.85rem;
+}
+
+/* Rótulo da lista — mesma forma dos outros rótulos de grupo do site
+   (ver .projects-tech-label em pages/Projetos). */
+.li-exp-stack-label {
+    margin: 0 0 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+}
+
 .li-exp-skills {
     display: flex;
     flex-wrap: wrap;
     /* Sem pílula o gap assume o papel do padding: coluna maior que linha para
        o olho separar um item do seguinte. */
     gap: 0.35rem 1.1rem;
-    margin-top: 0.85rem;
 }
 
 .li-exp-skill {
