@@ -24,8 +24,8 @@ export interface Testimonial {
  * {
  *   id: 'nome-sobrenome',
  *   name: 'Nome Sobrenome',
- *   role: { pt: 'Gerente de Projetos na Empresa', en: 'Project Manager at Company' },
- *   quote: { pt: '...', en: '...' },
+ *   role: { 'pt-BR': 'Gerente de Projetos na Empresa', 'pt-PT': '...', en: 'Project Manager at Company', es: '...' },
+ *   quote: { 'pt-BR': '...', 'pt-PT': '...', en: '...', es: '...' },
  *   initials: 'NS',
  *   url: 'https://www.linkedin.com/in/victorkaue/details/recommendations/',
  * },

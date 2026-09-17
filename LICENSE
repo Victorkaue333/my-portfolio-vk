@@ -1,0 +1,69 @@
+Este repositório usa licença dupla:
+
+  1. CÓDIGO-FONTE — MIT (texto abaixo).
+  2. CONTEÚDO PESSOAL — todos os direitos reservados (seção final).
+
+Em caso de dúvida sobre um arquivo, considere-o CONTEÚDO PESSOAL até
+confirmação por escrito do autor.
+
+================================================================================
+1. CÓDIGO-FONTE
+================================================================================
+
+Abrange: componentes, páginas, hooks, estilos (CSS), configuração, scripts
+(scripts/), tipos TypeScript e a estrutura de dados (interfaces e formato dos
+arquivos em src/data/ — não o conteúdo escrito neles).
+
+MIT License
+
+Copyright (c) 2025-2026 Victor Kauê
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+================================================================================
+2. CONTEÚDO PESSOAL — TODOS OS DIREITOS RESERVADOS
+================================================================================
+
+Copyright (c) 2025-2026 Victor Kauê. Todos os direitos reservados.
+
+O conteúdo abaixo NÃO é coberto pela licença MIT. Não pode ser copiado,
+reproduzido, modificado, redistribuído ou usado em outro site, portfólio ou
+produto sem autorização prévia e por escrito do autor:
+
+  - Fotografias e imagens pessoais (public/images/eu/ e similares).
+  - Imagens, capturas de tela e logotipos de projetos, inclusive de clientes e
+    empresas (public/images/fotos-projetos-pessoais/,
+    public/images/fotos-projetos-reais/, public/images/og/).
+  - Certificados, diplomas e documentos (public/Certificados/, public/docs/).
+  - Textos escritos: biografia, descrições de projetos, experiências,
+    formação, serviços, depoimentos e demais textos em src/data/ e
+    src/locales/.
+  - Nome "Victor Kauê", marca "VK", logotipo e identidade visual pessoal.
+
+Logotipos, nomes e marcas de terceiros (empresas, instituições, clientes e
+tecnologias) pertencem aos respectivos titulares e aparecem apenas para
+identificar trabalhos realizados ou ferramentas utilizadas.
+
+Quem reutilizar o CÓDIGO deste repositório deve substituir todo o CONTEÚDO
+PESSOAL pelo seu próprio antes de publicar.
+
+Dependências de terceiros (node_modules/) e fontes externas seguem as licenças
+de seus próprios autores.
+
+Contato para autorizações: https://github.com/Victorkaue333

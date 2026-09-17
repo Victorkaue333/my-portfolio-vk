@@ -33,6 +33,29 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 
 ---
 
+## ADR-0010 — Só dado verificável no portfólio + Vercel Analytics
+
+- **Data:** 2026-09-17
+- **Contexto:** A Home exibia contadores fixos (30%, 25+, 10+) sem origem, e
+  Serviços mostrava três depoimentos placeholder. Para quem avalia, número sem
+  contexto e depoimento inventado derrubam a credibilidade. Também não havia
+  nenhuma medição de tráfego para orientar melhorias.
+- **Decisão:** Números da Home passam a ser derivados de `src/data/` em
+  `src/data/profile.ts` (total de projetos, projetos profissionais, empresas),
+  cada um com legenda e link. Depoimentos: lista vazia esconde a seção. Campos
+  de estudo de caso (`metrics`, `role`, `teamSize`, `duration`, `featured`) e de
+  certificado (`verifyUrl`, `credentialId`) entram como **opcionais** — o bloco
+  só renderiza com dado real. Adicionado `@vercel/analytics` (`<Analytics />` no
+  `App`).
+- **Alternativas consideradas:** manter os números com legenda genérica;
+  Plausible/Umami (exigem conta/servidor externo); Google Analytics (pesado e
+  exige banner de cookies).
+- **Consequências:** Blocos novos ficam invisíveis até os dados serem
+  preenchidos. Analytics precisa ser ativado no painel da Vercel e só coleta em
+  produção.
+
+---
+
 ## ADR-0009 — Registro único de páginas (`src/config/pages.ts`)
 
 - **Data:** 2026-09-17
