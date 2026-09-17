@@ -40,18 +40,12 @@
     color: var(--text-color);
 }
 
+/* Logo solto, sem placa: a arte já tem contorno escuro no "V" branco, então
+   lê nos dois temas. Altura fixa, largura automática (proporção ~1.72:1). */
 .footer-mark {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: var(--radius-md);
-    background: var(--accent-color);
-    color: #0a0a0a;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    line-height: 1;
+    display: block;
+    height: 24px;
+    width: auto;
 }
 
 .footer-brand-name {

@@ -22,9 +22,16 @@ export function Footer() {
     <footer className="footer" id="footer">
       <div className="container footer-inner">
         <Link to="/" className="footer-brand" aria-label={t('footer.home')}>
-          <span className="footer-mark" aria-hidden="true">
-            VK
-          </span>
+          <img
+            className="footer-mark"
+            src="/images/brand/logotipo-vk-48.webp"
+            srcSet="/images/brand/logotipo-vk-48.webp 1x, /images/brand/logotipo-vk-96.webp 2x"
+            width={79}
+            height={48}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
           <span className="footer-brand-name">
             Victor<span> Kauê</span>
           </span>
