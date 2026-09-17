@@ -115,47 +115,88 @@
     color-scheme: dark;
 }
 
-/* ========== TEMA CLARO (alto contraste) ========== */
+/* ========== TEMA CLARO — branco + slate + laranja ========== */
 /* Sobrescreve os tokens base; como quase tudo referencia estas variáveis via
-   var(), a maior parte do site inverte automaticamente. */
+   var(), a maior parte do site inverte automaticamente. Os tokens marcados
+   "só claro" não existem no :root — use-os apenas em seletores html.light. */
 html.light {
     color-scheme: light;
 
+    /* Marca (escala orange) */
+    --color-primary-400: #fb923c;
+    --color-primary-500: #f97316;
+    --color-primary-600: #ea580c;
+    --color-primary-700: #c2410c;
+    --color-success-500: #16a34a;
+
     /* Escala neutra invertida por PAPEL (100 = texto forte, 950 = fundo/base) */
     --color-neutral-950: #ffffff;
-    --color-neutral-900: #f4f5f7;
-    --color-neutral-800: #e9ebef;
-    --color-neutral-700: #c7ccd4;
-    --color-neutral-600: #4d5661; /* "dim" mais escuro = mais contraste */
-    --color-neutral-400: #616b77;
-    --color-neutral-300: #2b323b;
-    --color-neutral-200: #161b21;
-    --color-neutral-100: #0a0d12; /* texto principal quase preto */
+    --color-neutral-900: #f8fafc;
+    --color-neutral-800: #f1f5f9;
+    --color-neutral-700: #cbd5e1;
+    --color-neutral-600: #64748b;
+    --color-neutral-400: #64748b;
+    --color-neutral-300: #334155;
+    --color-neutral-200: #1e293b;
+    --color-neutral-100: #0f172a;
 
-    /* Semântica */
-    --bg-color: #eaecf1;
-    --bg-alt: #e0e4ea;
-    --bg-dark: #eaecf1;
-    --text-color: #0a0d12;
-    --text-muted-color: #303842; /* forte contraste em corpo de texto */
-    --text-dim-color: #515a65;
+    /* Base */
+    --bg-color: #f8fafc;
+    --bg-alt: #f1f5f9;
+    --bg-dark: #f8fafc;
     --surface-color: #ffffff;
-    --surface-hover-color: #f0f2f6;
-    --border-color: #d0d6de;
-    --border-subtle: rgba(0, 0, 0, 0.09);
-    --accent-glow: rgba(255, 122, 0, 0.22);
-    --secondary-color: #4d5661;
+    --surface-soft-color: #f8fafc;   /* só claro */
+    --surface-hover-color: #f1f5f9;
+
+    /* Texto */
+    --text-color: #0f172a;
+    --text-muted-color: #334155;     /* corpo */
+    --text-dim-color: #64748b;       /* secundário / metadado */
+    --text-subtle-color: #475569;    /* só claro — ícones neutros e metadado em fundo alt */
+    --text-disabled-color: #94a3b8;  /* só claro — placeholder / desabilitado */
+    --secondary-color: #64748b;
+
+    /* Bordas */
+    --border-color: #e2e8f0;
+    --border-subtle: #e2e8f0;
+    --border-strong: #cbd5e1;        /* só claro */
+    --border-hover: #94a3b8;         /* só claro */
+
+    /* Primary */
+    --accent-color: #f97316;
+    --accent-hover: #ea580c;
+    --accent-active: #c2410c;        /* só claro */
+    --accent-foreground: #ffffff;    /* só claro */
+    --accent-text: #c2410c;          /* só claro — laranja como TEXTO pequeno (AA 5.2:1 no branco) */
+    --accent-soft: #fff7ed;          /* só claro */
+    --accent-soft-hover: #ffedd5;    /* só claro */
+    --accent-border: #fed7aa;        /* só claro */
+    --accent-glow: rgba(249, 115, 22, 0.18);
+
+    /* Estados semânticos (só claro) */
+    --success-color: #16a34a;
+    --success-text: #15803d;
+    --warning-color: #d97706;
+    --error-color: #dc2626;
+    --info-color: #2563eb;
 
     /* Gradientes / vidro */
-    --gradient-orange-soft: rgba(255, 122, 0, 0.1);
-    --gradient-surface: linear-gradient(145deg, #ffffff, #eef1f5);
-    --glass-bg: rgba(255, 255, 255, 0.72);
-    --glass-border: rgba(0, 0, 0, 0.08);
+    --gradient-primary: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    --gradient-orange-soft: #fff7ed;
+    --gradient-surface: #ffffff;
+    --gradient-glow: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(249, 115, 22, 0.08), transparent 40%);
+    --glass-bg: #ffffff;
+    --glass-border: #e2e8f0;
 
-    /* Sombras suaves (as escuras pesam demais no claro) */
-    --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
-    --shadow-md: 0 4px 14px rgba(16, 24, 40, 0.1);
-    --shadow-lg: 0 12px 28px rgba(16, 24, 40, 0.14);
-    --shadow-xl: 0 25px 50px -12px rgba(16, 24, 40, 0.2);
-    --shadow-glow: 0 0 24px rgba(255, 122, 0, 0.28);
+    /* Sombras em slate (sem tom bege/preto) */
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.07);
+    --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.1);
+    --shadow-xl: 0 25px 50px -12px rgba(15, 23, 42, 0.12);
+    --shadow-glow: 0 0 24px rgba(249, 115, 22, 0.18);
+
+    /* Ponte shadcn/Tailwind (global.css) */
+    --input: #cbd5e1;
+    --ring: rgba(249, 115, 22, 0.55);
+    --destructive: #dc2626;
 }

@@ -154,49 +154,53 @@
 
 /* ============ Overrides tema claro ============ */
 html.light .navbar {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 246, 249, 0.9) 100%);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 12px 30px rgba(16, 24, 40, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.92);
+    border-color: var(--border-color);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
 }
 
 html.light .navbar.scrolled {
-    border-color: rgba(255, 122, 0, 0.28);
-    box-shadow: 0 16px 38px rgba(16, 24, 40, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    border-color: var(--border-strong);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
 }
 
-html.light .logo-white { color: #14100b; }
+html.light .logo-white { color: var(--text-color); }
 
 html.light .nav-menu {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.06);
-    box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
+    background: var(--surface-soft-color);
+    border-color: var(--border-color);
 }
 
-html.light .nav-menu a { color: #4a525c; }
+html.light .nav-menu a { color: var(--text-muted-color); }
 
 html.light .nav-menu a:hover:not(.active) {
-    color: #14100b;
-    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
+    background: var(--surface-hover-color);
+}
+
+html.light .nav-menu a.active {
+    color: var(--accent-active);
+    background: var(--accent-soft);
 }
 
 html.light .btn-lang,
 html.light .btn-theme {
-    color: #3a424c;
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.12);
+    color: var(--text-muted-color);
+    background: var(--surface-color);
+    border-color: var(--border-strong);
 }
 
 html.light .btn-lang:hover,
 html.light .btn-theme:hover {
-    color: var(--color-primary-600);
-    border-color: rgba(255, 122, 0, 0.5);
-    background: rgba(255, 122, 0, 0.1);
+    color: var(--text-color);
+    border-color: var(--border-hover);
+    background: var(--surface-hover-color);
 }
 
 @media (max-width: 1280px) {
     .nav-menu a {
         padding: 0.5rem 0.85rem;
-        font-size: 0.85rem;
+        font-size: 0.88rem;
     }
 }
 

@@ -1,10 +1,17 @@
 /* ==========================================================================
    Overrides do TEMA CLARO
-   Corrige valores hardcoded (branco/preto) que não passam pelos tokens.
-   Carregado por último para vencer as folhas de estilo por componente.
+   Corrige valores hardcoded (pensados para o escuro) que não passam pelos
+   tokens. Só cor: nada de layout, espaçamento, tipografia ou animação.
+   Todo valor vem dos tokens de html.light em variables.css.
+
+   Atenção à especificidade: `html.light .x` (0,2,1) vence `.x.active` e
+   `.x:hover` (0,2,0). Ao sobrescrever o estado base de um componente,
+   sobrescreva também os estados que ele já tinha.
    ========================================================================== */
 
-/* ---- Texto que era branco fixo → escuro (alto contraste) ---- */
+/* ===================== Texto ===================== */
+
+/* Texto que era branco fixo → foreground */
 html.light .title-white,
 html.light .result-value,
 html.light .project-title,
@@ -19,156 +26,537 @@ html.light .footer-icon-link:hover {
     color: var(--text-color);
 }
 
-html.light .title-gray { color: #67707b; }
+html.light .title-gray { color: var(--text-dim-color); }
 html.light .hero-description { color: var(--text-muted-color); }
 
-/* ---- Fundos escuros sólidos → claros ---- */
-html.light .results-strip { background: #ffffff; }
+/* Laranja como texto pequeno → tom AA (#C2410C). Ícones e fundos seguem #F97316. */
+html.light .sidebar-role,
+html.light .nav-item.active,
+html.light .diferencial-card h3,
+html.light .expertise-title,
+html.light .featured-kicker,
+html.light .featured-cta,
+html.light .results-badge,
+html.light .cert-issuer,
+html.light .cert-preview-issuer,
+html.light .pd-eyebrow,
+html.light .project-category-badge,
+html.light .footer-action-link,
+html.light .project-tag-more,
+html.light .tech-filter-clear,
+html.light .approach-progress-count,
+html.light .contact-map-link {
+    color: var(--accent-text);
+}
+
+/* Laranja em texto grande (display) → #EA580C, passa AA para texto grande */
+html.light .page-hero-accent,
+html.light .pd-metric dt {
+    color: var(--accent-hover);
+}
+html.light .page-hero-accent { text-shadow: 0 0 26px rgba(249, 115, 22, 0.12); }
+html.light .pd-monogram { text-shadow: 0 0 30px rgba(249, 115, 22, 0.15); }
+
+/* Ícones com cor de marca branca → escuro no claro (GitHub, Next.js, OpenAI…).
+   O TechIcon aplica a cor via style inline, por isso o seletor de atributo. */
+html.light .social-icon.github,
+html.light .footer-contact-icons a.github {
+    color: var(--text-color);
+}
+html.light svg[style*="rgb(255, 255, 255)"] {
+    color: var(--text-color) !important;
+}
+
+/* ===================== Botões ===================== */
+
+html.light .btn-primary {
+    background: var(--accent-color);
+    color: var(--accent-foreground);
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2);
+}
+html.light .btn-primary:hover {
+    background: var(--accent-hover);
+    color: var(--accent-foreground);
+    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.25);
+}
+html.light .btn-primary:active { background: var(--accent-active); }
+
+html.light .btn-secondary {
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    border-color: var(--accent-border);
+}
+html.light .btn-secondary:hover {
+    background: var(--gradient-primary);
+    color: var(--accent-foreground);
+    border-color: transparent;
+    box-shadow: 0 6px 18px rgba(249, 115, 22, 0.22);
+}
+
+html.light .btn-ghost {
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
+    color: var(--accent-text);
+}
+html.light .btn-ghost:hover {
+    background: var(--accent-soft-hover);
+    border-color: var(--accent-color);
+    color: var(--accent-active);
+    box-shadow: var(--shadow-md);
+}
+
+html.light .btn-outline {
+    border-color: var(--border-strong);
+    color: var(--text-muted-color);
+}
+html.light .btn-outline:hover {
+    border-color: var(--accent-color);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    box-shadow: var(--shadow-sm);
+}
+
+html.light .btn-cv:hover {
+    background: var(--accent-hover);
+    filter: none;
+}
+html.light .btn-cv:active { background: var(--accent-active); }
+
+html.light .back-to-top {
+    border-color: var(--accent-hover);
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.22);
+}
+html.light .back-to-top:hover { box-shadow: 0 10px 24px rgba(249, 115, 22, 0.3); }
+
+/* ===================== PageHero ===================== */
+
+html.light .page-hero-icon {
+    color: var(--accent-color);
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
+    box-shadow: 0 0 22px rgba(249, 115, 22, 0.1);
+}
+
+/* ===================== Home ===================== */
+
+/* Padrão pontilhado do hero (era branco) → slate */
+html.light .hero {
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.04) 0%, transparent 40%),
+        radial-gradient(rgba(15, 23, 42, 0.07) 1px, transparent 1px);
+}
+
+html.light .social-icon {
+    background: var(--surface-color);
+    border-color: var(--border-strong);
+}
+
+html.light .photo-container {
+    background: var(--surface-color);
+    box-shadow: 0 0 50px rgba(15, 23, 42, 0.1);
+}
+
+html.light .results-strip {
+    background: var(--surface-color);
+    border-color: var(--border-color);
+}
+
 html.light .service-pro-card,
 html.light .project-card,
 html.light .service-card {
     background: var(--surface-color);
     border-color: var(--border-color);
 }
-html.light .projeto-extended-info,
-html.light .projeto-summary-fallback {
-    background: rgba(255, 255, 255, 0.66);
-}
-html.light .photo-container { background: #ffffff; }
-html.light .project-image { background: #e6e9ee; }
 
-/* ---- Superfícies "overlay branco" (rgba(255,255,255,.0x)) → overlay escuro ---- */
-html.light .social-icon,
-html.light .sidebar-pill,
-html.light .social-btn,
-html.light .tech-tag,
+html.light .service-pro-card:hover {
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow: var(--shadow-lg), 0 0 20px rgba(249, 115, 22, 0.08);
+}
+
+html.light .service-icon-box,
+html.light .edu-icon,
+html.light .li-exp-skill {
+    border-color: var(--accent-border);
+}
+
+html.light .featured-card {
+    background: var(--surface-color);
+    border-color: var(--border-color);
+}
+html.light .featured-card:hover,
+html.light .featured-card:focus-visible {
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow: var(--shadow-lg);
+}
+html.light .featured-image,
+html.light .project-image { background: var(--bg-alt); }
+
+/* ===================== ProjectCard ===================== */
+
+html.light .project-card { box-shadow: var(--shadow-sm); }
+html.light .project-card:hover {
+    border-color: rgba(249, 115, 22, 0.35);
+    box-shadow: var(--shadow-lg), 0 0 25px rgba(249, 115, 22, 0.08);
+}
+html.light .project-card.is-last-viewed { border-color: rgba(249, 115, 22, 0.45); }
+
+html.light .project-last-viewed {
+    background: var(--surface-color);
+    border-color: var(--accent-border);
+    color: var(--accent-text);
+}
+
 html.light .project-tag-icon,
 html.light .project-tag-icon-wrapper,
-html.light .project-tag-text,
+html.light .project-tag-text {
+    background: var(--surface-soft-color);
+    border-color: var(--border-color);
+}
+html.light .project-tag-text { color: var(--text-subtle-color); }
+
+html.light .project-tag-icon:hover,
+html.light .project-tag-icon-wrapper:hover {
+    background: var(--surface-hover-color);
+    border-color: rgba(249, 115, 22, 0.35);
+}
+
+html.light .author-avatar { border-color: var(--border-color); }
+
+html.light .project-footer {
+    background: var(--surface-soft-color);
+    border-top-color: var(--border-color);
+}
+
+/* ===================== Superfícies "overlay branco" → surface ===================== */
+
+html.light .sidebar-pill,
 html.light .detail-card-item,
 html.light .architecture-flow,
 html.light .decision-item,
 html.light .feature-item-detail,
-html.light .summary-card {
-    background: rgba(0, 0, 0, 0.035);
-    border-color: rgba(0, 0, 0, 0.09);
+html.light .summary-card,
+html.light .pd-stack-chip {
+    background: var(--surface-soft-color);
+    border-color: var(--border-color);
 }
 
-/* bordas brancas fixas remanescentes */
-html.light .social-icon,
-html.light .project-tag-icon-wrapper { border-color: rgba(0, 0, 0, 0.1); }
+html.light .pd-tech-block { background: var(--surface-color); }
 
-/* ---- Hovers que usavam overlay branco → overlay escuro ---- */
-html.light .social-btn:hover,
-html.light .project-tag-icon:hover,
-html.light .project-tag-icon-wrapper:hover,
 html.light .feature-item-detail:hover {
-    background: rgba(0, 0, 0, 0.06);
+    background: var(--surface-hover-color);
+    border-color: rgba(249, 115, 22, 0.3);
 }
 
-/* ---- ProjectCard footer ---- */
-html.light .project-footer {
-    background: rgba(0, 0, 0, 0.02);
-    border-top-color: rgba(0, 0, 0, 0.07);
+/* ===================== Sobre ===================== */
+
+html.light .profile-card::before { filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.35)); }
+html.light .profile-card:hover { border-color: rgba(249, 115, 22, 0.35); }
+html.light .profile-photo { border-color: rgba(249, 115, 22, 0.6); }
+
+html.light .header-cta {
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
+    color: var(--accent-text);
+    box-shadow: none;
+}
+html.light .header-cta:hover {
+    background: var(--accent-soft-hover);
+    border-color: var(--accent-color);
 }
 
-/* ---- Filtros (Projetos / Certificados) ---- */
-html.light .filter-btn {
-    background: rgba(0, 0, 0, 0.04);
-    color: var(--text-muted-color);
+html.light .social-btn {
+    background: var(--surface-color);
+    border-color: var(--border-strong);
+}
+html.light .social-btn:hover {
+    background: var(--surface-hover-color);
+    border-color: var(--accent-color);
 }
 
-/* ---- Padrão de grid pontilhado do hero (era branco) → escuro ---- */
-html.light .hero {
-    background-image:
-        radial-gradient(circle at 20% 20%, rgba(255, 122, 0, 0.06) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(255, 122, 0, 0.04) 0%, transparent 40%),
-        radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+html.light .diferencial-card:hover {
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(249, 115, 22, 0.08);
 }
 
-/* grão de ruído: quase imperceptível, mas escurece um tico para não sumir */
-html.light body::after { opacity: 0.03; }
-
-/* ===================== Componentes restantes ===================== */
-
-/* ---- MobileNavbar ---- */
-html.light .mobile-nav-container {
-    background: rgba(255, 255, 255, 0.82);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 14px 34px rgba(16, 24, 40, 0.16), 0 0 20px rgba(255, 122, 0, 0.06);
+html.light .education-item-row:hover,
+html.light .expertise-box:hover {
+    border-color: var(--accent-border);
 }
 
-/* ---- Footer ---- */
-html.light .footer-contact-icons a {
-    background: rgba(0, 0, 0, 0.035);
+html.light .tech-tag {
+    background: var(--surface-soft-color);
+    border-color: var(--border-color);
+}
+html.light .tech-tag:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
 }
 
-/* ---- Contato: form + inputs ---- */
-html.light .form-progress { background: rgba(0, 0, 0, 0.08); }
+/* ===================== Serviços ===================== */
 
-html.light .form-group input,
-html.light .form-group textarea {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.14);
+html.light .service-card.featured {
+    border-color: rgba(249, 115, 22, 0.42);
+    box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.18), var(--shadow-md);
+}
+html.light .service-card:hover {
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow: var(--shadow-md), 0 0 24px rgba(249, 115, 22, 0.1);
 }
 
-html.light .contact-card.github { border-color: rgba(0, 0, 0, 0.18); }
-html.light .contact-card.github svg { background: rgba(0, 0, 0, 0.06); color: #24292f; }
-html.light .contact-card.github:hover { border-color: #24292f; }
-html.light .contact-card.github:hover svg { background: #24292f; color: #fff; }
+html.light .service-icon,
+html.light .approach-icon {
+    color: var(--accent-color);
+    border-color: var(--accent-border);
+    background: var(--accent-soft);
+}
+html.light .approach-panel.is-active .approach-icon {
+    background: var(--accent-soft-hover);
+    border-color: rgba(249, 115, 22, 0.5);
+}
 
-/* ---- Serviços: approach horizontal, depoimentos, FAQ, CTA ---- */
 html.light .approach-panel {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.08);
+    background: var(--surface-color);
+    border-color: var(--border-color);
     box-shadow: var(--shadow-sm);
 }
-
 html.light .approach-panel.is-active {
-    border-color: rgba(255, 122, 0, 0.38);
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 122, 0, 0.12);
+    border-color: rgba(249, 115, 22, 0.38);
+    box-shadow: var(--shadow-md), 0 0 0 1px rgba(249, 115, 22, 0.12);
+}
+@media (max-width: 768px) {
+    html.light .approach-panel.is-active {
+        border-color: var(--border-color);
+        box-shadow: none;
+    }
 }
 
 html.light .approach-progress-rail,
 html.light .approach-rule {
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--border-color);
 }
 
 html.light .approach-track::before {
-    border-top-color: rgba(255, 122, 0, 0.28);
+    border-top-color: rgba(249, 115, 22, 0.28);
 }
 
 html.light .testimonial-card {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.08);
+    background: var(--surface-color);
+    border-color: var(--border-color);
     box-shadow: var(--shadow-sm);
+}
+html.light .testimonial-avatar {
+    color: var(--accent-text);
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
 }
 
 html.light .faq-item {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.08);
+    background: var(--surface-color);
+    border-color: var(--border-color);
 }
+html.light .faq-item.open { border-color: rgba(249, 115, 22, 0.4); }
 
 html.light .cta-panel {
-    border-color: rgba(255, 122, 0, 0.32);
-    background: linear-gradient(140deg, rgba(255, 122, 0, 0.12), rgba(255, 122, 0, 0.03) 45%, rgba(0, 0, 0, 0.02) 85%);
+    border-color: var(--accent-border);
+    background: linear-gradient(140deg, rgba(249, 115, 22, 0.1), rgba(249, 115, 22, 0.03) 45%, var(--surface-color) 85%);
 }
 
-/* ---- Certificados ---- */
-html.light .cert-filters,
-html.light .cert-results-count,
-html.light .cert-badge {
-    background: rgba(0, 0, 0, 0.035);
-}
-html.light .filter-btn:hover { background: rgba(0, 0, 0, 0.06); color: var(--text-color); }
-html.light .cert-image { background: #e9ebef; }
+/* ===================== Filtros (Projetos / Certificados) ===================== */
+/* .filter-btn é compartilhado pelas duas páginas. */
 
-/* ---- Projetos: filtros + estado vazio ---- */
-html.light .filter-btn { border-color: rgba(0, 0, 0, 0.1); }
+html.light .filter-btn {
+    background: var(--surface-color);
+    border-color: var(--border-color);
+    color: var(--text-muted-color);
+}
+html.light .filter-btn:hover {
+    background: var(--surface-hover-color);
+    border-color: var(--border-strong);
+    color: var(--text-color);
+}
+html.light .filter-btn.active {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    color: var(--accent-foreground);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.25);
+}
+
+/* ===================== Projetos ===================== */
+
+html.light .projects-section-header { border-bottom-color: var(--border-color); }
+
+html.light .projects-section-icon {
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
+}
+
+html.light .projects-section-count {
+    background: var(--bg-alt);
+    color: var(--text-subtle-color);
+}
+
+html.light .tech-filter-chip,
+html.light .tech-filter-clear {
+    background: var(--surface-color);
+    border-color: var(--border-color);
+}
+html.light .tech-filter-clear { border-color: var(--accent-border); }
+html.light .tech-filter-chip:hover {
+    border-color: var(--accent-border);
+    color: var(--text-color);
+}
+html.light .tech-filter-chip.active {
+    background: var(--accent-soft);
+    border-color: var(--accent-color);
+    color: var(--accent-text);
+}
+
 html.light .no-projects-found {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.12);
+    background: var(--surface-soft-color);
+    border-color: var(--border-strong);
 }
+
+/* ===================== Certificados ===================== */
+
+html.light .cert-filters {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: var(--border-color);
+    box-shadow: inset 0 0 0 1px rgba(249, 115, 22, 0.12);
+}
+html.light .cert-results-count {
+    background: var(--surface-soft-color);
+    border-color: var(--border-color);
+}
+
+html.light .cert-card:hover {
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+html.light .cert-image {
+    background: var(--bg-alt);
+    border-bottom-color: var(--border-color);
+}
+
+html.light .cert-badge {
+    background: var(--bg-alt);
+    color: var(--text-subtle-color);
+}
+html.light .cert-badge.is-verified,
+html.light .cert-preview-open.is-verify { color: #047857; }
+
+html.light .reset-filter-btn {
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
+    color: var(--accent-text);
+}
+html.light .reset-filter-btn:hover { background: var(--accent-soft-hover); }
+
+/* ---- Modal de certificado ---- */
+html.light .cert-preview-dialog {
+    border-color: var(--accent-border);
+    box-shadow: 0 30px 80px -20px rgba(15, 23, 42, 0.35);
+}
+html.light .cert-preview-icon-btn {
+    background: var(--surface-soft-color);
+    border-color: var(--border-color);
+}
+html.light .cert-preview-stage { background: var(--bg-alt); }
+html.light .cert-preview-open:hover { box-shadow: 0 4px 14px rgba(249, 115, 22, 0.3); }
+
+/* ===================== ProjetoDetalhe ===================== */
+
+html.light .project-category-badge { border-color: var(--accent-border); }
+html.light .pd-stack-chip:hover { border-color: rgba(249, 115, 22, 0.4); }
+html.light .pd-role-col.is-mine { border-color: rgba(249, 115, 22, 0.35); }
+
+html.light .projeto-extended-info,
+html.light .projeto-summary-fallback {
+    background: var(--surface-color);
+}
+
+/* ===================== Navegação mobile ===================== */
+
+html.light .mobile-nav-container {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: var(--border-color);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12), 0 0 24px rgba(249, 115, 22, 0.05);
+}
+html.light .mobile-nav-item.active {
+    color: var(--accent-active);
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 1px var(--accent-border), 0 8px 15px rgba(15, 23, 42, 0.06);
+}
+html.light .mobile-nav-item.active .mobile-nav-icon {
+    filter: none;
+}
+
+/* ===================== Footer ===================== */
+
+html.light .footer-contact-icons a {
+    background: var(--surface-color);
+    border-color: var(--border-color);
+}
+html.light .status-dot {
+    background: var(--success-color);
+    box-shadow: 0 0 10px rgba(22, 163, 74, 0.5);
+}
+
+/* ===================== Contato: form + inputs ===================== */
+
+html.light .contact-form { box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.12), var(--shadow-sm); }
+
+html.light .form-progress { background: var(--bg-alt); }
+
+html.light .form-group input,
+html.light .form-group textarea {
+    background: var(--surface-color);
+    border-color: var(--border-strong);
+    color: var(--text-color);
+}
+html.light .form-group input:hover,
+html.light .form-group textarea:hover {
+    border-color: var(--border-hover);
+}
+html.light .form-group input:focus,
+html.light .form-group textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+html.light .form-group input::placeholder,
+html.light .form-group textarea::placeholder {
+    color: var(--text-disabled-color);
+}
+
+html.light .form-success {
+    background: rgba(22, 163, 74, 0.08);
+    border-color: rgba(22, 163, 74, 0.3);
+    color: var(--success-text);
+}
+
+html.light .contact-card { background: var(--surface-color); }
+
+html.light .contact-card.github { border-color: var(--border-strong); }
+html.light .contact-card.github svg { background: var(--bg-alt); color: #24292f; }
+html.light .contact-card.github:hover { border-color: #24292f; }
+html.light .contact-card.github:hover svg { background: #24292f; color: #fff; }
+
+/* ===================== Diversos ===================== */
+
+html.light .marquee-item:hover .tech-icon {
+    filter: drop-shadow(0 0 10px rgba(15, 23, 42, 0.12));
+}
+
+html.light .notfound-suggestions a { border-color: var(--border-strong); }
+html.light .notfound-suggestions a:hover,
+html.light .notfound-suggestions a:focus-visible {
+    border-color: rgba(249, 115, 22, 0.45);
+    background: var(--accent-soft);
+}
+
+/* grão de ruído: bem discreto para não "lavar" o branco */
+html.light body::after { opacity: 0.02; }
 
 /* ===================== Fix da transição de tema ===================== */
 /* O grão (body::after) é 400%×400% do viewport = camada gigante. Rasterizá-la
