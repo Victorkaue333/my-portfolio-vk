@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  FiArrowLeft, FiArrowRight, FiCheckCircle, FiCpu, FiDatabase,
-  FiExternalLink, FiGithub, FiLayout,
+  FiArrowLeft, FiArrowRight, FiCheckCircle, FiClock, FiCpu, FiDatabase,
+  FiExternalLink, FiGithub, FiLayout, FiUser, FiUsers,
 } from 'react-icons/fi';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from '../../components/ui/Button/Button';
@@ -60,6 +60,22 @@ export default function ProjetoDetalhe() {
   const extraTechs = Math.max(0, techs.length - heroTechs.length);
   const github = project.github || 'https://github.com/Victorkaue333';
 
+  // Próximo projeto na ordem de data/projects.ts, dando a volta no fim.
+  const index = projects.indexOf(project);
+  const nextProject = projects[(index + 1) % projects.length];
+
+  const metrics = project.metrics ?? [];
+  const facts = [
+    project.role && { key: 'role', icon: <FiUser size={15} />, label: t('projectDetail.myRole'), value: project.role.title },
+    project.teamSize && {
+      key: 'team',
+      icon: <FiUsers size={15} />,
+      label: t('projectDetail.team'),
+      value: t('projectDetail.teamSize', { count: project.teamSize }),
+    },
+    project.duration && { key: 'duration', icon: <FiClock size={15} />, label: t('projectDetail.duration'), value: project.duration },
+  ].filter(Boolean) as { key: string; icon: React.ReactNode; label: string; value: string }[];
+
   const hasShots = !!project.screenshots && project.screenshots.length > 0;
   const isPlaceholder = !project.image || project.image.includes('placeholder');
 
@@ -99,6 +115,17 @@ export default function ProjetoDetalhe() {
               ))}
               {extraTechs > 0 && <span className="pd-stack-chip pd-stack-more">+{extraTechs}</span>}
             </div>
+
+            {facts.length > 0 && (
+              <dl className="pd-facts">
+                {facts.map((f) => (
+                  <div key={f.key} className="pd-fact">
+                    <dt>{f.icon}{f.label}</dt>
+                    <dd>{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
 
             <div className="pd-actions">
               <Button href={github} target="_blank" rel="noopener noreferrer" variant="secondary">
@@ -142,9 +169,46 @@ export default function ProjetoDetalhe() {
                 >
                   <span className="pd-eyebrow">{s.label}</span>
                   <p className="pd-story-text">{s.text}</p>
+                  {s.key === 'impact' && metrics.length > 0 && (
+                    <dl className="pd-metrics">
+                      {metrics.map((m) => (
+                        <div key={m.label} className="pd-metric">
+                          <dt>{m.value}</dt>
+                          <dd>{m.label}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
                 </article>
               ))}
             </section>
+
+            {/* ===== MEU PAPEL (só com dado real em `role`) ===== */}
+            {project.role && (
+              <section className="pd-section pd-role reveal-on-scroll">
+                <h2 className="pd-section-title">{t('projectDetail.myRole')}</h2>
+                <div className="pd-role-grid">
+                  <div className="pd-role-col is-mine">
+                    <h3 className="pd-subtitle">{t('projectDetail.roleMine')}</h3>
+                    <ul>
+                      {project.role.mine.map((item) => (
+                        <li key={item}><FiCheckCircle size={15} aria-hidden="true" />{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  {project.role.team && project.role.team.length > 0 && (
+                    <div className="pd-role-col">
+                      <h3 className="pd-subtitle">{t('projectDetail.roleTeam')}</h3>
+                      <ul>
+                        {project.role.team.map((item) => (
+                          <li key={item}><FiUsers size={15} aria-hidden="true" />{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
 
             {/* ===== FEATURES ===== */}
             {project.features && project.features.length > 0 && (
@@ -234,6 +298,17 @@ export default function ProjetoDetalhe() {
             </Button>
           )}
         </div>
+
+        {nextProject && nextProject !== project && (
+          <Link to={nextProject.detailPath} className="pd-next">
+            <span className="pd-next-label">{t('projectDetail.nextProject')}</span>
+            <span className="pd-next-title">
+              {nextProject.title}
+              <FiArrowRight size={22} aria-hidden="true" />
+            </span>
+            <span className="pd-next-desc">{nextProject.shortDescription || nextProject.description}</span>
+          </Link>
+        )}
       </div>
     </main>
   );

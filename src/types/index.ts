@@ -1,3 +1,19 @@
+/** Número verificável de um projeto. Ex.: { value: '40%', label: 'menos tempo de resposta' }. */
+export interface ProjectMetric {
+  value: string;
+  label: string;
+}
+
+/** O que foi meu e o que foi da equipe — recrutador quer separar os dois. */
+export interface ProjectRole {
+  /** Ex.: "Desenvolvedor Full Stack (único dev)". */
+  title: string;
+  /** O que eu fiz. */
+  mine: string[];
+  /** O que ficou com outras pessoas (design, PO, infra...). */
+  team?: string[];
+}
+
 export interface Project {
   id: string;
   slug?: string;
@@ -40,6 +56,17 @@ export interface Project {
     }[];
   };
   screenshots?: string[];
+  /**
+   * Campos de estudo de caso — todos opcionais; o bloco correspondente só
+   * aparece quando o dado existe. Preencher só com números reais.
+   */
+  /** 2–3 métricas de impacto. */
+  metrics?: ProjectMetric[];
+  role?: ProjectRole;
+  /** Pessoas no time, contando comigo. 1 = projeto solo. */
+  teamSize?: number;
+  /** Ex.: "3 meses" ou "ago 2025 – fev 2026". */
+  duration?: string;
 }
 
 /** Um cargo (posição) — modelo estilo LinkedIn. */
