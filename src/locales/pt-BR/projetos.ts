@@ -14,6 +14,7 @@ const projetos = {
       real: 'Projetos Profissionais',
     },
     noFound: 'Nenhum projeto encontrado para esse filtro.',
+    categoryFilter: 'Filtrar por categoria',
     techFilter: 'Filtrar por tecnologia',
     clearTech: 'Limpar tecnologia',
     lastViewed: 'Visto por último',

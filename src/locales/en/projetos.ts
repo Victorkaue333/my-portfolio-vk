@@ -15,6 +15,7 @@ const projetos: typeof base = {
       real: 'Professional Projects',
     },
     noFound: 'No projects found for this filter.',
+    categoryFilter: 'Filter by category',
     techFilter: 'Filter by technology',
     clearTech: 'Clear technology',
     lastViewed: 'Last viewed',

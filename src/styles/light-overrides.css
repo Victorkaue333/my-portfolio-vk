@@ -363,7 +363,8 @@ html.light .cta-panel {
 }
 
 /* ===================== Filtros (Projetos / Certificados) ===================== */
-/* .filter-btn é compartilhado pelas duas páginas. */
+/* .filter-btn ficou só em /certificados. Os filtros de /projetos viraram
+   o AnimatedTabs, que traz o próprio CSS baseado em tokens. */
 
 html.light .filter-btn {
     background: var(--surface-color);

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FiFolder, FiAlertCircle, FiUser, FiBriefcase, FiChevronDown, FiX } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
+import { AnimatedTabs } from '../../components/ui/AnimatedTabs/AnimatedTabs';
 import { ProjectCard } from '../../components/ui/ProjectCard/ProjectCard';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { PageHero } from '../../components/ui/PageHero/PageHero';
@@ -14,6 +15,13 @@ type Filter = 'todos' | 'pessoal' | 'real';
 type SectionKey = 'pessoal' | 'real';
 
 const isFilter = (v: unknown): v is Filter => v === 'todos' || v === 'pessoal' || v === 'real';
+
+/** Abas de categoria — mesma ordem e mesmos valores de antes. */
+const FILTERS = [
+  { value: 'todos', labelKey: 'projects.categories.all' },
+  { value: 'pessoal', labelKey: 'projects.categories.personal' },
+  { value: 'real', labelKey: 'projects.categories.real' },
+] as const satisfies readonly { value: Filter; labelKey: string }[];
 
 /** Tecnologias do projeto (technologies + stack, sem repetir). */
 const techsOf = (p: Project) => new Set([...(p.technologies ?? []), ...(p.stack ?? [])]);
@@ -69,16 +77,15 @@ export default function Projetos() {
             icon={<FiFolder size={22} />}
           />
 
+          {/* Animated Tabs: só a apresentação mudou — o estado, o localStorage
+              e a filtragem abaixo continuam os mesmos. */}
           <div className="projects-filter-container">
-            {(['todos', 'pessoal', 'real'] as const).map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`filter-btn ${filter === f ? 'active' : ''}`}
-              >
-                {t(`projects.categories.${f === 'todos' ? 'all' : f === 'pessoal' ? 'personal' : 'real'}`)}
-              </button>
-            ))}
+            <AnimatedTabs
+              tabs={FILTERS.map((f) => ({ value: f.value, title: t(f.labelKey) }))}
+              active={filter}
+              onChange={(value) => setFilter(value as Filter)}
+              label={t('projects.categoryFilter')}
+            />
           </div>
 
           <div className="projects-tech-filter" role="group" aria-label={t('projects.techFilter')}>

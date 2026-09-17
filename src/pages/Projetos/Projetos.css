@@ -171,7 +171,11 @@
     font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
-    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        background-color var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
 .tech-filter-chip:hover {
@@ -179,10 +183,20 @@
     color: var(--text-color);
 }
 
+/* Microanimação de seleção — mesma ideia do indicador das abas, em escala
+   bem menor: um anel do accent surgindo. Sem deslocar o chip nem escalar,
+   para não competir com a faixa de categorias logo acima (regra 5/18). */
 .tech-filter-chip.active {
     border-color: var(--accent-color);
     background: rgba(255, 122, 0, 0.12);
     color: var(--text-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 14%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tech-filter-chip {
+        transition: none;
+    }
 }
 
 .tech-filter-clear {

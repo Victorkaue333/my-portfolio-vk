@@ -1,0 +1,79 @@
+/* Animated Tabs — trilho com indicador deslizante.
+   Adaptado de https://ui.aceternity.com/components/tabs
+
+   O visual é o dos filtros que já existiam (`.filter-btn`): pílula, laranja do
+   tema no estado ativo, mesma sombra. O que muda é que o fundo laranja deixou
+   de pular de botão em botão e passou a deslizar. */
+
+.animated-tabs {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.3rem;
+    max-width: 100%;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent-color) 6%, transparent);
+}
+
+.animated-tabs-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 999px;
+    background: var(--gradient-primary);
+    box-shadow: 0 5px 15px color-mix(in srgb, var(--accent-color) 30%, transparent);
+    transition:
+        transform var(--transition-normal),
+        width var(--transition-normal),
+        height var(--transition-normal);
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform, width;
+}
+
+.animated-tab {
+    position: relative;
+    z-index: 1;
+    padding: 0.6rem 1.4rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted-color);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.88rem;
+    line-height: 1.1;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.animated-tab:hover {
+    color: var(--text-color);
+}
+
+.animated-tab[data-active='true'] {
+    color: #ffffff;
+}
+
+.animated-tab:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* O indicador é enfeite; o estado ativo também está no texto e no
+   `aria-pressed`. Sem movimento, ele simplesmente troca de lugar. */
+@media (prefers-reduced-motion: reduce) {
+    .animated-tabs-indicator {
+        transition: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .animated-tab {
+        padding: 0.55rem 1rem;
+        font-size: 0.82rem;
+    }
+}
