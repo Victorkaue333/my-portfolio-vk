@@ -33,6 +33,24 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 
 ---
 
+## ADR-0008 — CSS global inline e modulepreload da rota no HTML pós-build
+
+- **Data:** 2026-09-17
+- **Contexto:** PageSpeed mobile (96) apontou LCP de 4,5s com ~3,5s de atraso
+  de renderização no `<p class="hero-description">`, CSS global bloqueando a
+  renderização (~150ms) e cadeia de rede parando no `index.js` — o chunk lazy
+  da Home só era descoberto após executar o JS. O preload da foto do Hero
+  baixava o original, não a variante escolhida pelo `srcset`.
+- **Decisão:** `scripts/prerender-meta.mjs` coloca o `index-*.css` inline num
+  `<style>` e injeta `modulepreload` (+ `preload as=style`) do chunk de cada rota
+  lido do manifest do Vite. Hero da Home entra só com CSS (`.hero-enter`), sem
+  `Reveal`/IntersectionObserver. Preload da foto ganha `imagesrcset`/`imagesizes`.
+- **Alternativas consideradas:** plugin Vite de critical CSS (dependência nova);
+  import estático da Home (aumenta o JS das outras rotas); SSR/SSG.
+- **Consequências:** HTML ~40 KB maior (sem cache separado do CSS — aceitável
+  numa SPA que baixa o HTML uma vez). `imagesrcset` do `index.html` precisa
+  acompanhar o `<img>` do Hero.
+
 ## ADR-0007 — Variantes de imagem geradas por `sharp` e commitadas
 
 - **Data:** 2026-07-23
