@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/((?!assets/|images/|Certificados/|docs/|favicon|apple-touch-icon|robots.txt|sitemap.xml|llms.txt).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|assets/|images/|Certificados/|docs/|favicon|apple-touch-icon|robots.txt|sitemap.xml|llms.txt).*)", "destination": "/index.html" }
   ],
   "headers": [
     {

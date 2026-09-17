@@ -1,0 +1,130 @@
+/* Bloco de Spotify — o card segue os tokens do portfólio, não o verde do
+   Spotify. A única marca verde é o logotipo, onde ela é obrigatória. */
+
+.spotify-block {
+    margin-top: var(--spacing-lg);
+}
+
+/* Estado de sondagem: existe só para o IntersectionObserver ter um alvo. */
+.spotify-block.is-probing {
+    margin: 0;
+    height: 0;
+}
+
+.spotify-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.75rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+}
+
+.spotify-logo {
+    color: #1db954;
+    flex-shrink: 0;
+}
+
+.spotify-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--gradient-surface);
+}
+
+.spotify-cover {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    background: var(--surface-color);
+}
+
+.spotify-cover.is-empty {
+    display: grid;
+    place-items: center;
+    color: var(--text-dim-color);
+}
+
+.spotify-meta {
+    min-width: 0;
+    flex: 1;
+}
+
+.spotify-track,
+.spotify-artist {
+    margin: 0;
+    max-width: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.spotify-track {
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.spotify-artist {
+    font-size: 0.85rem;
+    color: var(--text-muted-color);
+}
+
+.spotify-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-shrink: 0;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    color: var(--text-muted-color);
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.spotify-open:hover,
+.spotify-open:focus-visible {
+    color: var(--accent-color);
+    border-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
+}
+
+/* O iframe do Spotify traz o próprio fundo arredondado; o container só
+   recorta e segura a borda do tema. */
+.spotify-embed {
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--surface-color);
+    line-height: 0;
+}
+
+.spotify-embed iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+}
+
+.spotify-note {
+    margin: 0.6rem 0 0;
+    max-width: none;
+    font-size: 0.82rem;
+    color: var(--text-dim-color);
+}
+
+@media (max-width: 480px) {
+    .spotify-card {
+        flex-wrap: wrap;
+    }
+
+    .spotify-open {
+        width: 100%;
+        justify-content: center;
+    }
+}

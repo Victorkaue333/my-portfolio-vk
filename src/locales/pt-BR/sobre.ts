@@ -52,6 +52,14 @@ const sobre = {
     },
     viewAll: 'Ver todos os repositórios',
   },
+  spotify: {
+    title: 'Spotify',
+    nowPlaying: 'Tocando agora',
+    lastPlayed: 'Última faixa que ouvi',
+    playlist: 'O que estou ouvindo',
+    open: 'Abrir no Spotify',
+    error: 'Não deu para falar com o Spotify agora.',
+  },
 };
 
 export default sobre;

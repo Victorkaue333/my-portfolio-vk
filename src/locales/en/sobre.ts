@@ -53,6 +53,14 @@ const sobre: typeof base = {
     },
     viewAll: 'View all repositories',
   },
+  spotify: {
+    title: 'Spotify',
+    nowPlaying: 'Now playing',
+    lastPlayed: 'Last track I played',
+    playlist: 'What I am listening to',
+    open: 'Open in Spotify',
+    error: 'Could not reach Spotify right now.',
+  },
 };
 
 export default sobre;

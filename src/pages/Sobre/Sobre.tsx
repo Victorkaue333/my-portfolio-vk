@@ -9,6 +9,7 @@ import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher/LanguageS
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { Timeline } from '../../components/ui/Timeline/Timeline';
+import { Spotify } from '../../components/ui/Spotify/Spotify';
 import { Terminal } from '../../components/ui/Terminal/Terminal';
 import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
 import { education } from '../../data/education';
@@ -381,6 +382,14 @@ export default function Sobre() {
               </h2>
               <GithubActivity />
             </section>
+
+            {/* Spotify — o detalhe pessoal, em um card. Sem seção própria no
+                menu: ele não é conteúdo de portfólio, é um rodapé humano da
+                página. Some sozinho se não houver playlist configurada nem
+                integração ativa. */}
+            <div className="about-content-section reveal-on-scroll">
+              <Spotify />
+            </div>
 
             <div className="view-more-action">
               <Button href="/projetos" variant="primary">

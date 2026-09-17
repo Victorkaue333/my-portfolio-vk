@@ -53,6 +53,14 @@ const sobre: typeof base = {
     },
     viewAll: 'Ver todos os repositórios',
   },
+  spotify: {
+    title: 'Spotify',
+    nowPlaying: 'A tocar agora',
+    lastPlayed: 'Última faixa que ouvi',
+    playlist: 'O que estou a ouvir',
+    open: 'Abrir no Spotify',
+    error: 'Não foi possível falar com o Spotify agora.',
+  },
 };
 
 export default sobre;
