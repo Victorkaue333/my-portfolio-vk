@@ -53,6 +53,33 @@ const ICONS = [
 ];
 const ICON_SOURCE = 'images/fotos-projetos-pessoais/vk-portifolio/logotipo-vk.webp';
 
+// Imagens de preview de link (og:image) em `public/images/og/<nome>.jpg`.
+// Quadradas e < 300px: o WhatsApp exibe miniatura compacta à esquerda do título
+// (em vez de banner) e não aceita WebP de forma confiável — por isso JPEG.
+// Nomes espelhados em scripts/prerender-meta.mjs e src/hooks/useSeo.ts.
+const OG_SIZE = 280;
+const OG_BACKGROUND = { r: 10, g: 10, b: 18 }; // #0a0a12 — theme-color do site
+/** Slug de cada capa em PROJECT_COVERS (mesma ordem). */
+const PROJECT_COVER_SLUGS = [
+  'agendeaqui',
+  'meu-portfolio',
+  'oliveira-kids',
+  'saberes-interculturais',
+  'transcritor-de-entrevistas',
+  'maratonatech',
+  'ntidi',
+  'queelvra',
+  'sigref',
+  'va-suplementos',
+  'vksoftware',
+];
+const OG_IMAGES = [
+  // Foto: `cover` ancorado no topo para manter o rosto no recorte quadrado.
+  { out: 'home', src: 'images/eu/victorkaue.webp', fit: 'cover', position: 'north' },
+  // Capas de projeto são 16:9 — `contain` evita cortar logo/screenshot.
+  ...PROJECT_COVERS.map((src, i) => ({ out: PROJECT_COVER_SLUGS[i], src, fit: 'contain' })),
+];
+
 const kib = (bytes) => `${(bytes / 1024).toFixed(1)} KiB`;
 
 /** Registra no manifesto que `<src>-<width>.webp` existe em disco. */
@@ -168,6 +195,36 @@ async function run() {
   } else {
     console.warn(`[optimize-images] origem de ícone ausente: ${ICON_SOURCE}`);
     missing++;
+  }
+
+  // Previews de link (og:image).
+  for (const og of OG_IMAGES) {
+    const srcPath = join(PUBLIC, og.src);
+    if (!existsSync(srcPath)) {
+      console.warn(`[optimize-images] origem de og:image ausente: ${og.src}`);
+      missing++;
+      continue;
+    }
+    const outRel = `images/og/${og.out}.jpg`;
+    const outPath = join(PUBLIC, outRel);
+    mkdirSync(dirname(outPath), { recursive: true });
+    if (isFresh(srcPath, outPath)) {
+      skipped++;
+      continue;
+    }
+    await sharp(srcPath)
+      .resize({
+        width: OG_SIZE,
+        height: OG_SIZE,
+        fit: og.fit,
+        position: og.position ?? 'centre',
+        background: OG_BACKGROUND,
+      })
+      .flatten({ background: OG_BACKGROUND }) // JPEG não tem alpha
+      .jpeg({ quality: 85, mozjpeg: true })
+      .toFile(outPath);
+    generated++;
+    console.log(`[optimize-images] ${outRel} — ${kib(statSync(outPath).size)}`);
   }
 
   // Manifesto consumido por src/utils/imageSrcSet.ts — evita `srcset` apontando
