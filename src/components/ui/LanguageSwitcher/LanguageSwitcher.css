@@ -1,0 +1,137 @@
+/* ============ Seletor de idioma ============ */
+.lang-flag {
+    width: 18px;
+    height: 12px;
+    flex-shrink: 0;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+/* ---- Dropdown (navbar) ---- */
+.lang-switcher {
+    position: relative;
+}
+
+.btn-lang-chevron {
+    transition: transform var(--transition-fast);
+}
+
+.btn-lang-chevron.open {
+    transform: rotate(180deg);
+}
+
+.lang-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: var(--z-dropdown);
+    min-width: 210px;
+    margin: 0;
+    padding: 0.35rem;
+    list-style: none;
+    background: rgba(17, 21, 30, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    animation: lang-menu-in 0.14s ease-out;
+}
+
+@keyframes lang-menu-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.lang-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #c9d0db;
+    text-align: left;
+    border-radius: calc(var(--radius-md) - 4px);
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.lang-menu-item:hover,
+.lang-menu-item:focus-visible {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.07);
+    outline: none;
+}
+
+.lang-menu-item.active {
+    color: #ffffff;
+}
+
+.lang-menu-label {
+    flex: 1;
+}
+
+.lang-menu-check {
+    color: var(--color-primary-500);
+}
+
+/* ---- Segmentado (sidebar do Sobre) ---- */
+.lang-segmented {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.3rem;
+    width: 100%;
+    padding: 0.3rem;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+}
+
+.lang-segmented-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: auto;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: calc(var(--radius-md) - 2px);
+    transition: var(--transition-ui-fast);
+}
+
+.lang-segmented-btn.active {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ---- Tema claro ---- */
+html.light .lang-flag {
+    box-shadow: 0 0 0 1px var(--border-strong);
+}
+
+html.light .lang-menu {
+    background: var(--surface-color);
+    border-color: var(--border-color);
+}
+
+html.light .lang-menu-item {
+    color: var(--text-muted-color);
+}
+
+html.light .lang-menu-item:hover,
+html.light .lang-menu-item:focus-visible,
+html.light .lang-menu-item.active {
+    color: var(--text-color);
+    background: var(--surface-hover-color);
+}
+
+html.light .lang-segmented {
+    background: var(--surface-soft-color);
+    border-color: var(--border-color);
+}
+
+html.light .lang-segmented-btn:not(.active) {
+    color: var(--text-muted-color);
+}

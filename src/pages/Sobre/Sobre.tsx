@@ -4,12 +4,12 @@ import { FiBookOpen, FiBriefcase, FiCalendar, FiChevronRight, FiCode, FiMail, Fi
 import { FaLinkedin } from 'react-icons/fa6';
 import { SiGithub } from 'react-icons/si';
 import { Button } from '../../components/ui/Button/Button';
+import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher/LanguageSwitcher';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { education } from '../../data/education';
 import { experiences } from '../../data/experiences';
 import { socialLinks } from '../../data/social';
-import { useLanguage } from '../../hooks/useLanguage';
 import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useSeo } from '../../hooks/useSeo';
 import type { ExperienceRole } from '../../types';
@@ -51,7 +51,6 @@ function ExperienceBody({ role }: { role: ExperienceRole }) {
 
 export default function Sobre() {
   const { t } = useTranslation();
-  const { lang, setLanguage } = useLanguage();
   const [activeSection, setActiveSection] = useState('intro');
   const [githubStatsError, setGithubStatsError] = useState(false);
   useScrollReveal();
@@ -107,22 +106,7 @@ export default function Sobre() {
                   </div>
                 </div>
 
-                <div className="lang-toggle-container">
-                  <button
-                    className={`lang-btn ${lang === 'en' ? 'active' : ''}`}
-                    onClick={() => setLanguage('en')}
-                    aria-pressed={lang === 'en'}
-                  >
-                    English
-                  </button>
-                  <button
-                    className={`lang-btn ${lang === 'pt' ? 'active' : ''}`}
-                    onClick={() => setLanguage('pt')}
-                    aria-pressed={lang === 'pt'}
-                  >
-                    Português
-                  </button>
-                </div>
+                <LanguageSwitcher variant="segmented" />
 
                 <nav className="sidebar-nav">
                   {menuItems.map((item) => (

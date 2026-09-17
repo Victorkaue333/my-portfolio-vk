@@ -40,7 +40,6 @@ html.light .project-image { background: #e6e9ee; }
 /* ---- Superfícies "overlay branco" (rgba(255,255,255,.0x)) → overlay escuro ---- */
 html.light .social-icon,
 html.light .sidebar-pill,
-html.light .lang-toggle-container,
 html.light .social-btn,
 html.light .tech-tag,
 html.light .project-tag-icon,

@@ -167,32 +167,6 @@
     color: var(--text-muted-color);
 }
 
-.lang-toggle-container {
-    display: flex;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.04);
-    padding: 0.3rem;
-    border-radius: var(--radius-md);
-    margin-bottom: 2rem;
-    border: 1px solid var(--border-subtle);
-}
-
-.lang-btn {
-    flex: 1;
-    padding: 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    border-radius: calc(var(--radius-md) - 2px);
-    transition: var(--transition-ui-fast);
-    min-height: auto;
-}
-
-.lang-btn.active {
-    background: var(--gradient-primary);
-    color: #FFFFFF;
-    box-shadow: var(--shadow-sm);
-}
-
 .sidebar-nav {
     width: 100%;
     display: flex;

@@ -3,7 +3,6 @@ import {
     FiAward,
     FiBriefcase,
     FiDownload,
-    FiGlobe,
     FiHome,
     FiLayers,
     FiMail,
@@ -14,9 +13,9 @@ import {
 import { Link, NavLink } from 'react-router-dom';
 import { navLinks } from '../../../data/social';
 import { prefetchRoute } from '../../../routes';
-import { useLanguage } from '../../../hooks/useLanguage';
 import { useScrollPosition } from '../../../hooks/useScrollPosition';
 import { useTheme } from '../../../theme/ThemeProvider';
+import { LanguageSwitcher } from '../../ui/LanguageSwitcher/LanguageSwitcher';
 import './Navbar.css';
 
 const navIconByPath = {
@@ -40,7 +39,6 @@ const navKeyByPath = {
 export function Navbar() {
   const { t } = useTranslation();
   const { scrolled } = useScrollPosition(60);
-  const { lang, toggleLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -87,10 +85,7 @@ export function Navbar() {
             {theme === 'dark' ? <FiSun size={16} aria-hidden="true" /> : <FiMoon size={16} aria-hidden="true" />}
           </button>
 
-          <button className="btn-lang" onClick={toggleLanguage} aria-label="Trocar idioma / Change language">
-            <FiGlobe size={14} aria-hidden="true" />
-            {lang === 'pt' ? 'EN' : 'PT'}
-          </button>
+          <LanguageSwitcher />
 
           <a
             href="/docs/Curriculo/Curriculo_Victor_Kaue.pdf"
