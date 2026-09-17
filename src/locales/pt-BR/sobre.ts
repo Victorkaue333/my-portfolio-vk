@@ -109,6 +109,9 @@ const sobre = {
     open: 'Abrir no Spotify',
     error: 'Não deu para falar com o Spotify agora.',
   },
+  codeWindow: {
+    label: 'Arquivo developer.ts com o resumo do perfil',
+  },
 };
 
 export default sobre;

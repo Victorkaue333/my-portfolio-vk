@@ -1,0 +1,105 @@
+/* developer.ts — janela de editor pequena, com as cores do tema.
+   Mesma moldura do Terminal (barra + pontos) para não introduzir uma segunda
+   linguagem de "janela" no site. */
+
+.code-window {
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--gradient-surface);
+    box-shadow: var(--shadow-md);
+}
+
+.code-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.9rem;
+    background: var(--surface-hover-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.code-dots {
+    display: inline-flex;
+    gap: 0.35rem;
+    flex-shrink: 0;
+}
+
+.code-dots i {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 999px;
+    background: var(--border-color);
+}
+
+.code-dots i:first-child {
+    background: color-mix(in srgb, var(--accent-color) 55%, transparent);
+}
+
+.code-file {
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.74rem;
+    color: var(--text-dim-color);
+}
+
+.code-body {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    line-height: 1.85;
+    color: var(--text-muted-color);
+}
+
+.code-row {
+    display: block;
+    white-space: pre;
+    opacity: 0;
+    transform: translateY(4px);
+}
+
+/* A entrada acontece uma vez, quando o bloco aparece. Sem loop, sem repetir a
+   cada re-render: o estado `is-shown` só liga. */
+.code-body.is-shown .code-row {
+    animation: code-row-in var(--transition-normal) both;
+    animation-delay: var(--code-row-delay, 0ms);
+}
+
+@keyframes code-row-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.code-gutter {
+    display: inline-block;
+    width: 1.6rem;
+    color: color-mix(in srgb, var(--text-dim-color) 65%, transparent);
+    user-select: none;
+}
+
+/* Realce de sintaxe derivado do accent e dos neutros — sem a paleta
+   azul/roxo/rosa das demos (regra 28). */
+.code-kw    { color: var(--accent-color); }
+.code-key   { color: var(--text-color); }
+.code-str   { color: color-mix(in srgb, var(--accent-color) 62%, var(--text-muted-color)); }
+.code-num   { color: var(--text-color); }
+.code-punct { color: var(--text-dim-color); }
+
+@media (prefers-reduced-motion: reduce) {
+    .code-row {
+        opacity: 1;
+        transform: none;
+    }
+
+    .code-body.is-shown .code-row {
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .code-body {
+        font-size: 0.72rem;
+        padding: 0.75rem 0.85rem;
+    }
+}

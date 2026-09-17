@@ -108,6 +108,9 @@ const sobre: typeof base = {
     open: 'Open in Spotify',
     error: 'Could not reach Spotify right now.',
   },
+  codeWindow: {
+    label: 'developer.ts file with the profile summary',
+  },
 };
 
 export default sobre;

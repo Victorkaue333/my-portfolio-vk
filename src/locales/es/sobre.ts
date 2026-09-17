@@ -108,6 +108,9 @@ const sobre: typeof base = {
     open: 'Abrir en Spotify',
     error: 'No se pudo conectar con Spotify ahora.',
   },
+  codeWindow: {
+    label: 'Archivo developer.ts con el resumen del perfil',
+  },
 };
 
 export default sobre;

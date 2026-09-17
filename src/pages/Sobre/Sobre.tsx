@@ -5,6 +5,7 @@ import { FiBookOpen, FiBriefcase, FiCalendar, FiChevronRight, FiCode, FiMail, Fi
 import { FaLinkedin } from 'react-icons/fa6';
 import { SiGithub } from 'react-icons/si';
 import { Button } from '../../components/ui/Button/Button';
+import { CodeWindow } from '../../components/ui/CodeWindow/CodeWindow';
 import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivity';
 import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher/LanguageSwitcher';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
@@ -242,6 +243,10 @@ export default function Sobre() {
 
             <section id="intro" className="about-content-section reveal-on-scroll">
               <p className="intro-text">{t('about.intro')}</p>
+              {/* developer.ts — o mesmo perfil escrito como código. Os valores
+                  saem de data/expertise.ts, data/projects.ts e
+                  data/experiences.ts; nada é digitado à mão. */}
+              <CodeWindow className="intro-code" />
             </section>
 
             <section id="role" className="about-content-section reveal-on-scroll">
