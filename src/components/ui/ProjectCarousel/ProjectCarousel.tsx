@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronLeft, FiChevronRight, FiMaximize2, FiX } from 'react-icons/fi';
+import { Lens } from '../Lens/Lens';
 import './ProjectCarousel.css';
 
 interface ProjectCarouselProps {
@@ -76,6 +77,24 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title 
     <div className="project-carousel-wrapper">
       <div className="project-carousel-container" tabIndex={0}>
         <div className="project-carousel-main" onClick={() => setIsLightboxOpen(true)}>
+          {/* Lens: as screenshots são o único lugar do site onde ampliar tem
+              função — capas de projeto são logotipos, e o briefing (regra 4)
+              exclui logo/avatar/ícone. `zoomed` recebe uma cópia estática da
+              imagem para a lupa não duplicar o motion.img com drag. */}
+          <Lens
+            className="carousel-lens"
+            zoomFactor={1.5}
+            lensSize={160}
+            zoomed={
+              <img
+                src={images[currentIndex]}
+                className="carousel-image"
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+              />
+            }
+          >
           <AnimatePresence initial={false} custom={direction}>
             <motion.img
               key={currentIndex}
@@ -104,6 +123,7 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title 
               alt={`${title} - screenshot ${currentIndex + 1}`}
             />
           </AnimatePresence>
+          </Lens>
 
           <div className="carousel-ui-overlay">
             {images.length > 1 && (

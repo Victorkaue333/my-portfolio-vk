@@ -1,0 +1,30 @@
+/* Lens — lupa que segue o cursor.
+   Adaptado de https://ui.aceternity.com/components/lens */
+
+.lens {
+    position: relative;
+    overflow: hidden;
+    border-radius: inherit;
+}
+
+.lens-zoom {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    /* A camada ampliada nunca recebe ponteiro: o clique precisa chegar na
+       imagem embaixo (abre o lightbox) e o arraste do carrossel também. */
+    pointer-events: none;
+    /* Acima da imagem, abaixo dos controles do carrossel (z-index 10). */
+    z-index: 5;
+}
+
+.lens-zoom-inner {
+    position: absolute;
+    inset: 0;
+}
+
+/* Cursor indicando que a área é inspecionável — a lupa não pode ser a única
+   pista de que ali dá para olhar de perto. */
+.lens:hover {
+    cursor: zoom-in;
+}

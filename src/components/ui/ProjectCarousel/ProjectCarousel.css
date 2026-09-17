@@ -297,3 +297,10 @@
         display: none; /* Hide title on small mobile to save space */
     }
 }
+
+/* A lupa (components/ui/Lens) ocupa a área da imagem: as screenshots são
+   posicionadas em absoluto e precisam do mesmo retângulo de referência. */
+.project-carousel-main > .carousel-lens {
+    position: absolute;
+    inset: 0;
+}
