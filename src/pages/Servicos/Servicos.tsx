@@ -270,31 +270,39 @@ export default function Servicos() {
         <TechMarquee />
       </section>
 
-      {/* Depoimentos */}
-      <section className="services-testimonials content-section">
-        <div className="container">
-          <div className="section-header reveal-on-scroll">
-            <h2 className="section-title">{t('servicos.testimonialsTitle')}</h2>
-            <p className="section-subtitle">{t('servicos.testimonialsSubtitle')}</p>
+      {/* Depoimentos — só aparece com depoimento real cadastrado (data/testimonials.ts) */}
+      {testimonials.length > 0 && (
+        <section className="services-testimonials content-section">
+          <div className="container">
+            <div className="section-header reveal-on-scroll">
+              <h2 className="section-title">{t('servicos.testimonialsTitle')}</h2>
+              <p className="section-subtitle">{t('servicos.testimonialsSubtitle')}</p>
+            </div>
+            <div className="testimonials-grid">
+              {testimonials.map((item, i) => (
+                <Reveal key={item.id} delay={i * 0.12}>
+                  <figure className="testimonial-card">
+                    <blockquote>“{item.quote[lang]}”</blockquote>
+                    <figcaption>
+                      <span className="testimonial-avatar" aria-hidden="true">{item.initials}</span>
+                      <span className="testimonial-meta">
+                        {item.url ? (
+                          <a href={item.url} target="_blank" rel="noopener noreferrer">
+                            <strong>{item.name}</strong>
+                          </a>
+                        ) : (
+                          <strong>{item.name}</strong>
+                        )}
+                        <small>{item.role[lang]}</small>
+                      </span>
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </div>
           </div>
-          <div className="testimonials-grid">
-            {testimonials.map((item, i) => (
-              <Reveal key={item.id} delay={i * 0.12}>
-                <figure className="testimonial-card">
-                  <blockquote>“{item.quote[lang]}”</blockquote>
-                  <figcaption>
-                    <span className="testimonial-avatar" aria-hidden="true">{item.initials}</span>
-                    <span className="testimonial-meta">
-                      <strong>{item.name}</strong>
-                      <small>{item.role[lang]}</small>
-                    </span>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <Faq />
 
