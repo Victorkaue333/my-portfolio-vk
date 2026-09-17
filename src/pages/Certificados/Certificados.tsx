@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FiAward, FiExternalLink, FiFilter, FiRotateCcw } from 'react-icons/fi';
+import { FiAward, FiFilter, FiMaximize2, FiRotateCcw } from 'react-icons/fi';
+import { CertificatePreview } from '../../components/ui/CertificatePreview/CertificatePreview';
 import { PageHero } from '../../components/ui/PageHero/PageHero';
 import { Reveal } from '../../components/ui/Reveal/Reveal';
 import { certificateCategories, certificates } from '../../data/certificates';
@@ -11,6 +12,8 @@ import './Certificados.css';
 export default function Certificados() {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('todos');
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+  const closePreview = useCallback(() => setPreviewIndex(null), []);
   useScrollReveal();
 
   useSeo({
@@ -54,20 +57,20 @@ export default function Certificados() {
           </div>
 
           <div className="cert-grid">
-            {filtered.map((cert) => (
+            {filtered.map((cert, index) => (
               <Reveal key={cert.id} delay={0.1} width="100%" height="100%" className="cert-grid-item">
-                <a
+                <button
+                  type="button"
                   className="cert-card"
-                  href={cert.pdf || cert.image}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Abrir certificado: ${cert.title}`}
+                  onClick={() => setPreviewIndex(index)}
+                  aria-haspopup="dialog"
+                  aria-label={`${t('certsPage.preview')}: ${cert.title}`}
                 >
                   <div className="cert-image">
                     <img src={cert.image} alt={cert.title} loading="lazy" />
                     <div className="cert-overlay">
                       <span>
-                        Abrir certificado <FiExternalLink size={14} />
+                        {t('certsPage.preview')} <FiMaximize2 size={14} />
                       </span>
                     </div>
                   </div>
@@ -76,7 +79,7 @@ export default function Certificados() {
                     <h3 className="cert-title">{cert.title}</h3>
                     <div className="cert-badge">{categoryLabel(cert.category)}</div>
                   </div>
-                </a>
+                </button>
               </Reveal>
             ))}
           </div>
@@ -92,6 +95,14 @@ export default function Certificados() {
           )}
         </div>
       </section>
+
+      <CertificatePreview
+        certificates={filtered}
+        index={previewIndex}
+        onClose={closePreview}
+        onNavigate={setPreviewIndex}
+        categoryLabel={categoryLabel}
+      />
     </main>
   );
 }
