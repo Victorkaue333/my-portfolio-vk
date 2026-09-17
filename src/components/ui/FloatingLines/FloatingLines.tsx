@@ -29,24 +29,33 @@ export const FloatingLines: React.FC = () => {
     let running = false;
     let startTime: number | null = null;
 
-    const resize = () => {
+    const resize = (nextWidth: number, nextHeight: number) => {
       // Cap no DPR: em telas 3x o custo de preenchimento triplica sem ganho visível.
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      width = canvas.clientWidth;
-      height = canvas.clientHeight;
+      width = nextWidth;
+      height = nextHeight;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    // O evento de resize dispara em rajada; coalesce num único quadro.
-    const onResize = () => {
+    // Tamanho via ResizeObserver, não `canvas.clientWidth`: ler geometria logo
+    // depois do commit do React forçava um layout síncrono ("ajuste forçado"
+    // no PageSpeed). O observer entrega o tamanho já calculado, depois do
+    // layout, e também cobre o resize da janela. Rajadas viram um quadro só.
+    let pending: { w: number; h: number } | null = null;
+    const ro = new ResizeObserver((entries) => {
+      const box = entries[entries.length - 1]?.contentRect;
+      if (!box) return;
+      pending = { w: box.width, h: box.height };
       cancelAnimationFrame(resizeRaf);
       resizeRaf = requestAnimationFrame(() => {
-        resize();
+        if (!pending) return;
+        resize(pending.w, pending.h);
+        pending = null;
         if (!running) drawFrame(0); // mantém o quadro estático correto
       });
-    };
+    });
 
     const onPointerMove = (e: PointerEvent) => {
       mouse.tx = e.clientX / window.innerWidth;
@@ -54,6 +63,7 @@ export const FloatingLines: React.FC = () => {
     };
 
     const drawFrame = (elapsed: number) => {
+      if (width === 0 || height === 0) return; // ainda sem medida do observer
       ctx.clearRect(0, 0, width, height);
       const aspect = width / Math.max(height, 1);
       const isMobile = width <= 768;
@@ -143,8 +153,7 @@ export const FloatingLines: React.FC = () => {
     );
     io.observe(canvas);
 
-    resize();
-    window.addEventListener('resize', onResize);
+    ro.observe(canvas);
     document.addEventListener('visibilitychange', onVisibility);
     if (!reduceMotion) {
       window.addEventListener('pointermove', onPointerMove, { passive: true });
@@ -160,7 +169,7 @@ export const FloatingLines: React.FC = () => {
       stop();
       cancelAnimationFrame(resizeRaf);
       io.disconnect();
-      window.removeEventListener('resize', onResize);
+      ro.disconnect();
       window.removeEventListener('pointermove', onPointerMove);
       document.removeEventListener('visibilitychange', onVisibility);
     };
