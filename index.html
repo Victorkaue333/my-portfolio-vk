@@ -11,7 +11,8 @@
         }
       } catch (e) {}
     </script>
-    <meta name="description" content="Portfólio de Victor Kauê, desenvolvedor backend/full-stack com foco em Python, Django, APIs e sistemas web." />
+    <!-- Meta/OG da Home. O prerender (scripts/prerender-meta.mjs) reescreve por rota. -->
+    <meta name="description" content="Desenvolvedor full stack: sistemas web, APIs REST e dashboards com Python, Django, React e TypeScript — da ideia ao deploy. Projetos para empresas e instituições públicas. Veja o portfólio e fale comigo." />
     <meta name="author" content="Victor Kauê" />
     <meta name="theme-color" content="#0a0a12" />
     <link rel="canonical" href="https://victor-kaue.vercel.app/" />
@@ -21,21 +22,24 @@
     <meta property="og:site_name" content="Victor Kauê — Portfólio" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:url" content="https://victor-kaue.vercel.app/" />
-    <meta property="og:title" content="Victor Kauê | Desenvolvedor Full Stack" />
-    <meta property="og:description" content="Especialista em Backend (Python/Django) e interfaces premium com React. Veja meus projetos e trajetória técnica." />
-    <meta property="og:image" content="https://victor-kaue.vercel.app/images/fotos-projetos-pessoais/vk-portifolio/victor_kaue.webp" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Victor Kauê — Desenvolvedor Full Stack" />
+    <meta property="og:title" content="Victor Kauê | Desenvolvedor Full Stack — Python, Django e React" />
+    <meta property="og:description" content="Desenvolvedor full stack: sistemas web, APIs REST e dashboards com Python, Django, React e TypeScript — da ideia ao deploy. Projetos para empresas e instituições públicas. Veja o portfólio e fale comigo." />
+    <!-- JPEG quadrado 280px (npm run images:optimize): o WhatsApp exibe miniatura
+         compacta ao lado do título e ignora WebP. Não trocar por banner/WebP. -->
+    <meta property="og:image" content="https://victor-kaue.vercel.app/images/og/home.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="280" />
+    <meta property="og:image:height" content="280" />
+    <meta property="og:image:alt" content="Victor Kauê | Desenvolvedor Full Stack — Python, Django e React" />
 
-    <!-- Twitter / X -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Twitter / X — `summary` = card com miniatura quadrada -->
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:url" content="https://victor-kaue.vercel.app/" />
-    <meta name="twitter:title" content="Victor Kauê | Desenvolvedor Full Stack" />
-    <meta name="twitter:description" content="Especialista em Backend (Python/Django) e interfaces premium com React. Veja meus projetos e trajetória técnica." />
-    <meta name="twitter:image" content="https://victor-kaue.vercel.app/images/fotos-projetos-pessoais/vk-portifolio/victor_kaue.webp" />
+    <meta name="twitter:title" content="Victor Kauê | Desenvolvedor Full Stack — Python, Django e React" />
+    <meta name="twitter:description" content="Desenvolvedor full stack: sistemas web, APIs REST e dashboards com Python, Django, React e TypeScript — da ideia ao deploy. Projetos para empresas e instituições públicas. Veja o portfólio e fale comigo." />
+    <meta name="twitter:image" content="https://victor-kaue.vercel.app/images/og/home.jpg" />
 
-    <title>Victor Kauê | Desenvolvedor Full Stack</title>
+    <title>Victor Kauê | Desenvolvedor Full Stack — Python, Django e React</title>
 
     <!-- preload:home -->
     <!-- Imagem LCP da Home. Sem isto o browser só a descobre depois de baixar e
