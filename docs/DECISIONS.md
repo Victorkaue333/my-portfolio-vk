@@ -7,6 +7,56 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 
 ---
 
+## ADR-0012 — Camada de interação Aceternity UI, portada em vez de instalada
+
+- **Data:** 2026-09-17
+- **Contexto:** Pedido de acrescentar animações e microinterações inspiradas no
+  Aceternity UI **sobre** a interface existente — sem refatorar layout, sem
+  trocar componentes por demos e sem introduzir uma segunda identidade visual.
+  O caminho oficial (`npx shadcn@latest add @aceternity/<nome>`) assume Next.js
+  com App Router, `components.json` do shadcn, `cn()` de `@/lib/utils`
+  (clsx + tailwind-merge), `motion/react` e `next/image`. Este projeto é Vite +
+  React 19 SPA, sem shadcn, com estilo em CSS por componente e tokens em
+  `styles/variables.css`.
+- **Decisão:** Baixar o código oficial de cada componente pelo registro do
+  Aceternity (`https://ui.aceternity.com/registry/<nome>.json`, a mesma fonte
+  que o CLI consome) e portar arquivo a arquivo para a convenção do projeto:
+  uma pasta por componente em `src/components/ui/` com `.tsx` + `.css`, cores
+  derivadas de `--accent-color`/neutros via `color-mix`, e `cn()` local
+  (`src/utils/cn.ts`) — sem clsx nem tailwind-merge, porque não há sopa de
+  classes Tailwind para desempatar. Zero dependência nova.
+  Onde o original usa framer-motion só para interpolar um número ou ler o
+  progresso da rolagem (Glowing Effect, Timeline, Text Generate, Spotlight,
+  Floating Navbar, Animated Tabs, Terminal), o port usa CSS ou
+  `requestAnimationFrame`: Home, Sobre e Projetos não carregam o pacote de
+  animação hoje e um tween não justifica +46 kB gzip na rota. O framer é usado
+  onde já estava carregado (Lens, no detalhe de projeto).
+  Tokens de movimento em `src/config/motion.ts`, espelhando
+  `--transition-fast/normal/slow`.
+- **Alternativas consideradas:** rodar `shadcn init` + `add` (criaria
+  `components.json`, reescreveria a configuração do Tailwind 4 e traria
+  componentes em `.tsx` com Tailwind inline, quebrando a convenção de CSS por
+  componente); copiar o JSX oficial como veio e sobrescrever cores por cima
+  (o visual padrão — azul/roxo/rosa — continuaria vazando em estados não
+  cobertos); manter os efeitos de borda animada que já existiam (mantê-los
+  junto com os novos empilharia dois efeitos no mesmo card).
+- **Consequências:** Os componentes não recebem atualização pelo CLI — são
+  código do projeto, e cada um cita a URL de origem no topo do arquivo. Três
+  itens do catálogo não entraram: **Canvas Reveal Effect** (dependência do
+  Card Spotlight oficial) exigiria `three` + `@react-three/fiber`, retirados do
+  projeto no ADR-0005; **Macbook Scroll** exigiria `@tabler/icons-react`, cerca
+  de 160 nós de DOM só do teclado e `min-h-[200vh]` na página, e os projetos em
+  destaque têm logotipo como capa, não screenshot de tela cheia — sem imagem
+  real para a tela do MacBook, o componente seria enfeite caro; **Focus Cards**
+  entrou como comportamento em CSS, porque o JSX oficial traz a própria grade e
+  substituiria o card de certificado inteiro.
+  As luzes de borda que giravam em loop (`borderLight`, 4s infinitos em
+  `.service-pro-card`, `.diferencial-card` e `.service-card`) foram removidas:
+  o Glowing Effect e o Card Spotlight cobrem o mesmo papel e só gastam quadro
+  durante a interação.
+
+---
+
 ## ADR-0011 — 4 idiomas e textos i18n organizados por tela
 
 - **Data:** 2026-09-17
