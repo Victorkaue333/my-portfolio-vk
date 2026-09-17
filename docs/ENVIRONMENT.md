@@ -27,6 +27,33 @@ Se no futuro algum valor precisar variar por ambiente, expor via
 `import.meta.env.VITE_*` (Vite só injeta variáveis com prefixo `VITE_`) e
 documentar aqui.
 
+
+## Variáveis do Spotify (opcionais)
+
+Ativam o "Now Playing" do bloco de Spotify em `/sobre` e do comando `spotify`
+do terminal. **Não são obrigatórias:** sem elas o endpoint
+`/api/spotify/now-playing` responde `501 { configured:false }` e o site usa o
+Spotify Embed configurado em `src/config/spotify.ts`.
+
+| Nome | Descrição | Obrigatória | Onde obter |
+| --- | --- | --- | --- |
+| `SPOTIFY_CLIENT_ID` | Client ID do app no Spotify Developer Dashboard. | Não | https://developer.spotify.com/dashboard |
+| `SPOTIFY_CLIENT_SECRET` | Client secret do mesmo app. **Segredo.** | Não | idem |
+| `SPOTIFY_REFRESH_TOKEN` | Refresh token da minha conta, com escopo `user-read-currently-playing user-read-recently-played`. **Segredo.** | Não | fluxo de autorização — passo a passo no `.env.example` |
+
+Regras específicas:
+
+- As três são lidas **somente** por `api/spotify/now-playing.js`, no servidor.
+  Não têm prefixo `VITE_` de propósito: o Vite só injeta `VITE_*` no bundle,
+  então elas nunca chegam ao navegador.
+- Cadastrar na Vercel em *Project → Settings → Environment Variables* e
+  refazer o deploy. Localmente, `vercel dev` lê o `.env` da raiz.
+- O endpoint nunca devolve token: a resposta tem título, artista, álbum, capa
+  e link público da faixa.
+- Conteúdo do embed (playlist/álbum/faixa) **não** é variável de ambiente — é
+  a constante `SPOTIFY_URL` em `src/config/spotify.ts`, porque é conteúdo
+  público e versionado, como o resto de `src/data`.
+
 ## ⚠️ Sobre os arquivos `.env` / `.env.example` atuais
 
 Os arquivos `.env` e `.env.example` presentes na raiz **não pertencem a este

@@ -10,6 +10,26 @@ Tipos: **Adicionado**, **Alterado**, **Corrigido**, **Removido**.
 
 ## [Não lançado]
 
+### Adicionado (camada de interação — parte 2)
+- **Terminal interativo** em `/sobre`: depois da abertura animada, a sessão
+  aceita digitação. Comandos: `help`, `about`, `projects`, `stack`, `github`,
+  `spotify`, `contact`, `ls`, `pwd`, `whoami`, `clear`; histórico com ↑/↓;
+  `projects --open <n>` navega para o projeto. Interpretação por whitelist
+  (`components/ui/Terminal/commands.tsx`) — não é um shell (ADR-0013).
+- **Bloco de Spotify** em `/sobre`: Spotify Embed oficial (`SPOTIFY_URL` em
+  `src/config/spotify.ts`) e, opcionalmente, "Now Playing" real pela função
+  serverless `api/spotify/now-playing.js`. Sem autoplay. Some da página quando
+  não há nem embed configurado nem integração ativa.
+- **`developer.ts`** (`components/ui/CodeWindow`): janela de editor com o
+  perfil escrito como código, derivada de `data/expertise.ts`,
+  `data/projects.ts` e `data/experiences.ts`.
+- `.env.example` com os nomes das variáveis do Spotify (nenhuma obrigatória).
+
+### Alterado (camada de interação — parte 2)
+- `GithubActivity` passou a ler de `src/utils/github.ts`, a fonte única das
+  chamadas e do cache — o mesmo módulo que o comando `github` do terminal usa.
+  Sem mudança visual.
+
 ### Adicionado
 - Documentação padrão do projeto: `PROJECT_CONTEXT.md`, `CLAUDE.md` (raiz) e
   `docs/` com `PRD`, `ARCHITECTURE`, `API`, `DATABASE`, `DEPLOY`,

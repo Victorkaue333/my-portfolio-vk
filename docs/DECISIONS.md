@@ -7,6 +7,59 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 
 ---
 
+## ADR-0013 — Terminal interativo com whitelist e Spotify em duas camadas
+
+- **Data:** 2026-09-17
+- **Contexto:** O terminal do ADR-0012 só reproduzia uma sessão gravada. O
+  pedido seguinte foi torná-lo uma experiência real — a pessoa digita e ele
+  responde — e acrescentar um bloco de Spotify, a única referência musical do
+  portfólio. Os dois tocam em assunto sensível: um terminal na web sugere
+  execução de comando, e o Spotify sugere OAuth com segredo. Este projeto é uma
+  SPA estática, sem backend (ADR-0002), publicada na Vercel.
+- **Decisão:**
+  1. **Terminal:** interpretação por lista fechada em
+     `components/ui/Terminal/commands.tsx` — o texto digitado é normalizado e
+     comparado com `TERMINAL_COMMANDS`; um `switch` escolhe qual função local
+     roda. Não existe `eval`, `new Function`, `child_process`, shell, nem
+     requisição que carregue a entrada do usuário. O único "argumento" aceito é
+     `projects --open <n>`, e mesmo ele só indexa a lista de
+     `data/projects.ts`. Entrada desconhecida responde
+     `command not found: <x>`. Toda saída sai de dado que o site já publica.
+  2. **Spotify em duas camadas:** o **Embed oficial** é o caminho padrão —
+     `SPOTIFY_URL` em `src/config/spotify.ts`, sem credencial, sem servidor, com
+     `toEmbedUrl()` validando host e tipo antes de virar `src` de iframe (e sem
+     `autoplay`). O **Now Playing** é opcional e vive na única função serverless
+     do projeto, `api/spotify/now-playing.js`: `SPOTIFY_CLIENT_ID`,
+     `SPOTIFY_CLIENT_SECRET` e `SPOTIFY_REFRESH_TOKEN` ficam no servidor, sem
+     prefixo `VITE_`, e a resposta devolve só metadado público da faixa. Sem as
+     variáveis o endpoint responde `501 { configured: false }` e o front cai no
+     embed — a integração é degradável por desenho.
+  3. **Uma fonte por integração:** `utils/github.ts` e `utils/spotify.ts`
+     concentram chamada, cache e tratamento de erro. O card e o comando do
+     terminal consomem o mesmo módulo; `GithubActivity` foi refatorado para ler
+     de lá em vez de ter o `fetch` embutido.
+- **Alternativas consideradas:** um parser de linha de comando genérico com
+  flags e caminhos (superfície maior, nenhum ganho — a lista de saídas é
+  finita); pedir o token do Spotify no cliente com PKCE (exigiria login do
+  visitante para ver o que *eu* estou ouvindo — inverte o sentido do
+  componente); embutir o refresh token no bundle com `VITE_` (é público: está
+  fora de questão); manter o `fetch` do GitHub dentro do componente e repetir a
+  chamada no terminal (dois caches, dois tratamentos de 429, números que podem
+  divergir na mesma tela).
+- **Consequências:** O projeto passa a ter uma função serverless — a primeira.
+  Ela é opcional: sem variáveis configuradas, `vercel dev`/`vite dev` e o host
+  estático continuam funcionando, e o front trata 404, 501, 429 e 502 como
+  "sem Now Playing". O `.env.example` volta a existir, agora com os nomes deste
+  projeto (fecha a pendência apontada no ADR-0002 e em `docs/ENVIRONMENT.md`).
+  Enquanto `SPOTIFY_URL` estiver vazio e o endpoint não estiver configurado, o
+  bloco de Spotify não é renderizado — nenhum card vazio entra na página.
+  **Macbook Scroll** segue de fora pelos motivos do ADR-0012 (dependência de
+  `@tabler/icons-react`, ~160 nós só do teclado e `min-h-[200vh]` na rota);
+  a lupa (Lens) nas screenshots do detalhe de projeto já cobre "ver a interface
+  de perto" sem esse custo.
+
+---
+
 ## ADR-0012 — Camada de interação Aceternity UI, portada em vez de instalada
 
 - **Data:** 2026-09-17
