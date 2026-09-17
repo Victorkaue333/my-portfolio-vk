@@ -17,21 +17,21 @@
     width: 100%;
 }
 
+/* Sem pílula: ícone e nome soltos. O espaçamento que a borda dava passa a
+   vir do gap da trilha, escopado aqui para não mexer no componente genérico. */
 .tech-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.55rem 1rem;
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--surface-color) 60%, transparent);
     white-space: nowrap;
-    transition: border-color var(--transition-fast), background var(--transition-fast);
 }
 
-.tech-chip:hover {
-    border-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
-    background: color-mix(in srgb, var(--accent-color) 8%, transparent);
+.tech-marquee-section .moving-track {
+    gap: 2.25rem;
+}
+
+.tech-chip:hover .tech-chip-name {
+    color: var(--text-color);
 }
 
 .tech-chip-icon {
@@ -43,6 +43,7 @@
     font-weight: 600;
     color: var(--text-muted-color);
     letter-spacing: 0.01em;
+    transition: color var(--transition-fast);
 }
 
 @media (max-width: 768px) {
@@ -51,8 +52,11 @@
     }
 
     .tech-chip {
-        padding: 0.45rem 0.8rem;
         gap: 0.45rem;
+    }
+
+    .tech-marquee-section .moving-track {
+        gap: 1.6rem;
     }
 
     .tech-chip-name {

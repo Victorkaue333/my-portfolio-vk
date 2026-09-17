@@ -490,7 +490,9 @@
 .li-exp-skills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    /* Sem pílula o gap assume o papel do padding: coluna maior que linha para
+       o olho separar um item do seguinte. */
+    gap: 0.35rem 1.1rem;
     margin-top: 0.85rem;
 }
 
@@ -498,14 +500,10 @@
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    font-size: 0.72rem;
+    /* 0.72rem era tamanho de chip; solto na página o texto precisa de corpo. */
+    font-size: 0.78rem;
     font-weight: 600;
-    padding: 0.25rem 0.65rem;
-    border-radius: var(--radius-full);
-    background: var(--gradient-orange-soft);
-    /* branco no tema escuro; inverte no claro via token */
-    color: var(--text-color);
-    border: 1px solid rgba(255, 122, 0, 0.15);
+    color: var(--text-muted-color);
 }
 
 .li-exp-skill .li-exp-skill-icon {

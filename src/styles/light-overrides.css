@@ -174,8 +174,7 @@ html.light .service-pro-card:hover {
 }
 
 html.light .service-icon-box,
-html.light .edu-icon,
-html.light .li-exp-skill {
+html.light .edu-icon {
     border-color: var(--accent-border);
 }
 
@@ -234,8 +233,7 @@ html.light .detail-card-item,
 html.light .architecture-flow,
 html.light .decision-item,
 html.light .feature-item-detail,
-html.light .summary-card,
-html.light .pd-stack-chip {
+html.light .summary-card {
     background: var(--surface-soft-color);
     border-color: var(--border-color);
 }
@@ -396,21 +394,12 @@ html.light .projects-section-count {
     color: var(--text-subtle-color);
 }
 
-html.light .tech-filter-chip,
 html.light .tech-filter-clear {
     background: var(--surface-color);
-    border-color: var(--border-color);
-}
-html.light .tech-filter-clear { border-color: var(--accent-border); }
-html.light .tech-filter-chip:hover {
     border-color: var(--accent-border);
-    color: var(--text-color);
 }
-html.light .tech-filter-chip.active {
-    background: var(--accent-soft);
-    border-color: var(--accent-color);
-    color: var(--accent-text);
-}
+html.light .tech-filter-chip:hover { color: var(--text-color); }
+html.light .tech-filter-chip.active { color: var(--accent-text); }
 
 html.light .no-projects-found {
     background: var(--surface-soft-color);
@@ -467,7 +456,6 @@ html.light .cert-preview-open:hover { box-shadow: 0 4px 14px rgba(249, 115, 22, 
 /* ===================== ProjetoDetalhe ===================== */
 
 html.light .project-category-badge { border-color: var(--accent-border); }
-html.light .pd-stack-chip:hover { border-color: rgba(249, 115, 22, 0.4); }
 html.light .pd-role-col.is-mine { border-color: rgba(249, 115, 22, 0.35); }
 
 html.light .projeto-extended-info,
