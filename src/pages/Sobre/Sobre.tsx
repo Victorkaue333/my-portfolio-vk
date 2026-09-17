@@ -4,6 +4,7 @@ import { FiBookOpen, FiBriefcase, FiCalendar, FiChevronRight, FiCode, FiMail, Fi
 import { FaLinkedin } from 'react-icons/fa6';
 import { SiGithub } from 'react-icons/si';
 import { Button } from '../../components/ui/Button/Button';
+import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivity';
 import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher/LanguageSwitcher';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
@@ -51,7 +52,6 @@ function ExperienceBody({ role }: { role: ExperienceRole }) {
 export default function Sobre() {
   const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState('intro');
-  const [githubStatsError, setGithubStatsError] = useState(false);
   usePageSeo('about');
 
   const menuItems = [
@@ -304,46 +304,9 @@ export default function Sobre() {
             <section id="github" className="about-content-section reveal-on-scroll">
               <h2 className="section-title">
                 <SiGithub size={24} aria-hidden="true" />
-                GitHub Stats
+                {t('github.title')}
               </h2>
-              {!githubStatsError ? (
-                <div className="github-stats-container">
-                  <a href="https://github.com/Victorkaue333" target="_blank" rel="noopener noreferrer" className="github-card-link">
-                    <img
-                      src="https://github-readme-stats.vercel.app/api?username=Victorkaue333&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0B1220&title_color=F59E0B&icon_color=F59E0B&text_color=F3F4F6"
-                      alt="GitHub Stats"
-                      className="github-img"
-                      width={495}
-                      height={195}
-                      loading="lazy"
-                      decoding="async"
-                      fetchPriority="low"
-                      onError={() => setGithubStatsError(true)}
-                    />
-                  </a>
-                  <a href="https://github.com/Victorkaue333" target="_blank" rel="noopener noreferrer" className="github-card-link">
-                    <img
-                      src="https://github-readme-stats.vercel.app/api/top-langs/?username=Victorkaue333&layout=compact&theme=tokyonight&hide_border=true&bg_color=0B1220&title_color=F59E0B&text_color=F3F4F6"
-                      alt="Top Languages"
-                      className="github-img top-langs"
-                      width={300}
-                      height={165}
-                      loading="lazy"
-                      decoding="async"
-                      fetchPriority="low"
-                      onError={() => setGithubStatsError(true)}
-                    />
-                  </a>
-                </div>
-              ) : (
-                <div className="github-fallback-card">
-                  <p>Confira minhas atividades diretamente no meu perfil:</p>
-                  <Button href="https://github.com/Victorkaue333" variant="outline" external>
-                    <SiGithub size={18} aria-hidden="true" />
-                    Ver GitHub
-                  </Button>
-                </div>
-              )}
+              <GithubActivity />
             </section>
 
             <div className="view-more-action">

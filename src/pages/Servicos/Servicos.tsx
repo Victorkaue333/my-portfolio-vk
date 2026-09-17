@@ -36,7 +36,8 @@ function ApproachHorizontal() {
   const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [distance, setDistance] = useState(0);
+  // Deslocamento do track que centraliza cada painel no viewport (um valor por etapa).
+  const [centers, setCenters] = useState<number[]>([0]);
   const [active, setActive] = useState(0);
 
   const steps = APPROACH_STEPS.map(({ n, Icon }) => ({
@@ -46,19 +47,26 @@ function ApproachHorizontal() {
     desc: t(`servicos.step${n}Desc`),
   }));
 
-  // Mede quanto o track precisa deslizar (largura total - viewport visível).
+  // Mede, para cada painel, o `x` do track que põe o centro dele no centro do
+  // viewport. A etapa em foco é sempre a centralizada — em qualquer largura,
+  // inclusive quando todos os painéis caberiam lado a lado (antes o curso
+  // dependia do "excesso" do track e sumia em telas largas).
   useLayoutEffect(() => {
     const track = trackRef.current;
-    if (!track) return;
+    const viewport = track?.parentElement;
+    if (!track || !viewport) return;
 
     let raf = 0;
 
     const calc = () => {
-      const viewport = track.parentElement?.clientWidth ?? 0;
-      setDistance(Math.max(0, track.scrollWidth - viewport));
+      const padLeft = parseFloat(getComputedStyle(viewport).paddingLeft) || 0;
+      // Centro do viewport no sistema de coordenadas do track (que começa após o padding).
+      const focus = viewport.clientWidth / 2 - padLeft;
+      const panels = Array.from(track.children) as HTMLElement[];
+      setCenters(panels.map((p) => focus - (p.offsetLeft + p.offsetWidth / 2)));
     };
 
-    // Ler `scrollWidth` força um layout síncrono. O ResizeObserver dispara em
+    // Ler `offsetLeft`/`offsetWidth` força um layout síncrono. O ResizeObserver dispara em
     // rajada durante o arrasto da janela, então junta tudo num quadro só.
     const scheduleCalc = () => {
       cancelAnimationFrame(raf);
@@ -72,7 +80,7 @@ function ApproachHorizontal() {
     // o mesmo cálculo, sem throttle.
     const ro = new ResizeObserver(scheduleCalc);
     ro.observe(track);
-    if (track.parentElement) ro.observe(track.parentElement);
+    ro.observe(viewport);
 
     return () => {
       cancelAnimationFrame(raf);
@@ -84,10 +92,21 @@ function ApproachHorizontal() {
     target: sectionRef,
     offset: ['start start', 'end end'],
   });
-  const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
+  // Progresso i/(n-1) = painel i centralizado. Entre duas etapas o track
+  // interpola, então o destaque (Math.round) troca quando o próximo painel
+  // passa a estar mais perto do centro — posição e destaque vêm da mesma conta.
+  const first = centers[0] ?? 0;
+  const last = centers[centers.length - 1] ?? first;
+  const multi = centers.length > 1;
+  const x = useTransform(
+    scrollYProgress,
+    multi ? centers.map((_, i) => i / (centers.length - 1)) : [0, 1],
+    multi ? centers : [first, first],
+  );
   const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  // Curso horizontal total (primeiro → último centralizado).
+  const distance = Math.abs(first - last);
 
-  // Etapa em foco = progresso do scroll mapeado nos passos (usado só para destaque visual).
   useMotionValueEvent(scrollYProgress, 'change', (value) => {
     const index = Math.round(value * (steps.length - 1));
     setActive(Math.min(steps.length - 1, Math.max(0, index)));
@@ -97,7 +116,7 @@ function ApproachHorizontal() {
     <section
       ref={sectionRef}
       className="approach-pin"
-      // Altura extra = distância horizontal, para o scroll vertical virar movimento lateral 1:1.
+      // Altura extra = curso horizontal, para o scroll vertical virar movimento lateral 1:1.
       style={{ height: `calc(100vh + ${distance}px)` }}
     >
       <div className="approach-sticky">
