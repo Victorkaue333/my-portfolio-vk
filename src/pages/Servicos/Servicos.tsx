@@ -17,6 +17,7 @@ import {
 import { Button } from '../../components/ui/Button/Button';
 import { PageHero } from '../../components/ui/PageHero/PageHero';
 import { Reveal } from '../../components/ui/Reveal/Reveal';
+import { CardSpotlight } from '../../components/ui/CardSpotlight/CardSpotlight';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { useLanguage } from '../../hooks/useLanguage';
 import { usePageSeo } from '../../hooks/useSeo';
@@ -219,7 +220,7 @@ export default function Servicos() {
         <div className="container">
           <div className="services-grid">
             <Reveal delay={0.1}>
-              <div className="service-card">
+              <CardSpotlight className="service-card" radius={300}>
                 <div className="service-icon">
                   <FiDatabase />
                 </div>
@@ -230,11 +231,11 @@ export default function Servicos() {
                   <li><FiCheckCircle /> {t('servicos.card1Item2')}</li>
                   <li><FiCheckCircle /> {t('servicos.card1Item3')}</li>
                 </ul>
-              </div>
+              </CardSpotlight>
             </Reveal>
 
             <Reveal delay={0.2}>
-              <div className="service-card featured">
+              <CardSpotlight className="service-card featured" radius={300}>
                 <div className="service-icon">
                   <FiLayout />
                 </div>
@@ -248,11 +249,11 @@ export default function Servicos() {
                 <Button href="/contato" variant="primary">
                   {t('servicos.card2Cta')} <FiArrowRight />
                 </Button>
-              </div>
+              </CardSpotlight>
             </Reveal>
 
             <Reveal delay={0.3}>
-              <div className="service-card">
+              <CardSpotlight className="service-card" radius={300}>
                 <div className="service-icon">
                   <FiCpu />
                 </div>
@@ -263,7 +264,7 @@ export default function Servicos() {
                   <li><FiCheckCircle /> {t('servicos.card3Item2')}</li>
                   <li><FiCheckCircle /> {t('servicos.card3Item3')}</li>
                 </ul>
-              </div>
+              </CardSpotlight>
             </Reveal>
           </div>
         </div>

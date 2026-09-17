@@ -1,0 +1,53 @@
+/* Card Spotlight — foco radial que segue o ponteiro dentro do card.
+   Adaptado de https://ui.aceternity.com/components/card-spotlight */
+
+.card-spotlight {
+    position: relative;
+    --spot-x: 50%;
+    --spot-y: 50%;
+}
+
+.card-spotlight-layer {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    /* Laranja do tema em opacidade baixa: acende a região sob o cursor sem
+       tingir o card (regra 17). */
+    background: radial-gradient(
+        var(--spot-radius, 300px) circle at var(--spot-x) var(--spot-y),
+        color-mix(in srgb, var(--accent-color) 12%, transparent) 0%,
+        color-mix(in srgb, var(--accent-color) 5%, transparent) 40%,
+        transparent 70%
+    );
+    z-index: 0;
+}
+
+.card-spotlight.is-interactive:hover .card-spotlight-layer,
+.card-spotlight.is-interactive:focus-within .card-spotlight-layer {
+    opacity: 1;
+}
+
+/* Tema claro: fundo branco realça qualquer cor, então o foco vale menos. */
+html.light .card-spotlight-layer {
+    background: radial-gradient(
+        var(--spot-radius, 300px) circle at var(--spot-x) var(--spot-y),
+        color-mix(in srgb, var(--accent-color) 8%, transparent) 0%,
+        color-mix(in srgb, var(--accent-color) 3%, transparent) 40%,
+        transparent 70%
+    );
+}
+
+/* O conteúdo do card fica acima do foco. */
+.card-spotlight > *:not(.card-spotlight-layer) {
+    position: relative;
+    z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-spotlight-layer {
+        transition: none;
+    }
+}
