@@ -5,6 +5,7 @@ const sobre: typeof base = {
   about: {
     title: 'About',
     subtitle: 'Full Stack Developer',
+    terminalLabel: 'Terminal session with the technical summary',
     intro:
       "I am a developer focused on backend and web systems, with a degree in Systems Development and currently studying Information Technology Management. I build APIs, business rules, data modeling, web interfaces and deployment with focus on clean architecture, security and business value.",
     highlights: {

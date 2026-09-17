@@ -4,6 +4,7 @@ const sobre = {
   about: {
     title: 'Sobre',
     subtitle: 'Desenvolvedor Full Stack',
+    terminalLabel: 'Sessão de terminal com o resumo técnico',
     intro:
       'Sou desenvolvedor com foco em backend e sistemas web, formado em Desenvolvimento de Sistemas e graduando em Gestão da Tecnologia da Informação. Atuo no desenvolvimento de APIs, regras de negócio, modelagem de dados, interface web e deploy, com foco em arquitetura limpa, segurança e valor de negócio.',
     highlights: {

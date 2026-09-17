@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiBookOpen, FiBriefcase, FiCalendar, FiChevronRight, FiCode, FiMail, FiMapPin, FiTarget } from 'react-icons/fi';
 import { FaLinkedin } from 'react-icons/fa6';
@@ -9,9 +9,11 @@ import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher/LanguageS
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { Timeline } from '../../components/ui/Timeline/Timeline';
+import { Terminal } from '../../components/ui/Terminal/Terminal';
 import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
 import { education } from '../../data/education';
 import { experiences } from '../../data/experiences';
+import { expertise } from '../../data/expertise';
 import { socialLinks } from '../../data/social';
 import { usePageSeo } from '../../hooks/useSeo';
 import type { ExperienceRole } from '../../types';
@@ -24,6 +26,19 @@ import './Sobre.css';
 function shortPeriod(period: string): string {
   return period.split(/\s+[-–—]\s+/)[0]?.trim() || period;
 }
+
+/**
+ * Linha `stack` do terminal: as primeiras linguagens e os primeiros
+ * frameworks de `data/expertise.ts`, na ordem em que estão lá. Derivado dos
+ * dados de propósito — nada de lista escrita à mão que possa divergir da
+ * faixa de tecnologias logo abaixo.
+ */
+const terminalStack = [
+  ...(expertise[0]?.items ?? []).slice(0, 4),
+  ...(expertise[1]?.items ?? []).slice(0, 3),
+]
+  .map((item) => item.name)
+  .join(' · ');
 
 /** Monograma (iniciais) para empresas sem logo. Ignora conectivos e sufixos após "—" ou parênteses. */
 function companyInitials(name: string): string {
@@ -63,6 +78,27 @@ export default function Sobre() {
   const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState('intro');
   usePageSeo('about');
+
+  // O scroll-spy desta página troca `activeSection` durante a rolagem, então
+  // Sobre re-renderiza bastante. Sem memo, as saídas do terminal virariam um
+  // objeto novo a cada quadro e o efeito que imprime as linhas reiniciaria o
+  // próprio timer — a digitação travava enquanto a pessoa rolasse.
+  const terminalOutputs = useMemo(
+    () => ({
+      0: ['Victor Kauê'],
+      1: [`${t('hero.role')} ${t('hero.tech')}`],
+      2: [
+        [
+          t('about.highlights.backend'),
+          t('about.highlights.api'),
+          t('about.highlights.enterprise'),
+        ].join(' · '),
+      ],
+      3: [terminalStack],
+    }),
+    [t],
+  );
+  const terminalCommands = useMemo(() => ['whoami', 'role', 'focus', 'stack'], []);
 
   const menuItems = [
     { id: 'intro', label: t('about.title'), icon: <FiTarget size={16} /> },
@@ -319,6 +355,17 @@ export default function Sobre() {
                 <FiCode size={24} />
                 Expertise técnica
               </h2>
+              {/* Terminal (Aceternity) — tudo que ele imprime sai de dados que
+                  já existem: nome da página, papel do hero, os três
+                  diferenciais e a stack de data/expertise.ts. Sem som: o
+                  `useAudio` do componente oficial foi removido. */}
+              <div className="expertise-terminal">
+                <Terminal
+                  label={t('about.terminalLabel')}
+                  commands={terminalCommands}
+                  outputs={terminalOutputs}
+                />
+              </div>
               <TechMarquee />
             </section>
 

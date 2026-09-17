@@ -727,6 +727,11 @@
     }
 }
 
+/* ========== Terminal em "Expertise técnica" ========== */
+.expertise-terminal {
+    margin-bottom: 2rem;
+}
+
 /* ========== Timelines (Experiência e Formação) ========== */
 /* A sidebar da página é sticky no topo; o rótulo da timeline precisa parar
    abaixo da navbar para não ficar escondido atrás dela. */

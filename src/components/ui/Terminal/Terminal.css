@@ -1,0 +1,131 @@
+/* Terminal — janela estilo macOS com digitação.
+   Adaptado de https://ui.aceternity.com/components/terminal
+   Sem áudio (o `useAudio` do original foi removido) e com as cores do tema. */
+
+.terminal {
+    width: 100%;
+    max-width: 44rem;
+}
+
+.terminal-window {
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: var(--gradient-surface);
+    box-shadow: var(--shadow-lg);
+}
+
+.terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    background: var(--surface-hover-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-dots {
+    display: inline-flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+/* Os três botões: cinza neutro, não o vermelho/amarelo/verde do original —
+   a janela é enfeite técnico, não precisa competir com o accent. */
+.terminal-dots i {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    background: var(--border-color);
+}
+
+.terminal-dots i:first-child {
+    background: color-mix(in srgb, var(--accent-color) 55%, transparent);
+}
+
+.terminal-bar-title {
+    flex: 1;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-dim-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.terminal-body {
+    height: 15rem;
+    overflow-y: auto;
+    padding: 1rem;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    /* Sem rolagem horizontal em nenhuma largura (regra 21): linha longa
+       quebra em vez de empurrar a página. */
+    overflow-x: hidden;
+    overflow-wrap: anywhere;
+}
+
+.terminal-body::-webkit-scrollbar {
+    width: 4px;
+}
+
+.terminal-line {
+    margin: 0;
+    max-width: none;
+    font-size: inherit;
+    line-height: inherit;
+    white-space: pre-wrap;
+}
+
+.terminal-line.is-output {
+    color: var(--text-muted-color);
+}
+
+.terminal-user {
+    color: var(--accent-color);
+}
+
+.terminal-path,
+.terminal-sigil {
+    color: var(--text-dim-color);
+}
+
+.terminal-command {
+    color: var(--text-color);
+}
+
+.terminal-cursor {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.95em;
+    margin-left: 0.15rem;
+    vertical-align: text-bottom;
+    background: var(--text-muted-color);
+    animation: terminal-blink 1.06s steps(1) infinite;
+}
+
+/* Enquanto digita o cursor fica sólido — piscar junto com a digitação
+   embaralha a leitura. */
+.terminal-cursor.is-typing {
+    animation: none;
+}
+
+@keyframes terminal-blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .terminal-cursor {
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminal-body {
+        height: 13rem;
+        font-size: 0.75rem;
+        padding: 0.85rem;
+    }
+}

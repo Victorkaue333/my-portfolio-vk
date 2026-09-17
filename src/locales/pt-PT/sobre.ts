@@ -5,6 +5,7 @@ const sobre: typeof base = {
   about: {
     title: 'Sobre',
     subtitle: 'Programador Full Stack',
+    terminalLabel: 'Sessão de terminal com o resumo técnico',
     intro:
       'Sou programador com foco em backend e sistemas web, formado em Desenvolvimento de Sistemas e a frequentar a licenciatura em Gestão de Tecnologias da Informação. Trabalho no desenvolvimento de APIs, regras de negócio, modelação de dados, interface web e deploy, com foco em arquitetura limpa, segurança e valor de negócio.',
     highlights: {
