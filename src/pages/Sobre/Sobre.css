@@ -43,13 +43,6 @@
     top: 100px;
 }
 
-/* ângulo animável do brilho que corre pela borda do card */
-@property --ring-angle {
-    syntax: "<angle>";
-    initial-value: 0deg;
-    inherits: false;
-}
-
 .profile-card {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -62,40 +55,6 @@
     box-shadow: var(--shadow-xl);
     transition: transform var(--transition-normal), border-color var(--transition-normal);
     position: relative;
-    isolation: isolate;
-}
-
-/* luz que passa ao redor do card — arco de conic-gradient girando, mascarado só na borda */
-.profile-card::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 2px; /* espessura do anel de luz */
-    background: conic-gradient(
-        from var(--ring-angle),
-        transparent 0deg 250deg,
-        rgba(255, 168, 64, 0.35) 300deg,
-        var(--accent-color) 335deg,
-        #ffe6c0 355deg,
-        transparent 360deg
-    );
-    /* mostra só o anel (borda), esconde o miolo */
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    filter: drop-shadow(0 0 6px rgba(255, 122, 0, 0.55));
-    animation: ringSpin 4s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-}
-
-@keyframes ringSpin {
-    to { --ring-angle: 360deg; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .profile-card::before { animation: none; }
 }
 
 .profile-card:hover {

@@ -249,7 +249,6 @@ html.light .feature-item-detail:hover {
 
 /* ===================== Sobre ===================== */
 
-html.light .profile-card::before { filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.35)); }
 html.light .profile-card:hover { border-color: rgba(249, 115, 22, 0.35); }
 html.light .profile-photo { border-color: rgba(249, 115, 22, 0.6); }
 
