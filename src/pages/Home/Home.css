@@ -347,14 +347,11 @@
             mask-composite: exclude;
     pointer-events: none;
     z-index: 1;
+    animation: borderLight 4s linear infinite;
 }
 
-/* A luz só gira no hover. Animar `--border-angle` repinta o conic-gradient e
-   refaz a máscara a cada quadro — com a grade inteira animando de uma vez,
-   isso rodava sem parar mesmo com os cards parados ou fora da tela. Parado,
-   o gradiente segue desenhando o brilho no canto (--border-angle: 0deg). */
-.service-pro-card:hover::after {
-    animation: borderLight 4s linear infinite;
+@media (prefers-reduced-motion: reduce) {
+    .service-pro-card::after { animation: none; }
 }
 
 .service-pro-card:hover {
