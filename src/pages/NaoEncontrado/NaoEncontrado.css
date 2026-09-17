@@ -9,6 +9,57 @@
   width: 100%;
 }
 
+.notfound-suggestions {
+  max-width: 520px;
+  margin: 2rem auto 0;
+}
+
+.notfound-suggestions h2 {
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text-dim-color);
+}
+
+.notfound-suggestions ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notfound-suggestions a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  color: inherit;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.notfound-suggestions a:hover,
+.notfound-suggestions a:focus-visible {
+  border-color: rgba(255, 122, 0, 0.45);
+  background: rgba(255, 122, 0, 0.05);
+}
+
+.notfound-suggestions span {
+  display: flex;
+  flex-direction: column;
+}
+
+.notfound-suggestions strong { color: var(--text-color); }
+.notfound-suggestions small { color: var(--text-dim-color); font-size: 0.8rem; }
+.notfound-suggestions svg { color: var(--accent-color); flex-shrink: 0; }
+
 .notfound-actions {
   display: flex;
   flex-wrap: wrap;
