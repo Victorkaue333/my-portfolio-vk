@@ -2,14 +2,13 @@
 
 > **Este projeto não expõe nem consome uma API REST própria.** É uma SPA
 > front-end estática, sem backend. Este documento registra os **contratos
-> externos** que o app usa (deep-links e integração de build-time) para que o
+> externos** que o app usa (deep-links) para que o
 > comportamento fique explícito.
 
 ## Convenções gerais
 
 - Não há servidor de aplicação, autenticação, tokens ou endpoints versionados.
-- Toda "integração" é: (a) deep-link/navegação para serviço externo em runtime,
-  ou (b) fetch de conteúdo público em build-time.
+- Toda "integração" é deep-link/navegação para serviço externo em runtime.
 - Nenhum segredo é usado. Requisições são anônimas a recursos públicos.
 
 ## Contrato 1 — Deep-link de contato (WhatsApp)
@@ -56,38 +55,11 @@ Runtime. Navegação direta (`<a target="_blank" rel="noopener noreferrer">`).
 - Currículo: `public/docs/Curriculo/Curriculo_Victor_Kaue.pdf`.
 - Certificados: PDFs em `public/Certificados/pdfs/`.
 
-## Contrato 3 — Enriquecimento de projetos (build-time, opcional)
-
-Executado sob demanda via `npm run projects:enrich`
-(`scripts/enrich-projects.mjs`). Não roda no navegador.
-
-- **Método:** `GET`
-- **URL:** `https://raw.githubusercontent.com/{owner}/{repo}/main/README.md`
-- **Auth:** nenhuma (conteúdo público)
-- **Entrada:** URLs `github:` extraídas de `src/data/projects.ts`
-- **Saída:** `src/data/projects.enrichment.json`
-
-**Formato da saída (por repositório):**
-
-```json
-[
-  {
-    "url": "https://github.com/owner/repo",
-    "resumo": "Primeiro parágrafo do README (até 220 chars).",
-    "tecnologias": ["React", "TypeScript", "..."]
-  }
-]
-```
-
-**Erros:** README ausente/inacessível → `resumo` vazio e o item é logado; o
-script não interrompe a execução por falha em um repositório.
-
 ## Formato de erros
 
 Não aplicável a um backend. Erros possíveis são de cliente:
 
 - Deep-link: falha silenciosa se o dispositivo não tiver WhatsApp/handler.
-- Build-time fetch: tratado no script (log + continua).
 
 ## Roadmap (se um backend for adicionado)
 

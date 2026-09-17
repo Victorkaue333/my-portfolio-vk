@@ -232,8 +232,6 @@ flowchart TD
     E -- "Não" --> F["Build falha — corrigir dados"]
     F --> A
     E -- "Sim" --> G["Push → Vercel builda e publica"]
-    H["npm run projects:enrich (opcional)"] -.->|"READMEs do GitHub"| I["projects.enrichment.json"]
-    I -.-> A
 ```
 
 Modelo de conteúdo completo (entidades, campos e relações) em [`docs/DATABASE.md`](docs/DATABASE.md).
@@ -288,7 +286,7 @@ Versões reais em [`package.json`](package.json).
 | **Vercel** | Hospedagem estática + deploy contínuo por push |
 | `tsc -b` + `vite build` | Checagem de tipos + bundle de produção |
 | `manualChunks` (react, motion, i18n, icons) | Split de vendors para cache eficiente |
-| Node.js (`scripts/enrich-projects.mjs`) | Enriquecimento de projetos em build-time |
+| Node.js (`scripts/prerender-meta.mjs`) | `<head>` por rota + `sitemap.xml` pós-build |
 
 ---
 
@@ -301,7 +299,8 @@ meu_portifolio/
 │   ├── docs/Curriculo/            # Currículo em PDF
 │   └── images/                    # fotos de projetos, galeria, backgrounds (.webp)
 ├── scripts/
-│   └── enrich-projects.mjs        # busca READMEs no GitHub → projects.enrichment.json
+│   ├── optimize-images.mjs        # variantes .webp responsivas (npm run images:optimize)
+│   └── prerender-meta.mjs         # <head> por rota + sitemap.xml pós-build
 ├── src/
 │   ├── components/
 │   │   ├── Layout/                # Navbar, MobileNavbar, Footer, BackToTop, ScrollToTop
@@ -381,7 +380,6 @@ Scripts reais de [`package.json`](package.json):
 | `npm run dev` | Inicia o Vite em modo desenvolvimento (porta 3000) |
 | `npm run build` | `tsc -b && vite build` (checagem de tipos + build de produção) |
 | `npm run preview` | Serve o build de produção localmente |
-| `npm run projects:enrich` | Busca READMEs dos repositórios e gera `src/data/projects.enrichment.json` |
 
 ---
 

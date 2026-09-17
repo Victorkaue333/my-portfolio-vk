@@ -41,6 +41,10 @@ Tipos: **Adicionado**, **Alterado**, **Corrigido**, **Removido**.
 - `~12,9 MB` de assets: galeria morta (`Serra_do_Arapua`, 8,3 MB) e fontes
   devicon (11,2 MB não copiadas ao build); deps mortas `axios`, `lucide-react`,
   `radix-ui`, `class-variance-authority`, `@fontsource/orbitron`, `devicon`.
+- Script `projects:enrich` (`scripts/enrich-projects.mjs`) e
+  `src/data/projects.enrichment.json`: o JSON não era lido por nenhum código e o
+  script já não achava URLs desde que os projetos saíram de `projects.ts` para
+  arquivos próprios.
 
 ## [2.0.0] — 2026
 

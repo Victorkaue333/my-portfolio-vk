@@ -35,13 +35,6 @@ banco de dados.
           WhatsApp (wa.me)              GitHub / LinkedIn
 ```
 
-Integração externa **em build-time** (não runtime):
-
-```
-scripts/enrich-projects.mjs ──▶ raw.githubusercontent.com (READMEs)
-                            └──▶ src/data/projects.enrichment.json
-```
-
 ## Camadas e responsabilidades
 
 ### Apresentação (`src/pages/`, `src/components/`)
@@ -87,7 +80,6 @@ scripts/enrich-projects.mjs ──▶ raw.githubusercontent.com (READMEs)
 | --- | --- | --- |
 | WhatsApp `wa.me` | Runtime | Deep-link do formulário de contato. |
 | GitHub / LinkedIn / e-mail | Runtime | Links sociais e repositórios. |
-| `raw.githubusercontent.com` | Build-time | Enriquecimento de projetos (script opcional). |
 
 Ícones de tecnologia são bundlados via react-icons — não há mais CDN devicon
 em runtime.

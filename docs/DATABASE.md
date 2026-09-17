@@ -9,7 +9,6 @@
 
 - **Contratos (tipos):** `src/types/index.ts`
 - **Dados:** `src/data/*.ts` (+ `src/data/projects/{pessoais,profissionais}/*.ts`)
-- **Enriquecimento gerado:** `src/data/projects.enrichment.json` (ver [API.md](API.md))
 
 ## Diagrama entidade-relacionamento (lógico)
 
@@ -46,8 +45,7 @@
 ```
 
 As relações são por **convenção/valor** (não por FK): ex.: `Project.technologies`
-usa nomes que também aparecem em `ExpertiseItem.name`; `projects.enrichment.json`
-liga-se a `Project` pela `url` do campo `github`.
+usa nomes que também aparecem em `ExpertiseItem.name`.
 
 ## "Tabelas" (coleções) e colunas
 

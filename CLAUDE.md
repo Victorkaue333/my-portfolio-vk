@@ -29,7 +29,7 @@ src/
   hooks/        hooks reutilizáveis
   styles/       variables, reset, global, animations
   types/        interfaces compartilhadas (index.ts)
-scripts/        utilitários Node (enrich-projects.mjs)
+scripts/        utilitários Node (prerender-meta.mjs, optimize-images.mjs)
 docs/           documentação do projeto
 ```
 
@@ -38,7 +38,6 @@ docs/           documentação do projeto
 - `npm run dev` — dev server em `http://localhost:3000`
 - `npm run build` — checagem de tipos (`tsc -b`) + build Vite
 - `npm run preview` — serve o build de produção
-- `npm run projects:enrich` — busca READMEs dos repos e gera `src/data/projects.enrichment.json`
 - `npm run images:optimize` — gera variantes responsivas `.webp` + `src/data/image-variants.json` (rodar ao adicionar/trocar capa de projeto; commitar o resultado)
 
 Não há suíte de testes automatizados. "Testar" = `npm run build` passar sem
