@@ -364,6 +364,10 @@
 }
 
 /* ========== PROJECTS (PRO MAX) ========== */
+.home-github {
+    padding: 8rem 0 0;
+}
+
 .home-projects {
     padding: 8rem 0;
     background: radial-gradient(circle at bottom right, rgba(255, 122, 0, 0.05) 0%, transparent 50%);

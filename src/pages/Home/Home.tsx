@@ -23,6 +23,7 @@ import { ProjectCard } from '../../components/ui/ProjectCard/ProjectCard';
 import { Counter } from '../../components/ui/Counter/Counter';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { FloatingLines } from '../../components/ui/FloatingLines/FloatingLines';
+import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivity';
 import './Home.css';
 
 export default function Home() {
@@ -155,6 +156,16 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ========== GITHUB ACTIVITY ========== */}
+      <section id="github" className="home-github">
+        <div className="container">
+          <div className="section-header reveal-on-scroll">
+            <h2 className="section-title"><SiGithub aria-hidden="true" /> {t('github.title')}</h2>
+          </div>
+          <GithubActivity showRepos={false} />
         </div>
       </section>
 
