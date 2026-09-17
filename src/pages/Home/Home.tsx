@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { featuredProjects } from '../../data/projects';
 import { homeMetrics } from '../../data/profile';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useSeo } from '../../hooks/useSeo';
 import { Button } from '../../components/ui/Button/Button';
 import { Reveal } from '../../components/ui/Reveal/Reveal';
@@ -28,7 +27,6 @@ import './Home.css';
 
 export default function Home() {
   const { t } = useTranslation();
-  useScrollReveal();
 
   useSeo({
     title: t('seo.homeTitle'),

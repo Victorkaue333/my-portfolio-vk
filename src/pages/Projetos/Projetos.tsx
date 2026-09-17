@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { ProjectCard } from '../../components/ui/ProjectCard/ProjectCard';
 import { PageHero } from '../../components/ui/PageHero/PageHero';
 import { projects } from '../../data/projects';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useSeo } from '../../hooks/useSeo';
 import type { Project } from '../../types';
 import './Projetos.css';
@@ -12,7 +11,6 @@ import './Projetos.css';
 export default function Projetos() {
   const { t } = useTranslation();
   const [filter, setFilter] = useState<'todos' | 'pessoal' | 'real'>('todos');
-  useScrollReveal([filter]);
 
   useSeo({
     title: t('seo.projectsTitle'),

@@ -60,6 +60,9 @@ banco de dados.
   (ver DECISIONS.md).
 - Animações com `framer-motion` (transições de página em `AnimatePresence`).
 - Hooks locais em `src/hooks/` (ex.: `useScrollPosition`, `useLanguage`).
+- Scroll reveal: basta a classe `reveal-on-scroll` (ou `<Reveal>` para
+  delay/offset próprios); `components/Layout/ScrollReveal`, montado uma vez no
+  `App`, observa o DOM inteiro — páginas não chamam hook.
 
 ### Dados (`src/data/`)
 - Conteúdo como módulos TypeScript tipados (não há fetch em runtime).

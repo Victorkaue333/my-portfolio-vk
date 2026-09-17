@@ -8,7 +8,6 @@ import { Link, useParams } from 'react-router-dom';
 import { Button } from '../../components/ui/Button/Button';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { projects } from '../../data/projects';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useSeo } from '../../hooks/useSeo';
 import { ProjectCarousel } from '../../components/ui/ProjectCarousel/ProjectCarousel';
 import './ProjetoDetalhe.css';
@@ -23,7 +22,6 @@ export default function ProjetoDetalhe() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id || p.slug === id);
-  useScrollReveal();
 
   useSeo({
     title: project ? `${project.title} — Victor Kauê` : t('seo.notFoundTitle'),

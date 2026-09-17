@@ -10,7 +10,6 @@ import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { education } from '../../data/education';
 import { experiences } from '../../data/experiences';
 import { socialLinks } from '../../data/social';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useSeo } from '../../hooks/useSeo';
 import type { ExperienceRole } from '../../types';
 import './Sobre.css';
@@ -53,7 +52,6 @@ export default function Sobre() {
   const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState('intro');
   const [githubStatsError, setGithubStatsError] = useState(false);
-  useScrollReveal();
 
   useSeo({
     title: t('seo.aboutTitle'),

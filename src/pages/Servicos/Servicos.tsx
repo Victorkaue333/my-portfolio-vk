@@ -19,7 +19,6 @@ import { PageHero } from '../../components/ui/PageHero/PageHero';
 import { Reveal } from '../../components/ui/Reveal/Reveal';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { useLanguage } from '../../hooks/useLanguage';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useSeo } from '../../hooks/useSeo';
 import { testimonials } from '../../data/testimonials';
 import './Servicos.css';
@@ -184,7 +183,6 @@ function Faq() {
 export default function Servicos() {
   const { t } = useTranslation();
   const { lang } = useLanguage();
-  useScrollReveal();
 
   useSeo({
     title: t('seo.servicesTitle'),

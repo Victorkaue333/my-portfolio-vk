@@ -6,6 +6,7 @@ import { Footer } from './components/Layout/Footer/Footer';
 import { BackToTop } from './components/Layout/BackToTop/BackToTop';
 import ScrollToTop from './components/Layout/ScrollToTop/ScrollToTop';
 import { MobileNavbar } from './components/Layout/Navbar/MobileNavbar';
+import { ScrollReveal } from './components/Layout/ScrollReveal/ScrollReveal';
 import {
   Home,
   Sobre,
@@ -62,6 +63,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <ScrollReveal />
       <Navbar />
       <AppRoutes />
       <Footer />

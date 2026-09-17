@@ -5,7 +5,6 @@ import { CertificatePreview } from '../../components/ui/CertificatePreview/Certi
 import { PageHero } from '../../components/ui/PageHero/PageHero';
 import { Reveal } from '../../components/ui/Reveal/Reveal';
 import { certificateCategories, certificates } from '../../data/certificates';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { useSeo } from '../../hooks/useSeo';
 import './Certificados.css';
 
@@ -14,7 +13,6 @@ export default function Certificados() {
   const [activeCategory, setActiveCategory] = useState('todos');
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const closePreview = useCallback(() => setPreviewIndex(null), []);
-  useScrollReveal();
 
   useSeo({
     title: t('seo.certsTitle'),
