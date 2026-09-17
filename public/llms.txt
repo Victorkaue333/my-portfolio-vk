@@ -46,4 +46,5 @@ Stack principal:
 ## Optional
 
 - [Certificados](https://victor-kaue.vercel.app/certificados): certificações e cursos concluídos
+- [Setup & Ferramentas](https://victor-kaue.vercel.app/uses): editor, terminal, stack e ferramentas usadas no dia a dia
 - [Sitemap](https://victor-kaue.vercel.app/sitemap.xml): todas as URLs indexáveis

@@ -58,6 +58,9 @@ export function Footer() {
                   <Link to={link.path}>{t(`nav.${link.navKey}`)}</Link>
                 </li>
               ))}
+              <li>
+                <Link to="/uses">{t('uses.footerLink')}</Link>
+              </li>
             </ul>
           </div>
 

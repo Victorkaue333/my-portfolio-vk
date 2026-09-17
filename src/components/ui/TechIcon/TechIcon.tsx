@@ -6,7 +6,8 @@ import {
   FiPenTool, FiClipboard, FiMessageCircle, FiEdit3, FiDatabase, FiRefreshCw,
   FiShare2, FiBookOpen, FiPlayCircle,
 } from 'react-icons/fi';
-import { FaAws } from 'react-icons/fa';
+import { FaAws, FaWindows } from 'react-icons/fa';
+import { VscTerminalPowershell } from 'react-icons/vsc';
 import {
   SiPython, SiJavascript, SiTypescript, SiReact, SiVite, SiCss, SiHtml5,
   SiDjango, SiFastapi, SiPytorch, SiOpenai, SiPhp, SiLaravel, SiBootstrap,
@@ -14,6 +15,7 @@ import {
   SiGithub, SiGunicorn, SiNodedotjs, SiHtmx, SiDbeaver, SiBruno,
   SiNextdotjs, SiNestjs, SiTailwindcss, SiShadcnui, SiFramer, SiRedis,
   SiJest, SiSupabase, SiFlutter, SiLinux, SiSocketdotio,
+  SiClaude, SiGooglechrome, SiVercel, SiObsidian, SiTrello, SiGnubash, SiNpm,
 } from 'react-icons/si';
 
 interface TechEntry {
@@ -85,6 +87,15 @@ const TECH_ICONS: Record<string, TechEntry> = {
   DBeaver: { Icon: SiDbeaver, color: '#C9A66B' },
   Bruno: { Icon: SiBruno, color: '#F4AA41' },
   SEO: { Icon: FiSearch, color: '#8B5CF6' },
+  npm: { Icon: SiNpm, color: '#CB3837' },
+  Vercel: { Icon: SiVercel },
+  Claude: { Icon: SiClaude, color: '#D97757' },
+  'Git Bash': { Icon: SiGnubash, color: '#4EAA25' },
+  PowerShell: { Icon: VscTerminalPowershell, color: '#5391FE' },
+  'Google Chrome': { Icon: SiGooglechrome, color: '#4285F4' },
+  Obsidian: { Icon: SiObsidian, color: '#8B6CEF' },
+  Trello: { Icon: SiTrello, color: '#2E8BDB' },
+  Windows: { Icon: FaWindows, color: '#1E9BF0' },
 
   // Conceitos abstratos (herdam a cor do contexto)
   IA: { Icon: FiCpu },

@@ -13,7 +13,7 @@
 export type NavKey = 'home' | 'about' | 'projects' | 'services' | 'certificates' | 'contact';
 
 /** Prefixo das chaves `seo.<key>Title` / `seo.<key>Desc` do i18n. */
-export type SeoKey = 'home' | 'about' | 'projects' | 'services' | 'certs' | 'contact' | 'notFound';
+export type SeoKey = 'home' | 'about' | 'projects' | 'services' | 'certs' | 'contact' | 'uses' | 'notFound';
 
 export interface PageDef {
   /** Padrão do react-router (`/projetos/:id`, `*`). */
@@ -74,6 +74,13 @@ export const pages = [
     navKey: 'contact',
     seoKey: 'contact',
     sitemap: { changefreq: 'yearly', priority: 0.7 },
+  },
+  {
+    // Fora dos menus principais (sem navKey) — link no Footer.
+    path: '/uses',
+    entry: 'src/pages/Uses/Uses.tsx',
+    seoKey: 'uses',
+    sitemap: { changefreq: 'yearly', priority: 0.4 },
   },
   {
     path: '*',
