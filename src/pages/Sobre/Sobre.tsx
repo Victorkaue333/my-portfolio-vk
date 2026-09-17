@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FiBookOpen, FiBriefcase, FiCalendar, FiChevronRight, FiCode, FiMail, FiMapPin, FiTarget } from 'react-icons/fi';
 import { FaLinkedin } from 'react-icons/fa6';
 import { SiGithub } from 'react-icons/si';
@@ -11,6 +12,7 @@ import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { Timeline } from '../../components/ui/Timeline/Timeline';
 import { Spotify } from '../../components/ui/Spotify/Spotify';
 import { Terminal } from '../../components/ui/Terminal/Terminal';
+import { createTerminalResolver } from '../../components/ui/Terminal/commands';
 import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
 import { education } from '../../data/education';
 import { experiences } from '../../data/experiences';
@@ -82,8 +84,18 @@ function ExperienceBody({ role }: { role: ExperienceRole }) {
 
 export default function Sobre() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [activeSection, setActiveSection] = useState('intro');
   usePageSeo('about');
+
+  // O interpretador do terminal: lista fechada de comandos sobre os dados que
+  // a página já publica (ver Terminal/commands.tsx). Memoizado porque Sobre
+  // re-renderiza a cada passo do scroll-spy.
+  const resolveCommand = useMemo(
+    () => createTerminalResolver({ t, navigate, pathname }),
+    [t, navigate, pathname],
+  );
 
   // O scroll-spy desta página troca `activeSection` durante a rolagem, então
   // Sobre re-renderiza bastante. Sem memo, as saídas do terminal virariam um
@@ -370,6 +382,11 @@ export default function Sobre() {
                   label={t('about.terminalLabel')}
                   commands={terminalCommands}
                   outputs={terminalOutputs}
+                  interactive
+                  resolve={resolveCommand}
+                  hint={t('terminal.hint')}
+                  inputLabel={t('terminal.inputLabel')}
+                  busyLabel={t('terminal.busy')}
                 />
               </div>
               <TechMarquee />

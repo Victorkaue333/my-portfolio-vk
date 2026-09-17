@@ -1,9 +1,26 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { cn } from '../../../utils/cn';
 import './Terminal.css';
 
+/** Uma linha impressa. `content` aceita nó React para caber link em saída. */
+export interface TerminalLine {
+  type: 'command' | 'output' | 'error';
+  content: ReactNode;
+}
+
+/** O que um comando devolve: linhas para imprimir ou o pedido de limpar a tela. */
+export type TerminalResponse = { clear: true } | { lines: ReactNode[] };
+
+/**
+ * Traduz o texto digitado em resposta. É **sempre** uma função local sobre uma
+ * lista fechada de comandos (ver `commands.tsx`): nada aqui executa o que a
+ * pessoa digitou. Sem `eval`, sem `Function`, sem shell, sem chamada ao
+ * servidor com o texto de entrada.
+ */
+export type TerminalResolver = (input: string) => TerminalResponse | Promise<TerminalResponse>;
+
 export interface TerminalProps {
-  /** Comandos digitados, na ordem. */
+  /** Comandos digitados sozinhos na abertura, na ordem. */
   commands: string[];
   /** Linhas impressas depois do comando de índice N. */
   outputs?: Record<number, string[]>;
@@ -18,21 +35,30 @@ export interface TerminalProps {
   className?: string;
   /** Rótulo do bloco para leitores de tela. */
   label: string;
+  /** Libera o campo de digitação quando a abertura termina. */
+  interactive?: boolean;
+  /** Obrigatório com `interactive`: resolve o texto digitado. */
+  resolve?: TerminalResolver;
+  /** Rótulo acessível do campo de digitação. */
+  inputLabel?: string;
+  /** Linha de dica impressa quando o campo abre (ex.: 'digite "help"'). */
+  hint?: string;
+  /** Texto da linha de espera enquanto um comando assíncrono responde. */
+  busyLabel?: string;
 }
 
 type Phase = 'idle' | 'typing' | 'executing' | 'outputting' | 'pausing' | 'done';
 
-interface Line {
-  type: 'command' | 'output';
-  content: string;
-}
+/** Quantos comandos o histórico (↑/↓) guarda. */
+const HISTORY_LIMIT = 30;
 
 /**
  * Terminal — https://ui.aceternity.com/components/terminal
  *
- * Janela estilo macOS que digita comandos sozinha quando entra na tela.
+ * Janela estilo macOS que digita uma abertura sozinha quando entra na tela e,
+ * com `interactive`, entrega o prompt para quem está lendo.
  *
- * Três mudanças em relação ao oficial:
+ * Mudanças em relação ao oficial:
  *
  * 1. **Sem áudio.** O original carrega `/sounds/sound.ogg` e toca um clique a
  *    cada tecla. O `useAudio` inteiro foi removido — não há arquivo de som no
@@ -40,9 +66,11 @@ interface Line {
  * 2. **Sem framer-motion.** O `useInView` virou um `IntersectionObserver`;
  *    /sobre não carrega o pacote de animação.
  * 3. **Cores do tema.** O prompt oficial é azul/verde/âmbar do Tailwind; aqui
- *    sai do accent e dos neutros do design system (CSS ao lado). O
- *    destacador de sintaxe por token também saiu: as saídas aqui são texto
- *    corrido, não comandos com flags e caminhos.
+ *    sai do accent e dos neutros do design system (CSS ao lado).
+ * 4. **Interativo.** O componente oficial só reproduz uma sessão gravada.
+ *    Aqui, terminada a abertura, aparece um campo real: Enter executa,
+ *    ↑/↓ navegam o histórico, `clear` limpa. A interpretação é um `switch`
+ *    sobre lista fechada (`commands.tsx`) — o terminal **não** é um shell.
  *
  * O conteúdo completo já está no DOM ao fim da animação e, com movimento
  * reduzido, aparece inteiro de uma vez — nunca depende da digitação.
@@ -56,22 +84,35 @@ export function Terminal({
   initialDelay = 350,
   className,
   label,
+  interactive = false,
+  resolve,
+  inputLabel,
+  hint,
+  busyLabel = '…',
 }: TerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [inView, setInView] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const [lines, setLines] = useState<Line[]>([]);
+  const [lines, setLines] = useState<TerminalLine[]>([]);
   const [currentText, setCurrentText] = useState('');
   const [commandIdx, setCommandIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [outputIdx, setOutputIdx] = useState(-1);
   const [phase, setPhase] = useState<Phase>('idle');
 
+  // Estado do prompt interativo.
+  const [draft, setDraft] = useState('');
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyIdx, setHistoryIdx] = useState(-1);
+  const [busy, setBusy] = useState(false);
+
   const currentCommand = commands[commandIdx] ?? '';
   const currentOutputs = useMemo(() => outputs[commandIdx] ?? [], [outputs, commandIdx]);
   const isLastCommand = commandIdx === commands.length - 1;
+  const live = interactive && phase === 'done';
 
   useEffect(() => {
     setReduceMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -102,7 +143,7 @@ export function Terminal({
 
     // Movimento reduzido: a sessão inteira aparece de uma vez.
     if (reduceMotion) {
-      const all: Line[] = [];
+      const all: TerminalLine[] = [];
       commands.forEach((command, i) => {
         all.push({ type: 'command', content: command });
         (outputs[i] ?? []).forEach((out) => all.push({ type: 'output', content: out }));
@@ -171,11 +212,78 @@ export function Terminal({
     return () => clearTimeout(t);
   }, [phase, delayBetweenCommands]);
 
+  // A dica entra uma única vez, quando o prompt abre.
+  const hintDone = useRef(false);
+  useEffect(() => {
+    if (!live || !hint || hintDone.current) return;
+    hintDone.current = true;
+    setLines((prev) => [...prev, { type: 'output', content: hint }]);
+  }, [live, hint]);
+
   // Mantém a última linha à vista sem rolar a página.
   useEffect(() => {
     const el = contentRef.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [lines, phase]);
+  }, [lines, phase, busy]);
+
+  const submit = useCallback(
+    (raw: string) => {
+      const value = raw.trim();
+      setDraft('');
+      setHistoryIdx(-1);
+      if (!resolve) return;
+
+      // Enter vazio só ecoa o prompt, como em um shell de verdade.
+      setLines((prev) => [...prev, { type: 'command', content: value }]);
+      if (!value) return;
+
+      setHistory((prev) => [value, ...prev.filter((h) => h !== value)].slice(0, HISTORY_LIMIT));
+
+      const apply = (res: TerminalResponse) => {
+        if ('clear' in res) {
+          setLines([]);
+          return;
+        }
+        setLines((prev) => [...prev, ...res.lines.map((content) => ({ type: 'output' as const, content }))]);
+      };
+
+      const result = resolve(value);
+      if (result instanceof Promise) {
+        setBusy(true);
+        result
+          .then(apply)
+          .catch(() => setLines((prev) => [...prev, { type: 'error', content: busyLabel }]))
+          .finally(() => setBusy(false));
+      } else {
+        apply(result);
+      }
+    },
+    [resolve, busyLabel],
+  );
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowUp') {
+      if (history.length === 0) return;
+      e.preventDefault();
+      const next = Math.min(historyIdx + 1, history.length - 1);
+      setHistoryIdx(next);
+      setDraft(history[next] ?? '');
+    } else if (e.key === 'ArrowDown') {
+      if (historyIdx < 0) return;
+      e.preventDefault();
+      const next = historyIdx - 1;
+      setHistoryIdx(next);
+      setDraft(next < 0 ? '' : history[next] ?? '');
+    }
+  };
+
+  // Clique em qualquer lugar do corpo devolve o foco ao campo — menos quando a
+  // pessoa está selecionando texto para copiar.
+  const focusInput = () => {
+    if (!live) return;
+    if (window.getSelection()?.toString()) return;
+    inputRef.current?.focus();
+  };
 
   const prompt = (
     <span className="terminal-prompt" aria-hidden="true">
@@ -188,7 +296,7 @@ export function Terminal({
   return (
     <div
       ref={containerRef}
-      className={cn('terminal', className)}
+      className={cn('terminal', interactive && 'is-interactive', className)}
       role="group"
       aria-label={label}
     >
@@ -200,7 +308,12 @@ export function Terminal({
           <span className="terminal-bar-title">{username} — bash</span>
         </div>
 
-        <div ref={contentRef} className="terminal-body">
+        <div
+          ref={contentRef}
+          className="terminal-body"
+          onClick={focusInput}
+          {...(live ? { role: 'log', 'aria-live': 'polite' as const } : {})}
+        >
           {lines.map((line, i) => (
             <p key={i} className={`terminal-line is-${line.type}`}>
               {line.type === 'command' ? (
@@ -222,7 +335,34 @@ export function Terminal({
             </p>
           )}
 
-          {(phase === 'done' || phase === 'pausing' || phase === 'outputting') && (
+          {busy && <p className="terminal-line is-output terminal-busy">{busyLabel}</p>}
+
+          {live && !busy && (
+            <form
+              className="terminal-line is-command terminal-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                submit(draft);
+              }}
+            >
+              {prompt}
+              <input
+                ref={inputRef}
+                className="terminal-input"
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                onKeyDown={onKeyDown}
+                aria-label={inputLabel ?? label}
+                autoComplete="off"
+                autoCapitalize="off"
+                autoCorrect="off"
+                spellCheck={false}
+                enterKeyHint="go"
+              />
+            </form>
+          )}
+
+          {!live && (phase === 'done' || phase === 'pausing' || phase === 'outputting') && (
             <p className="terminal-line is-command">
               {prompt}
               <span className="terminal-cursor" aria-hidden="true" />

@@ -129,3 +129,88 @@
         padding: 0.85rem;
     }
 }
+
+/* ---------- Prompt interativo ----------
+   Só existe com a prop `interactive`. O terminal decorativo continua
+   exatamente como estava. */
+
+/* A sessão cresce enquanto a pessoa digita — mais altura para não ler tudo
+   por uma fresta, e o scroll é interno (a página não se mexe). */
+.terminal.is-interactive .terminal-body {
+    height: 21rem;
+    cursor: text;
+}
+
+.terminal-line.is-error {
+    color: color-mix(in srgb, var(--accent-color) 70%, var(--text-muted-color));
+}
+
+.terminal-busy {
+    opacity: 0.7;
+}
+
+/* O form é a própria linha do prompt: label do prompt à esquerda, campo
+   ocupando o resto. */
+.terminal-form {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+}
+
+.terminal-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    caret-color: var(--accent-color);
+}
+
+/* O contorno de foco fica na janela inteira: um anel em volta de um campo sem
+   borda, dentro de um terminal, lê como erro de renderização. */
+.terminal.is-interactive:focus-within .terminal-window {
+    border-color: color-mix(in srgb, var(--accent-color) 45%, var(--border-color));
+}
+
+/* Links das saídas (projeto, GitHub, Spotify, contato). */
+.terminal-body a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    border-radius: 2px;
+}
+
+.terminal-body a:hover,
+.terminal-body a:focus-visible {
+    color: var(--accent-hover);
+}
+
+/* Bloco de saída com indentação (lista de projetos, stack por categoria). */
+.terminal-out-group {
+    display: block;
+}
+
+.terminal-out-key {
+    color: var(--text-color);
+}
+
+.terminal-out-index {
+    color: var(--text-dim-color);
+}
+
+@media (max-width: 480px) {
+    .terminal.is-interactive .terminal-body {
+        height: 17rem;
+    }
+
+    /* Abaixo de 16px o iOS dá zoom no campo ao focar e a página sai do lugar
+       (regra 24). O resto da sessão segue em 0.75rem. */
+    .terminal-input {
+        font-size: 16px;
+    }
+}
