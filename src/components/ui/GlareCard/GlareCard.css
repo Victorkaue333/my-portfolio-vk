@@ -1,0 +1,77 @@
+/* Glare Card — reflexo que segue o cursor.
+   Adaptado de https://ui.aceternity.com/components/glare-card */
+
+.glare-card {
+    position: relative;
+    height: 100%;
+    border-radius: var(--glare-radius, 1.5rem);
+    perspective: 900px;
+
+    --glare-x: 50%;
+    --glare-y: 50%;
+    --glare-rx: 0deg;
+    --glare-ry: 0deg;
+    --glare-opacity: 0;
+}
+
+.glare-card-inner {
+    position: relative;
+    height: 100%;
+    border-radius: inherit;
+    transform: rotateY(var(--glare-rx)) rotateX(var(--glare-ry));
+    transform-style: preserve-3d;
+    transition: transform var(--transition-normal);
+    will-change: transform;
+}
+
+.glare-card-inner > :first-child {
+    border-radius: inherit;
+}
+
+/* Camada do reflexo: brilho neutro no ponto do cursor + um véu laranja
+   fraco vindo do accent. `soft-light` mantém o card legível — o reflexo
+   clareia, não lava. */
+.glare-card-sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: var(--glare-opacity);
+    transition: opacity var(--transition-normal);
+    mix-blend-mode: soft-light;
+    background:
+        radial-gradient(
+            farthest-corner circle at var(--glare-x) var(--glare-y),
+            rgba(255, 255, 255, 0.35) 8%,
+            rgba(255, 255, 255, 0.14) 28%,
+            rgba(255, 255, 255, 0) 70%
+        ),
+        radial-gradient(
+            farthest-corner circle at var(--glare-x) var(--glare-y),
+            color-mix(in srgb, var(--accent-color) 22%, transparent) 0%,
+            transparent 55%
+        );
+    z-index: 3;
+}
+
+.glare-card.is-interactive:hover {
+    --glare-opacity: 0.55;
+}
+
+/* Tema claro: fundo já é claro, então o brilho branco precisa ser menor
+   para não apagar o conteúdo do card. */
+html.light .glare-card.is-interactive:hover {
+    --glare-opacity: 0.4;
+}
+
+/* Toque e movimento reduzido: sem inclinação e sem reflexo. O card continua
+   com o hover/foco próprio definido em Home.css. */
+@media (hover: none), (prefers-reduced-motion: reduce) {
+    .glare-card-inner {
+        transform: none;
+        transition: none;
+    }
+    .glare-card-sheen {
+        display: none;
+    }
+}

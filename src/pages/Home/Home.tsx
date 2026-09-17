@@ -29,6 +29,7 @@ import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivit
 import { TextGenerate } from '../../components/ui/TextGenerate/TextGenerate';
 import { Spotlight } from '../../components/ui/Spotlight/Spotlight';
 import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
+import { GlareCard } from '../../components/ui/GlareCard/GlareCard';
 import { srcFor, srcSetFor } from '../../utils/imageSrcSet';
 import './Home.css';
 
@@ -211,6 +212,9 @@ export default function Home() {
 
               return (
                 <Reveal key={project.id} delay={i * 0.1} width="100%" height="100%">
+                  {/* Glare Card só aqui: são os destaques da Home. Os cards de
+                      /projetos seguem sem reflexo (regra 13/18). */}
+                  <GlareCard radius="1.5rem">
                   <Link to={project.detailPath} className="featured-card">
                     <div className="featured-image">
                       <img
@@ -260,6 +264,7 @@ export default function Home() {
                       </div>
                     </div>
                   </Link>
+                  </GlareCard>
                 </Reveal>
               );
             })}
