@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiBookOpen, FiBriefcase, FiCalendar, FiChevronRight, FiCode, FiMail, FiMapPin, FiTarget } from 'react-icons/fi';
 import { FaLinkedin } from 'react-icons/fa6';
@@ -70,6 +70,44 @@ export default function Sobre() {
     { id: 'github', label: 'GitHub', icon: <SiGithub size={16} aria-hidden="true" /> },
   ];
 
+  // Scroll-spy: ativa a última seção cujo topo já passou da linha de leitura
+  // (35% da viewport). No fim da página força a última, que pode ser curta
+  // demais para alcançar a linha.
+  useEffect(() => {
+    const ids = menuItems.map((item) => item.id);
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.35;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      let current = ids[0] ?? 'intro';
+      if (atBottom) {
+        current = ids[ids.length - 1] ?? current;
+      } else {
+        for (const id of ids) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top <= line) current = id;
+        }
+      }
+      setActiveSection(current);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -80,7 +118,6 @@ export default function Sobre() {
         top: offsetPosition,
         behavior: 'smooth'
       });
-      setActiveSection(id);
     }
   };
 
