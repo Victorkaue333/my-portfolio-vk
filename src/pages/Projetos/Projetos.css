@@ -75,7 +75,7 @@
 .projects-section-title {
     font-family: var(--font-secondary);
     font-size: 1.6rem;
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: -0.02em;
     margin: 0;
 }
@@ -91,7 +91,7 @@
     background: rgba(255, 255, 255, 0.06);
     color: var(--text-muted-color);
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .projects-grid {

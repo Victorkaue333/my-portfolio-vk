@@ -145,7 +145,7 @@
     gap: 0.9rem;
     width: min(340px, 72vw);
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.12em;
     font-variant-numeric: tabular-nums;
     color: var(--text-muted-color);
@@ -273,7 +273,7 @@
 
 .approach-num {
     font-size: 3rem;
-    font-weight: 800;
+    font-weight: 600;
     line-height: 1;
     color: transparent;
     -webkit-text-stroke: 1.5px rgba(255, 122, 0, 0.4);
@@ -370,7 +370,7 @@
     justify-content: center;
     border-radius: 50%;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--color-primary-400);
     background: rgba(255, 122, 0, 0.12);
     border: 1px solid rgba(255, 122, 0, 0.28);

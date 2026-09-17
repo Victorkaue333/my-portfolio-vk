@@ -37,7 +37,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 1.8rem;
     font-family: var(--font-secondary);
     color: var(--text-color);
@@ -61,7 +61,7 @@
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--text-color);
-    font-weight: 800;
+    font-weight: 600;
     font-size: 0.85rem;
 }
 
@@ -125,7 +125,7 @@
     font-size: 1.15rem;
     color: var(--text-color);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 1.5rem;
     transition: color var(--transition-normal);
 }

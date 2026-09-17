@@ -158,7 +158,7 @@
     align-items: center;
     gap: 0.4rem;
     color: #fff;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.85rem;
     padding: 0.5rem 1.2rem;
     border: 1px solid var(--accent-color);
@@ -175,7 +175,7 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--accent-color);
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 0.5rem;
 }
 
@@ -212,7 +212,7 @@
     border-radius: var(--radius-full);
     color: var(--text-dim-color);
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .no-results {
@@ -232,7 +232,7 @@
     color: #ffb16f;
     background: rgba(255, 122, 0, 0.1);
     font-size: 0.82rem;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .reset-filter-btn:hover {

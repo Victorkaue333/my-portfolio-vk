@@ -43,7 +43,7 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--accent-color);
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 0.3rem;
 }
 
@@ -149,7 +149,7 @@
     background: var(--gradient-primary);
     color: #fff;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
     transition: var(--transition-ui-fast);
 }

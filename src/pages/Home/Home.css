@@ -55,8 +55,8 @@
     display: block;
     font-size: clamp(2rem, 8vw, 4.8rem); /* Slightly smaller minimum for mobile */
     line-height: 0.95;
-    font-weight: 800;
-    letter-spacing: -0.06em;
+    font-weight: 600;
+    letter-spacing: -0.05em;
     font-family: var(--font-secondary);
 }
 
@@ -174,7 +174,7 @@
     animation: rotate 40s linear reverse infinite;
 }
 
-/* ========== NÚMEROS ==========
+/* ========== NÚMEROS (visual original da faixa "Impacto") ==========
    Selo à esquerda, números alinhados à esquerda, rótulo em caixa alta.
    Cada item é link (contexto no title); o hover só acende o número. */
 .results-strip {
@@ -199,7 +199,7 @@
     margin: 0;
     font-family: inherit;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--accent-color);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -225,7 +225,7 @@
 
 .result-value {
     font-size: 3.5rem;
-    font-weight: 800;
+    font-weight: 600;
     color: #ffffff;
     font-family: var(--font-secondary);
     line-height: 1;

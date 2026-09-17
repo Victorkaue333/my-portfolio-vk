@@ -17,6 +17,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
+    letter-spacing: -0.01em;
     overflow-x: hidden;
     font-size: 1rem; /* 16px minimum — ui-ux-pro-max: readable-font-size */
 }

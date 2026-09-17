@@ -30,7 +30,7 @@
 .pd-eyebrow {
     display: inline-block;
     font-size: 0.78rem;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--accent-color);
@@ -43,7 +43,7 @@
     gap: 0.75rem;
     font-family: var(--font-secondary);
     font-size: clamp(1.5rem, 3vw, 1.9rem);
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: -0.02em;
     color: var(--text-color);
     margin-bottom: var(--spacing-md);
@@ -71,7 +71,7 @@
     border-radius: var(--radius-md);
     color: var(--accent-color);
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 1.25rem;
@@ -121,7 +121,7 @@
 
 .pd-stack-more {
     color: var(--text-dim-color);
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .pd-actions {
@@ -170,7 +170,7 @@
     justify-content: center;
     font-family: var(--font-secondary);
     font-size: clamp(4rem, 12vw, 7rem);
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: -0.04em;
     color: var(--accent-color);
     background: var(--gradient-surface);
@@ -285,7 +285,7 @@
 
 .pd-subtitle {
     font-size: 1.15rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-muted-color);
     margin-bottom: var(--spacing-md);
 }
@@ -326,7 +326,7 @@
 }
 
 .arch-node span {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.05rem;
     margin-bottom: 0.25rem;
 }
@@ -361,7 +361,7 @@
 
 .decision-label {
     display: inline-block;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-color);
     margin-right: 0.5rem;
 }
@@ -392,7 +392,7 @@
 }
 
 .tech-card-v2 span {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.9rem;
 }
 

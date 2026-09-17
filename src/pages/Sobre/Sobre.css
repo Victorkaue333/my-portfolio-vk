@@ -136,7 +136,7 @@
     font-size: 1.2rem;
     margin-bottom: 0.25rem;
     font-family: var(--font-secondary);
-    font-weight: 800;
+    font-weight: 600;
     white-space: nowrap;
 }
 
@@ -452,7 +452,7 @@
 
 .li-exp-monogram {
     font-family: var(--font-secondary);
-    font-weight: 800;
+    font-weight: 600;
     font-size: 1.05rem;
     color: var(--color-primary-500);
     letter-spacing: -0.02em;
@@ -465,7 +465,7 @@
 
 .li-exp-primary {
     font-size: 1.02rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-color);
     line-height: 1.3;
 }
@@ -528,7 +528,7 @@
 
 .li-exp-role-title {
     font-size: 0.95rem;
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text-color);
     line-height: 1.3;
 }
@@ -561,7 +561,7 @@
     position: absolute;
     left: 0;
     color: var(--accent-color);
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .li-exp-skills {

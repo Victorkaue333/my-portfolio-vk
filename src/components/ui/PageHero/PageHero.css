@@ -36,7 +36,7 @@
 .page-hero-main {
     color: #ffffff;
     font-size: clamp(2rem, 4.8vw, 3.6rem);
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: -0.03em;
     overflow-wrap: anywhere;
     word-break: break-word;
@@ -45,7 +45,7 @@
 .page-hero-accent {
     color: #ff7a00;
     font-size: clamp(2rem, 5vw, 3.7rem);
-    font-weight: 800;
+    font-weight: 600;
     letter-spacing: -0.03em;
     text-shadow: 0 0 26px rgba(255, 122, 0, 0.24);
     overflow-wrap: anywhere;
