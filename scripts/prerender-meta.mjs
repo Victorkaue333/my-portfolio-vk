@@ -4,62 +4,24 @@
 // para que cada URL compartilhe corretamente. Usuários e Google recebem a SPA
 // normal (o hook useSeo mantém o head consistente em runtime).
 //
-// Sem dependências: puro Node (fs/path). Roda no build local e no Vercel.
+// Rotas, títulos e sitemap vêm de src/config/prerender.ts — as mesmas fontes
+// do app (registro de páginas, seo PT, dados de projetos). O `runnerImport`
+// do Vite transforma o TS na hora, sem passo de compilação extra.
 
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { runnerImport } from 'vite';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = join(__dirname, '..', 'dist');
-const SITE = 'https://victor-kaue.vercel.app';
-const DEFAULT_IMAGE = `${SITE}/images/fotos-projetos-pessoais/vk-portifolio/victor_kaue.webp`;
 
-// Espelha src/i18n.ts (seo.*, PT — idioma padrão indexado).
-const routes = [
-  {
-    path: '/',
-    entry: 'src/pages/Home/Home.tsx',
-    title: 'Victor Kauê | Desenvolvedor Full Stack',
-    description:
-      'Portfólio de Victor Kauê — desenvolvedor backend/full-stack com foco em Python, Django, APIs escaláveis e sistemas web modernos, da ideia ao deploy.',
-  },
-  {
-    path: '/sobre',
-    entry: 'src/pages/Sobre/Sobre.tsx',
-    title: 'Sobre — Victor Kauê',
-    description:
-      'Conheça Victor Kauê: desenvolvedor backend/full-stack — trajetória técnica, experiência profissional, formação e stack de tecnologias.',
-  },
-  {
-    path: '/projetos',
-    entry: 'src/pages/Projetos/Projetos.tsx',
-    title: 'Projetos — Victor Kauê',
-    description:
-      'Projetos selecionados de Victor Kauê: sistemas web, APIs REST, dashboards e aplicações feitas com Python, Django, React e TypeScript.',
-  },
-  {
-    path: '/servicos',
-    entry: 'src/pages/Servicos/Servicos.tsx',
-    title: 'Serviços — Victor Kauê',
-    description:
-      'Serviços de Victor Kauê: sistemas customizados, desenvolvimento web, APIs REST e consultoria tech — robustos, escaláveis e de alta performance.',
-  },
-  {
-    path: '/certificados',
-    entry: 'src/pages/Certificados/Certificados.tsx',
-    title: 'Certificados — Victor Kauê',
-    description:
-      'Certificações e cursos concluídos por Victor Kauê em backend, frontend e engenharia de software.',
-  },
-  {
-    path: '/contato',
-    entry: 'src/pages/Contato/Contato.tsx',
-    title: 'Contato — Victor Kauê',
-    description:
-      'Vamos conversar sobre seu projeto. Fale com Victor Kauê e transforme sua ideia em um produto digital robusto e escalável.',
-  },
-];
+const {
+  module: { prerenderRoutes: routes, sitemapEntries, SITE_URL: SITE },
+} = await runnerImport(join(__dirname, '..', 'src', 'config', 'prerender.ts'), {
+  configFile: false,
+  logLevel: 'warn',
+});
 
 const escapeHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -158,7 +120,30 @@ function inlineEntryCss(html) {
   );
 }
 
-function applyMeta(html, { path, title, description, entry }, manifest) {
+/** sitemap.xml gerado a cada build — rota ou projeto novo entra sozinho. */
+function sitemapXml(entries) {
+  const urls = entries.map(({ loc, changefreq, priority }) =>
+    [
+      '  <url>',
+      `    <loc>${escapeHtml(loc)}</loc>`,
+      changefreq ? `    <changefreq>${changefreq}</changefreq>` : null,
+      `    <priority>${priority.toFixed(1)}</priority>`,
+      '  </url>',
+    ]
+      .filter(Boolean)
+      .join('\n'),
+  );
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<!-- Gerado por scripts/prerender-meta.mjs a partir de src/config/prerender.ts. -->',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...urls,
+    '</urlset>',
+    '',
+  ].join('\n');
+}
+
+function applyMeta(html, { path, title, description, entry, image }, manifest) {
   const url = `${SITE}${path === '/' ? '/' : path}`;
   let out = path === '/' ? html : stripHomePreload(html);
 
@@ -169,12 +154,13 @@ function applyMeta(html, { path, title, description, entry }, manifest) {
   out = setMetaContent(out, 'property', 'og:title', title);
   out = setMetaContent(out, 'property', 'og:description', description);
   out = setMetaContent(out, 'property', 'og:url', url);
-  out = setMetaContent(out, 'property', 'og:image', DEFAULT_IMAGE);
+  out = setMetaContent(out, 'property', 'og:image', image);
+  out = setMetaContent(out, 'property', 'og:image:alt', title);
 
   out = setMetaContent(out, 'name', 'twitter:title', title);
   out = setMetaContent(out, 'name', 'twitter:description', description);
   out = setMetaContent(out, 'name', 'twitter:url', url);
-  out = setMetaContent(out, 'name', 'twitter:image', DEFAULT_IMAGE);
+  out = setMetaContent(out, 'name', 'twitter:image', image);
 
   out = injectHeadLinks(out, routePreloadLinks(manifest, entry));
 
@@ -206,6 +192,9 @@ function run() {
   }
 
   console.log(`[prerender-meta] ${routes.length} rotas geradas.`);
+
+  writeFileSync(join(DIST, 'sitemap.xml'), sitemapXml(sitemapEntries), 'utf8');
+  console.log(`[prerender-meta] sitemap.xml com ${sitemapEntries.length} URLs.`);
 }
 
 run();

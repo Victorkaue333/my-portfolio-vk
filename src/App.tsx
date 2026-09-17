@@ -7,16 +7,7 @@ import { BackToTop } from './components/Layout/BackToTop/BackToTop';
 import ScrollToTop from './components/Layout/ScrollToTop/ScrollToTop';
 import { MobileNavbar } from './components/Layout/Navbar/MobileNavbar';
 import { ScrollReveal } from './components/Layout/ScrollReveal/ScrollReveal';
-import {
-  Home,
-  Sobre,
-  Projetos,
-  ProjetoDetalhe,
-  Servicos,
-  Certificados,
-  Contato,
-  NaoEncontrado,
-} from './routes';
+import { routes } from './routes';
 import './App.css';
 
 /* Sem spinner: loaders davam sensação de site lento. Na navegação a página
@@ -44,14 +35,9 @@ function AppRoutes() {
       <Suspense fallback={<PagePlaceholder />}>
         <div key={location.pathname} className="page-motion-wrapper">
           <Routes location={location}>
-            <Route path="/" element={<Home />} />
-            <Route path="/sobre" element={<Sobre />} />
-            <Route path="/projetos" element={<Projetos />} />
-            <Route path="/projetos/:id" element={<ProjetoDetalhe />} />
-            <Route path="/servicos" element={<Servicos />} />
-            <Route path="/certificados" element={<Certificados />} />
-            <Route path="/contato" element={<Contato />} />
-            <Route path="*" element={<NaoEncontrado />} />
+            {routes.map(({ path, Component }) => (
+              <Route key={path} path={path} element={<Component />} />
+            ))}
           </Routes>
         </div>
       </Suspense>

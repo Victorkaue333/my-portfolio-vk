@@ -52,6 +52,8 @@ banco de dados.
 
 ### Estado / infraestrutura de cliente
 - Roteamento SPA com `react-router-dom` (lazy loading + `Suspense` por rota).
+  Fonte única das páginas: `src/config/pages.ts` — alimenta `<Routes>`, menus,
+  `usePageSeo`, prerender de `<head>` e `sitemap.xml` (ver ADR-0009).
 - Tema claro/escuro em `src/theme/ThemeProvider.tsx` (contexto React,
   persistido em `localStorage`; tokens do tema claro em
   `styles/light-overrides.css`).

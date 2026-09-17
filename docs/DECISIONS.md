@@ -33,6 +33,31 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 
 ---
 
+## ADR-0009 — Registro único de páginas (`src/config/pages.ts`)
+
+- **Data:** 2026-09-17
+- **Contexto:** A lista de rotas estava repetida em ~8 lugares: `<Routes>` do
+  `App`, `routes.ts`, `Navbar` (ícone + chave i18n), `MobileNavbar`, `Footer`,
+  `data/social.ts` (`navLinks`), `prerender-meta.mjs` (títulos PT copiados do
+  i18n + regex sobre os arquivos de projeto) e `public/sitemap.xml` manual.
+  Página ou projeto novo exigia editar todos — e o SEO do prerender divergia do
+  runtime sem aviso.
+- **Decisão:** `src/config/pages.ts` (dados puros: `path`, `entry`, `navKey`,
+  `seoKey`, `sitemap`) é a fonte única. `routes.ts` deriva `lazy()`/prefetch via
+  `import.meta.glob`; menus usam `navPages` + `config/navIcons.ts`; páginas
+  chamam `usePageSeo(key)`. Strings `seo.*` saíram para `src/locales/seo.ts` (hoje `src/locales/<idioma>/seo.ts`, ver ADR-0011) e
+  as funções de SEO de projeto para `src/utils/projectSeo.ts`.
+  `src/config/prerender.ts` monta rotas e sitemap a partir dessas fontes, e o
+  `prerender-meta.mjs` o carrega com `runnerImport` do Vite. `sitemap.xml` passa
+  a ser gerado em `dist/`.
+- **Alternativas consideradas:** plugin Vite no `vite.config.ts` (importar dados
+  do `src/` no config reiniciaria o dev server a cada edição de conteúdo); JSON
+  compartilhado (perde tipagem e não cobre dados de projeto); manter as cópias.
+- **Consequências:** Página nova = 1 entrada em `pages.ts` (+ ícone e chaves
+  i18n, cobrados pelo `tsc`). O prerender depende de `vite` (já devDependency) e
+  `src/config/prerender.ts` não pode importar nada que dependa do navegador.
+  Saída verificada idêntica à anterior (17 rotas, 0 diferenças).
+
 ## ADR-0008 — CSS global inline e modulepreload da rota no HTML pós-build
 
 - **Data:** 2026-09-17

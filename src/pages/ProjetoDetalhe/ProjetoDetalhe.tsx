@@ -9,6 +9,7 @@ import { Button } from '../../components/ui/Button/Button';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { projects } from '../../data/projects';
 import { useSeo } from '../../hooks/useSeo';
+import { projectOgImage, projectSeoDescription, projectSeoTitle } from '../../utils/projectSeo';
 import { ProjectCarousel } from '../../components/ui/ProjectCarousel/ProjectCarousel';
 import './ProjetoDetalhe.css';
 
@@ -22,12 +23,12 @@ export default function ProjetoDetalhe() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const project = projects.find((p) => p.id === id || p.slug === id);
-
+  // Mesmas funções do prerender (src/config/prerender.ts).
   useSeo({
-    title: project ? `${project.title} — Victor Kauê` : t('seo.notFoundTitle'),
-    description: project ? (project.shortDescription || project.description) : t('seo.notFoundDesc'),
-    path: `/projetos/${id ?? ''}`,
-    image: project?.image,
+    title: project ? projectSeoTitle(project) : t('seo.notFoundTitle'),
+    description: project ? projectSeoDescription(project) : t('seo.notFoundDesc'),
+    path: `/projetos/${project?.slug ?? id ?? ''}`,
+    image: project ? projectOgImage(project.slug ?? project.id) : undefined,
     noindex: !project,
   });
 

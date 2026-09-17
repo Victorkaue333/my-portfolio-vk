@@ -1,40 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import {
-    FiAward,
-    FiBriefcase,
     FiDownload,
-    FiHome,
-    FiLayers,
-    FiMail,
     FiMoon,
     FiSun,
-    FiUser,
 } from 'react-icons/fi';
 import { Link, NavLink } from 'react-router-dom';
-import { navLinks } from '../../../data/social';
+import { navIcons } from '../../../config/navIcons';
+import { navPages } from '../../../config/pages';
 import { prefetchRoute } from '../../../routes';
 import { useScrollPosition } from '../../../hooks/useScrollPosition';
-import { useTheme } from '../../../theme/ThemeProvider';
 import { LanguageSwitcher } from '../../ui/LanguageSwitcher/LanguageSwitcher';
+import { useTheme } from '../../../theme/ThemeProvider';
 import './Navbar.css';
-
-const navIconByPath = {
-  '/': FiHome,
-  '/sobre': FiUser,
-  '/projetos': FiBriefcase,
-  '/servicos': FiLayers,
-  '/certificados': FiAward,
-  '/contato': FiMail,
-} as const;
-
-const navKeyByPath = {
-  '/': 'home',
-  '/sobre': 'about',
-  '/projetos': 'projects',
-  '/servicos': 'services',
-  '/certificados': 'certificates',
-  '/contato': 'contact',
-} as const;
 
 export function Navbar() {
   const { t } = useTranslation();
@@ -51,10 +28,9 @@ export function Navbar() {
 
         <div className="nav-menu-wrapper">
           <ul className="nav-menu">
-            {navLinks.map((link) => {
-              const Icon = navIconByPath[link.path as keyof typeof navIconByPath] || FiHome;
-              const navKey = navKeyByPath[link.path as keyof typeof navKeyByPath] || 'home';
-              const label = t(`nav.${navKey}`);
+            {navPages.map((link) => {
+              const Icon = navIcons[link.navKey];
+              const label = t(`nav.${link.navKey}`);
 
               return (
                 <li key={link.path}>
@@ -77,6 +53,8 @@ export function Navbar() {
         </div>
 
         <div className="navbar-actions">
+          <LanguageSwitcher />
+
           <button
             className="btn-theme"
             onClick={(e) => toggleTheme(e.currentTarget)}
@@ -84,8 +62,6 @@ export function Navbar() {
           >
             {theme === 'dark' ? <FiSun size={16} aria-hidden="true" /> : <FiMoon size={16} aria-hidden="true" />}
           </button>
-
-          <LanguageSwitcher />
 
           <a
             href="/docs/Curriculo/Curriculo_Victor_Kaue.pdf"

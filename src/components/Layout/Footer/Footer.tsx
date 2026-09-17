@@ -3,7 +3,8 @@ import { FaLinkedin } from 'react-icons/fa6';
 import { FiMail } from 'react-icons/fi';
 import { SiGithub, SiWhatsapp } from 'react-icons/si';
 import { Link } from 'react-router-dom';
-import { navLinks, socialLinks } from '../../../data/social';
+import { navPages } from '../../../config/pages';
+import { socialLinks } from '../../../data/social';
 import './Footer.css';
 
 export function Footer() {
@@ -15,15 +16,6 @@ export function Footer() {
     linkedin: FaLinkedin,
     github: SiGithub,
     whatsapp: SiWhatsapp,
-  } as const;
-
-  const navKeyByPath = {
-    '/': 'home',
-    '/sobre': 'about',
-    '/projetos': 'projects',
-    '/servicos': 'services',
-    '/certificados': 'certificates',
-    '/contato': 'contact',
   } as const;
 
   return (
@@ -61,9 +53,9 @@ export function Footer() {
           <div className="footer-nav">
             <p className="footer-label">Navegação</p>
             <ul>
-              {navLinks.map((link) => (
+              {navPages.map((link) => (
                 <li key={link.path}>
-                  <Link to={link.path}>{t(`nav.${navKeyByPath[link.path as keyof typeof navKeyByPath] || 'home'}`)}</Link>
+                  <Link to={link.path}>{t(`nav.${link.navKey}`)}</Link>
                 </li>
               ))}
             </ul>

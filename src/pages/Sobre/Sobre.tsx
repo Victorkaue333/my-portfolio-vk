@@ -10,7 +10,7 @@ import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { education } from '../../data/education';
 import { experiences } from '../../data/experiences';
 import { socialLinks } from '../../data/social';
-import { useSeo } from '../../hooks/useSeo';
+import { usePageSeo } from '../../hooks/useSeo';
 import type { ExperienceRole } from '../../types';
 import './Sobre.css';
 
@@ -52,12 +52,7 @@ export default function Sobre() {
   const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState('intro');
   const [githubStatsError, setGithubStatsError] = useState(false);
-
-  useSeo({
-    title: t('seo.aboutTitle'),
-    description: t('seo.aboutDesc'),
-    path: '/sobre',
-  });
+  usePageSeo('about');
 
   const menuItems = [
     { id: 'intro', label: t('about.title'), icon: <FiTarget size={16} /> },

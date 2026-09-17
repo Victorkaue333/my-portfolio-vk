@@ -46,6 +46,7 @@ erro de tipo + validação visual manual (`dev`/`preview`).
 ## Convenções
 
 - Componentes: PascalCase, uma pasta por componente com `.tsx` + `.css` de mesmo nome.
+- Nova página: pasta em `src/pages/` + entrada em `src/config/pages.ts` (rota, menu, SEO, sitemap saem daí). Se for de menu: ícone em `src/config/navIcons.ts` e chave `nav.*`; SEO em `src/locales/<idioma>/seo.ts`. Nunca repetir listas de rotas em componentes.
 - Import alias: `@/` → `src/` (ver `vite.config.ts` e `tsconfig`). Prefira caminhos relativos existentes ao editar arquivos que já os usam.
 - Novos projetos do portfólio: criar arquivo em `src/data/projects/{pessoais|profissionais}/` e registrar em `src/data/projects.ts`. Seguir a interface `Project` em `src/types/index.ts`.
 - Textos visíveis: pt-BR é a base de tipos. Chave nova vai no arquivo da tela em `src/locales/pt-BR/` **e** nos mesmos arquivos de `pt-PT/`, `en/` e `es/` (o `tsc` falha se faltar). Tela nova = arquivo novo nas 4 pastas + spread no `index.ts` de cada idioma. Dados com texto por idioma usam `Record<Language, string>`.

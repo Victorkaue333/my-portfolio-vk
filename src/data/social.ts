@@ -26,12 +26,3 @@ export const socialLinks: SocialLink[] = [
     detail: '(87) 98177-4951',
   },
 ];
-
-export const navLinks = [
-  { label: 'Início', path: '/' },
-  { label: 'Sobre', path: '/sobre' },
-  { label: 'Projetos', path: '/projetos' },
-  { label: 'Serviços', path: '/servicos' },
-  { label: 'Certificados', path: '/certificados' },
-  { label: 'Contato', path: '/contato' },
-];

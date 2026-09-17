@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-
-const SITE_URL = 'https://victor-kaue.vercel.app';
-const DEFAULT_IMAGE = `${SITE_URL}/images/fotos-projetos-pessoais/vk-portifolio/victor_kaue.webp`;
+import { useTranslation } from 'react-i18next';
+import { pageBySeoKey, type SeoKey } from '../config/pages';
+import { DEFAULT_OG_IMAGE as DEFAULT_IMAGE, SITE_URL } from '../config/site';
 
 export interface SeoOptions {
   /** Título completo da aba/SERP. */
@@ -64,6 +64,7 @@ export function useSeo({ title, description, path, image = DEFAULT_IMAGE, noinde
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:url', url);
     setMeta('property', 'og:image', absImage);
+    setMeta('property', 'og:image:alt', title);
 
     // Twitter
     setMeta('name', 'twitter:title', title);
@@ -71,4 +72,22 @@ export function useSeo({ title, description, path, image = DEFAULT_IMAGE, noinde
     setMeta('name', 'twitter:url', url);
     setMeta('name', 'twitter:image', absImage);
   }, [title, description, path, image, noindex]);
+}
+
+/**
+ * SEO de uma página do registro (src/config/pages.ts): título e descrição de
+ * `seo.<key>Title` / `seo.<key>Desc`, caminho da própria entrada. A 404 (`*`)
+ * usa `/404` como canonical e não é indexada.
+ */
+export function usePageSeo(key: SeoKey): void {
+  const { t } = useTranslation();
+  const page = pageBySeoKey(key);
+  const isFallback = page.path === '*';
+
+  useSeo({
+    title: t(`seo.${key}Title`),
+    description: t(`seo.${key}Desc`),
+    path: isFallback ? '/404' : page.path,
+    noindex: isFallback,
+  });
 }

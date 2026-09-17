@@ -23,6 +23,15 @@ Tipos: **Adicionado**, **Alterado**, **Corrigido**, **Removido**.
   Detalhe do Projeto e lacunas da Home; `<html lang>` sincronizado ao idioma.
 
 ### Alterado
+- **Arquitetura:** registro único de páginas em `src/config/pages.ts` substitui as
+  listas de rotas duplicadas (App, Navbar, MobileNavbar, Footer, `navLinks`,
+  prerender). `sitemap.xml` passa a ser gerado no build; `public/sitemap.xml`
+  removido. SEO do prerender usa as mesmas fontes do runtime (ADR-0009).
+- **Scroll reveal:** um observador global (`components/Layout/ScrollReveal`) no
+  lugar do hook `useScrollReveal` chamado por página e do IntersectionObserver
+  por instância do `<Reveal>`. Pega conteúdo que aparece depois (filtros, seções
+  recolhidas) sem `deps` manuais e escalona o atraso só entre elementos que
+  entram na tela juntos. Classe `.reveal-on-scroll` e API do `<Reveal>` mantidas.
 - **Performance:** `FloatingLines` reescrito de three.js/R3F para Canvas 2D
   (chunk 1.006 kB → 2,3 kB) e removidas as deps `three`, `@react-three/fiber`,
   `@react-three/drei`; ícones migrados de devicon (fonte ~1,5 MB + 140 kB de CSS)
