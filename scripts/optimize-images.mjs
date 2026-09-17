@@ -42,7 +42,8 @@ const TARGETS = [
   // Hero (elemento LCP) — container min(450px) desktop, min(220-280px) mobile, 1:1.
   { src: 'images/eu/victorkaue.webp', widths: [280, 450, 560, 900], aspect: 1 },
   // Capas de projeto — card ~380px, .project-image tem aspect-ratio 16/9.
-  ...PROJECT_COVERS.map((src) => ({ src, widths: [480, 800], aspect: 16 / 9 })),
+  // 640 cobre o card mobile (~350px CSS) em telas ~1,75x sem saltar para 800.
+  ...PROJECT_COVERS.map((src) => ({ src, widths: [480, 640, 800], aspect: 16 / 9 })),
 ];
 
 /** Ícones do site: hoje o favicon baixa os 46 KiB de logotipo-vk.webp. */

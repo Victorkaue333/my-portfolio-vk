@@ -36,7 +36,9 @@ export function ProjectCard({ project, withReveal = true }: ProjectCardProps) {
           <img
             src={srcFor(imageSrc, 800)}
             srcSet={srcSetFor(imageSrc)}
-            sizes="(max-width: 768px) 90vw, 380px"
+            // Mobile: o card ocupa `100vw - 4rem` (ver Home.css). Com 90vw o
+            // browser pedia a de 800px para uma capa exibida com ~346px.
+            sizes="(max-width: 768px) calc(100vw - 4rem), 380px"
             alt={projectTitle}
             width={800}
             height={450}
