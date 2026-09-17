@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Layout/Navbar/Navbar';
 import { Footer } from './components/Layout/Footer/Footer';
 import { BackToTop } from './components/Layout/BackToTop/BackToTop';
@@ -66,6 +67,9 @@ export default function App() {
       <Footer />
       <MobileNavbar />
       <BackToTop />
+      {/* Page views + origem do tráfego. Só envia em produção na Vercel;
+          precisa ativar "Analytics" no painel do projeto. */}
+      <Analytics />
     </BrowserRouter>
   );
 }
