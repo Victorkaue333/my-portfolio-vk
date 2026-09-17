@@ -158,6 +158,32 @@
     box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
 }
 
+/* Validação: link para o emissor + código — ficam agrupados à direita */
+.cert-preview-credential {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--text-dim-color);
+}
+
+.cert-preview-credential code {
+    font-size: 0.78rem;
+    color: var(--text-muted-color);
+}
+
+.cert-preview-meta + .cert-preview-open.is-verify {
+    margin-left: auto;
+}
+
+.cert-preview-open.is-verify {
+    background: transparent;
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #34d399;
+}
+
+.cert-preview-open.is-verify:hover {
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+}
+
 .cert-preview-icon-btn:focus-visible,
 .cert-preview-nav:focus-visible,
 .cert-preview-open:focus-visible {

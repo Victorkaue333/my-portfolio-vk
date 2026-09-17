@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FiChevronLeft, FiChevronRight, FiExternalLink, FiX } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiExternalLink, FiShield, FiX } from 'react-icons/fi';
 import type { Certificate } from '../../../types';
 import './CertificatePreview.css';
 
@@ -138,6 +138,22 @@ export function CertificatePreview({
                   <span className="cert-preview-counter">{current + 1} / {count}</span>
                 )}
               </div>
+              {cert.credentialId && (
+                <span className="cert-preview-credential">
+                  {t('certsPage.credential')}: <code>{cert.credentialId}</code>
+                </span>
+              )}
+              {cert.verifyUrl && (
+                <a
+                  className="cert-preview-open is-verify"
+                  href={cert.verifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FiShield size={14} aria-hidden="true" />
+                  {t('certsPage.verify')}
+                </a>
+              )}
               {(cert.pdf || cert.image) && (
                 <a
                   className="cert-preview-open"

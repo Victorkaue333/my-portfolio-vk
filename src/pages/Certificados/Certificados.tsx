@@ -1,24 +1,24 @@
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FiAward, FiFilter, FiMaximize2, FiRotateCcw } from 'react-icons/fi';
+import { FiAward, FiFilter, FiMaximize2, FiRotateCcw, FiShield } from 'react-icons/fi';
 import { CertificatePreview } from '../../components/ui/CertificatePreview/CertificatePreview';
 import { PageHero } from '../../components/ui/PageHero/PageHero';
 import { Reveal } from '../../components/ui/Reveal/Reveal';
 import { certificateCategories, certificates } from '../../data/certificates';
-import { useSeo } from '../../hooks/useSeo';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { usePageSeo } from '../../hooks/useSeo';
 import './Certificados.css';
+
+// Categoria salva pode ter sido removida dos dados desde a última visita.
+const isKnownCategory = (v: unknown): v is string =>
+  typeof v === 'string' && certificateCategories.some((c) => c.id === v);
 
 export default function Certificados() {
   const { t } = useTranslation();
-  const [activeCategory, setActiveCategory] = useState('todos');
+  const [activeCategory, setActiveCategory] = useLocalStorage('vk_certs_category', 'todos', isKnownCategory);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const closePreview = useCallback(() => setPreviewIndex(null), []);
-
-  useSeo({
-    title: t('seo.certsTitle'),
-    description: t('seo.certsDesc'),
-    path: '/certificados',
-  });
+  usePageSeo('certs');
 
   const filtered = activeCategory === 'todos'
     ? certificates
@@ -75,7 +75,14 @@ export default function Certificados() {
                   <div className="cert-info">
                     <span className="cert-issuer">{cert.issuer}</span>
                     <h3 className="cert-title">{cert.title}</h3>
-                    <div className="cert-badge">{categoryLabel(cert.category)}</div>
+                    <div className="cert-badges">
+                      <span className="cert-badge">{categoryLabel(cert.category)}</span>
+                      {cert.verifyUrl && (
+                        <span className="cert-badge is-verified">
+                          <FiShield size={11} aria-hidden="true" /> {t('certsPage.verifiable')}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </button>
               </Reveal>

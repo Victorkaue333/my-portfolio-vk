@@ -190,6 +190,20 @@
     height: 3rem;
 }
 
+.cert-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.cert-badge.is-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.1);
+}
+
 .cert-badge {
     display: inline-block;
     font-size: 0.65rem;

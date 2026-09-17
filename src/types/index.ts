@@ -127,6 +127,10 @@ export interface Certificate {
   category: string;
   image?: string;
   pdf?: string;
+  /** Página pública do emissor que valida o certificado. */
+  verifyUrl?: string;
+  /** Código de validação impresso no certificado. */
+  credentialId?: string;
 }
 
 export interface Service {
