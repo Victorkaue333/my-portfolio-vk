@@ -281,3 +281,43 @@
         padding: 0.48rem 0.9rem;
     }
 }
+
+/* ========== Focus Cards ==========
+   Adaptado de https://ui.aceternity.com/components/focus-cards
+
+   O componente oficial traz a própria grade (`grid-cols-3`, `h-96`, imagem em
+   `object-cover` e um overlay com o título) e mantém o índice em foco num
+   `useState`. Usar aquele JSX substituiria o card de certificado inteiro —
+   incluindo o botão que abre o preview, os selos e a categoria. Aqui só o
+   COMPORTAMENTO foi trazido, e ele cabe em CSS: `:hover` na grade + `:hover`
+   no item resolvem "um em foco, os outros esmaecidos" sem estado em React e
+   sem re-render a cada movimento do mouse.
+
+   Intensidade dentro do teto do briefing (regra 11): opacity 0.65, blur 1.5px
+   — direciona a atenção, não esconde o certificado. */
+
+.cert-grid-item {
+    transition:
+        opacity var(--transition-normal),
+        filter var(--transition-normal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    /* `:focus-within` de fora: um card alcançado por Tab nunca é desfocado. */
+    .cert-grid:hover .cert-grid-item:not(:hover):not(:focus-within) {
+        opacity: 0.65;
+        filter: blur(1.5px);
+    }
+}
+
+/* Movimento reduzido: nada esmaece. A grade fica exatamente como está. */
+@media (prefers-reduced-motion: reduce) {
+    .cert-grid-item {
+        transition: none;
+    }
+
+    .cert-grid:hover .cert-grid-item {
+        opacity: 1;
+        filter: none;
+    }
+}
