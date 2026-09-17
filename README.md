@@ -99,7 +99,7 @@ build e compilados no bundle. **O repositório é a fonte de verdade do conteúd
 ### 🧭 Navegação e experiência
 
 - [x] SPA com **transições animadas** entre rotas (framer-motion + `AnimatePresence`)
-- [x] **Lazy loading por rota** com `Suspense` e loaders customizados (primeira visita + navegação)
+- [x] **Lazy loading por rota** com `Suspense` + prefetch no hover (sem tela de loader)
 - [x] Fundo com **elementos 3D** (three.js / React Three Fiber) carregado de forma preguiçosa
 - [x] Scroll gerenciado: volta ao topo ao trocar de rota + botão "voltar ao topo"
 - [x] Navbar desktop + **navbar mobile dedicada**, tema dark premium com design tokens
@@ -200,7 +200,7 @@ O frontend é uma **SPA construída com React 19, Vite e TypeScript**. O fluxo b
 1. O navegador carrega `index.html` → `src/main.tsx` (fontes, estilos globais, i18n).
 2. `App.tsx` monta o `BrowserRouter`, o layout persistente (Navbar, Footer, MobileNavbar,
    BackToTop) e o fundo 3D (`FloatingLines`, lazy).
-3. O **React Router** resolve a rota; cada página é um chunk **lazy** com `Suspense` + loader.
+3. O **React Router** resolve a rota; cada página é um chunk **lazy** com `Suspense`.
 4. As páginas consomem conteúdo **exclusivamente de `src/data/`** (módulos tipados).
 5. Textos passam pelo **i18next** (`t()`); o idioma persiste em `localStorage` (`portfolio-lang`).
 6. Transições de página são orquestradas pelo **framer-motion** (`AnimatePresence`).
@@ -304,7 +304,7 @@ meu_portifolio/
 │   └── enrich-projects.mjs        # busca READMEs no GitHub → projects.enrichment.json
 ├── src/
 │   ├── components/
-│   │   ├── Layout/                # Navbar, MobileNavbar, Footer, BackToTop, loaders
+│   │   ├── Layout/                # Navbar, MobileNavbar, Footer, BackToTop, ScrollToTop
 │   │   └── ui/                    # Button, PageHero, ProjectCard, TechMarquee, 3D…
 │   ├── data/
 │   │   ├── projects/pessoais/     # um arquivo .ts por projeto pessoal

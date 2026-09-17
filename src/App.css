@@ -21,31 +21,11 @@
   .page-motion-wrapper { animation: none; }
 }
 
-/* Suspense fallback wrapper */
-.page-loader-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Suspense fallback — vazio, só reserva altura */
+.page-placeholder {
   min-height: 60vh;
 }
 
-/* Arc do loader — cor única da marca (--accent-color) em todas as rotas */
-.nav-loader-arc {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 3px solid color-mix(in srgb, var(--accent-color) 18%, transparent);
-  border-top-color: var(--accent-color);
-  animation: nav-loader-spin 0.9s linear infinite;
-}
-
-@keyframes nav-loader-spin {
-  to { transform: rotate(360deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav-loader-arc { animation: none; }
-}
 #root {
     min-height: 100vh;
     display: flex;

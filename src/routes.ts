@@ -29,8 +29,7 @@ export const ProjetoDetalhe = lazy(() => import('./pages/ProjetoDetalhe/ProjetoD
 export const NaoEncontrado = lazy(() => import('./pages/NaoEncontrado/NaoEncontrado'));
 
 /** Baixa o chunk da rota antes do clique. Erro de rede é ignorado de propósito:
- *  é só uma antecipação — a navegação de verdade tenta de novo e aí sim mostra
- *  o loader. */
+ *  é só uma antecipação — a navegação de verdade tenta de novo. */
 export function prefetchRoute(path: string): void {
   const segment = path === '/' ? '/' : `/${path.split('/')[1]}`;
   const load = loaders[segment as keyof typeof loaders];
