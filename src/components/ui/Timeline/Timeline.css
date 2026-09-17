@@ -1,0 +1,138 @@
+/* Timeline — linha vertical com progresso preso à rolagem.
+   Adaptado de https://ui.aceternity.com/components/timeline */
+
+.timeline {
+    position: relative;
+    --timeline-progress: 0;
+    --timeline-rail-x: 0.6rem;
+    /* Recuo do conteúdo. O ponto desconta isso para voltar à trilha, então os
+       dois precisam sair do mesmo lugar (ver .timeline-dot). */
+    --timeline-pad-x: 2.25rem;
+}
+
+/* Trilho de fundo — cinza, sumindo nas pontas, para a linha não "começar"
+   nem "terminar" de forma dura. */
+.timeline-track {
+    position: absolute;
+    left: var(--timeline-rail-x);
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 2px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--border-color) 6%,
+        var(--border-color) 94%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    pointer-events: none;
+}
+
+/* Preenchimento: `scaleY` em vez de `height` — o compositor resolve sem
+   recalcular layout a cada quadro de rolagem. */
+.timeline-fill {
+    position: absolute;
+    inset: 0;
+    transform: scaleY(var(--timeline-progress, 0));
+    transform-origin: top;
+    background: linear-gradient(
+        to bottom,
+        var(--accent-color),
+        color-mix(in srgb, var(--accent-color) 40%, transparent) 85%,
+        transparent
+    );
+    border-radius: 999px;
+}
+
+.timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding-left: var(--timeline-pad-x);
+    padding-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+/* `position` aqui já em todo breakpoint: a partir de 900px o aside vira
+   sticky, que também é posicionado. Sem isso o bloco contentor do ponto
+   mudaria de elemento no meio do caminho e o `left` passaria a contar de
+   outra origem. */
+.timeline-aside {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* O ponto é filho do aside, para acompanhar o rótulo quando ele fica sticky.
+   Como o aside começa depois do recuo do item, o `left` volta o recuo inteiro
+   para cair na trilha. Centrado na altura do rótulo, sem depender do
+   tamanho da fonte. */
+.timeline-dot {
+    position: absolute;
+    left: calc(var(--timeline-rail-x) - var(--timeline-pad-x));
+    top: 50%;
+    width: 0.7rem;
+    height: 0.7rem;
+    transform: translate(calc(-50% + 1px), -50%);
+    border-radius: 999px;
+    background: var(--surface-color);
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 0 4px var(--bg-color);
+}
+
+.timeline-title {
+    font-family: var(--font-secondary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    color: var(--text-dim-color);
+    text-transform: lowercase;
+}
+
+.timeline-content {
+    min-width: 0;
+}
+
+/* A partir de 900px o rótulo ganha coluna própria e acompanha o item
+   enquanto ele passa — é o "sticky" do componente original. */
+@media (min-width: 900px) {
+    .timeline {
+        --timeline-rail-x: 1rem;
+        --timeline-pad-x: 3rem;
+    }
+
+    .timeline-item {
+        grid-template-columns: 9rem minmax(0, 1fr);
+        gap: 2rem;
+        padding-bottom: 3.5rem;
+    }
+
+    .timeline-aside {
+        position: sticky;
+        top: 8rem;
+        align-self: start;
+        height: fit-content;
+    }
+
+    .timeline-title {
+        font-size: 1.15rem;
+    }
+}
+
+/* 320px: o rótulo encolhe, mas nada sai da tela nem cria rolagem lateral. */
+@media (max-width: 380px) {
+    .timeline {
+        --timeline-pad-x: 1.85rem;
+    }
+
+    .timeline-title {
+        font-size: 0.85rem;
+    }
+}

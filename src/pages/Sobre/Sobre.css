@@ -380,23 +380,11 @@
 }
 
 /* ========== Experiência — layout estilo LinkedIn ========== */
-.li-exp-list {
-    display: flex;
-    flex-direction: column;
-}
-
+/* Cada experiência virou o conteúdo de um item da Timeline — a lista
+   `.li-exp-list` não existe mais. O traço vertical faz a separação que era
+   do `border-bottom`, e o espaço entre entradas vem do `.timeline-item`. */
 .li-exp-item {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--border-subtle);
-}
-
-.li-exp-item:first-child {
-    padding-top: 0;
-}
-
-.li-exp-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+    padding: 0;
 }
 
 /* Cabeçalho: logo + texto principal */
@@ -565,13 +553,7 @@
     flex-shrink: 0;
 }
 
-/* Formações */
-.education-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
+/* Formações — também dentro de uma Timeline; `.education-list` saiu junto. */
 .education-item-row {
     display: flex;
     gap: 1.25rem;
@@ -743,4 +725,12 @@
     .li-exp-primary {
         font-size: 0.96rem;
     }
+}
+
+/* ========== Timelines (Experiência e Formação) ========== */
+/* A sidebar da página é sticky no topo; o rótulo da timeline precisa parar
+   abaixo da navbar para não ficar escondido atrás dela. */
+.exp-timeline,
+.edu-timeline {
+    margin-top: 0.5rem;
 }

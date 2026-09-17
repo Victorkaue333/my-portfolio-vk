@@ -8,6 +8,7 @@ import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivit
 import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher/LanguageSwitcher';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
+import { Timeline } from '../../components/ui/Timeline/Timeline';
 import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
 import { education } from '../../data/education';
 import { experiences } from '../../data/experiences';
@@ -15,6 +16,14 @@ import { socialLinks } from '../../data/social';
 import { usePageSeo } from '../../hooks/useSeo';
 import type { ExperienceRole } from '../../types';
 import './Sobre.css';
+
+/**
+ * Rótulo curto da timeline: "jun 2026 - o momento" vira "jun 2026".
+ * Sem inventar data — só corta o intervalo no primeiro separador.
+ */
+function shortPeriod(period: string): string {
+  return period.split(/\s+[-–—]\s+/)[0]?.trim() || period;
+}
 
 /** Monograma (iniciais) para empresas sem logo. Ignora conectivos e sufixos após "—" ou parênteses. */
 function companyInitials(name: string): string {
@@ -204,13 +213,21 @@ export default function Sobre() {
                 <FiBriefcase size={24} />
                 Experiência Profissional
               </h2>
-              <div className="li-exp-list">
-                {experiences.map((group) => {
+              {/* Timeline (Aceternity) alimentada por data/experiences.ts —
+                  nenhum texto, empresa ou data foi criado aqui; o rótulo da
+                  linha é o início do período do cargo mais recente. O card de
+                  cada empresa continua sendo o mesmo `.li-exp-item`. */}
+              <Timeline
+                className="exp-timeline"
+                data={experiences.flatMap((group) => {
                   const multi = group.roles.length > 1;
                   const primary = group.roles[0];
-                  if (!primary) return null;
-                  return (
-                    <article className="li-exp-item reveal-on-scroll" key={group.id}>
+                  if (!primary) return [];
+                  return [{
+                    id: group.id,
+                    title: shortPeriod(primary.period),
+                    content: (
+                    <article className="li-exp-item" key={group.id}>
                       <div className="li-exp-head">
                         <div className="li-exp-logo">
                           {group.logo ? (
@@ -268,27 +285,33 @@ export default function Sobre() {
                         </div>
                       )}
                     </article>
-                  );
+                    ),
+                  }];
                 })}
-              </div>
+              />
             </section>
 
-            <section id="education" className="about-content-section reveal-on-scroll">
-              <h2 className="section-title">
+            <section id="education" className="about-content-section">
+              <h2 className="section-title reveal-on-scroll">
                 <FiBookOpen size={24} />
                 Formações
               </h2>
-              <div className="education-list">
-                {education.map((edu) => (
-                  <div className="education-item-row" key={edu.id}>
-                    <div className="edu-icon"><FiBookOpen size={20} /></div>
-                    <div className="edu-info">
-                      <h3>{edu.course}</h3>
-                      <p>{edu.institution} - {edu.period}</p>
+              <Timeline
+                className="edu-timeline"
+                data={education.map((edu) => ({
+                  id: edu.id,
+                  title: shortPeriod(edu.period),
+                  content: (
+                    <div className="education-item-row">
+                      <div className="edu-icon"><FiBookOpen size={20} /></div>
+                      <div className="edu-info">
+                        <h3>{edu.course}</h3>
+                        <p>{edu.institution} - {edu.period}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ),
+                }))}
+              />
             </section>
 
             <section id="expertise" className="about-content-section reveal-on-scroll">
