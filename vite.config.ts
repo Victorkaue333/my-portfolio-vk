@@ -1,10 +1,29 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type PluginOption } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath, URL } from 'node:url'
 
+/**
+ * react-scan só no dev server (`apply: 'serve'`): destaca re-renders em tempo
+ * real. Injetado como <script> em head-prepend porque a lib precisa instrumentar
+ * o React antes de ele carregar — um `import()` dentro do main.tsx chegaria
+ * tarde demais. Servido do node_modules, não de CDN, e o build de produção nunca
+ * vê este plugin.
+ */
+const reactScanDev = (): PluginOption => ({
+  name: 'react-scan-dev',
+  apply: 'serve',
+  transformIndexHtml: () => [
+    {
+      tag: 'script',
+      attrs: { src: '/node_modules/react-scan/dist/auto.global.js' },
+      injectTo: 'head-prepend',
+    },
+  ],
+});
+
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [reactScanDev(), react(), tailwindcss()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
