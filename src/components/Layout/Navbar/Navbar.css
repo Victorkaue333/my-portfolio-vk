@@ -15,7 +15,29 @@
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.07);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    transition: top var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+    transition:
+        top var(--transition-normal),
+        transform var(--transition-normal),
+        opacity var(--transition-normal),
+        box-shadow var(--transition-normal),
+        border-color var(--transition-normal);
+}
+
+/* Floating Navbar: recolhe ao descer, volta ao subir (ver useScrollDirection).
+   O translateX(-50%) é o que centraliza a barra — o recolhimento precisa
+   somar a ele, não substituí-lo. */
+.navbar.is-hidden {
+    transform: translateX(-50%) translateY(calc(-100% - 1.5rem));
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Movimento reduzido: a barra continua recolhendo (é navegação, não enfeite),
+   só que sem o deslize. */
+@media (prefers-reduced-motion: reduce) {
+    .navbar {
+        transition: none;
+    }
 }
 
 .navbar.scrolled {

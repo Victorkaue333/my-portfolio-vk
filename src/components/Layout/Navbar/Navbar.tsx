@@ -9,6 +9,7 @@ import { navIcons } from '../../../config/navIcons';
 import { navPages } from '../../../config/pages';
 import { prefetchRoute } from '../../../routes';
 import { useScrollPosition } from '../../../hooks/useScrollPosition';
+import { useScrollDirection } from '../../../hooks/useScrollDirection';
 import { LanguageSwitcher } from '../../ui/LanguageSwitcher/LanguageSwitcher';
 import { useTheme } from '../../../theme/ThemeProvider';
 import './Navbar.css';
@@ -16,10 +17,22 @@ import './Navbar.css';
 export function Navbar() {
   const { t } = useTranslation();
   const { scrolled } = useScrollPosition(60);
+  // Floating Navbar (https://ui.aceternity.com/components/floating-navbar):
+  // só o COMPORTAMENTO foi trazido — recolher ao descer, reaparecer ao subir,
+  // fixa perto do topo. O JSX abaixo continua sendo a navbar do projeto.
+  const { hidden, reveal } = useScrollDirection({ topOffset: 120 });
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} id="main-navbar" aria-label="Navegação principal">
+    <nav
+      className={`navbar ${scrolled ? 'scrolled' : ''} ${hidden ? 'is-hidden' : ''}`}
+      id="main-navbar"
+      aria-label="Navegação principal"
+      // Tab nunca pode levar o foco para uma barra fora da tela: qualquer
+      // foco aqui dentro traz a navbar de volta (regra 23).
+      onFocusCapture={reveal}
+      onPointerEnter={reveal}
+    >
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" aria-label="Victor Kauê - Página inicial">
           <span className="logo-white">Victor</span>
