@@ -8,6 +8,7 @@ import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivit
 import { LanguageSwitcher } from '../../components/ui/LanguageSwitcher/LanguageSwitcher';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
+import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
 import { education } from '../../data/education';
 import { experiences } from '../../data/experiences';
 import { socialLinks } from '../../data/social';
@@ -185,19 +186,16 @@ export default function Sobre() {
                 <FiTarget size={24} />
                 {t('about.highlights.title')}
               </h2>
+              {/* Glowing Effect nos diferenciais — mesmo tratamento dos cards
+                  equivalentes na Home. Conteúdo, tamanho e grade intactos. */}
               <div className="diferenciais-grid">
-                <div className="diferencial-card">
-                  <h3>{t('about.highlights.backend')}</h3>
-                  <p>{t('about.highlights.backendDesc')}</p>
-                </div>
-                <div className="diferencial-card">
-                  <h3>{t('about.highlights.api')}</h3>
-                  <p>{t('about.highlights.apiDesc')}</p>
-                </div>
-                <div className="diferencial-card">
-                  <h3>{t('about.highlights.enterprise')}</h3>
-                  <p>{t('about.highlights.enterpriseDesc')}</p>
-                </div>
+                {(['backend', 'api', 'enterprise'] as const).map((key) => (
+                  <div className="diferencial-card" key={key}>
+                    <GlowingEffect spread={30} proximity={56} borderWidth={1.5} />
+                    <h3>{t(`about.highlights.${key}`)}</h3>
+                    <p>{t(`about.highlights.${key}Desc`)}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

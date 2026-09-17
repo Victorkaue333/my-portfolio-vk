@@ -1,0 +1,59 @@
+/* Glowing Effect — anel que acompanha o cursor.
+   Adaptado de https://ui.aceternity.com/components/glowing-effect
+
+   O original recorta o arco com `mask-composite: intersect` sobre uma camada
+   `linear-gradient(#0000,#0000)`. Aqui o anel é feito com a máscara dupla que
+   o projeto já usa nas bordas animadas (`content-box` + `exclude`, ver
+   styles/animations.css), e o arco vem do próprio gradiente cônico: um só
+   recorte, com o comportamento que este código-base já exercita. */
+
+.glowing-effect {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+
+    /* Laranja do tema, sem cor nova: núcleo no accent, pontas no tom claro
+       da mesma escala. */
+    --glow-core: var(--accent-color);
+    --glow-edge: var(--color-primary-400);
+}
+
+.glowing-effect-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: var(--glow-border-width, 1px);
+    filter: blur(var(--glow-blur, 0px));
+
+    /* O arco aceso fica em volta de `--start`, com `--spread` graus para cada
+       lado; o resto da volta é transparente. */
+    background: conic-gradient(
+        from calc((var(--start, 0) - var(--spread, 28)) * 1deg),
+        transparent 0deg,
+        var(--glow-edge) calc(var(--spread, 28) * 0.55deg),
+        var(--glow-core) calc(var(--spread, 28) * 1deg),
+        var(--glow-edge) calc(var(--spread, 28) * 1.45deg),
+        transparent calc(var(--spread, 28) * 2deg)
+    );
+
+    /* Mostra só a moldura: o miolo (content-box) é recortado. */
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+
+    opacity: calc(var(--active, 0) * 0.9);
+    transition: opacity var(--transition-normal);
+}
+
+/* Fallback estático: sem ponteiro fino (toque) ou com movimento reduzido o
+   anel não acende — o card mantém a borda e o hover/foco do próprio CSS. */
+@media (hover: none), (prefers-reduced-motion: reduce) {
+    .glowing-effect-ring {
+        opacity: 0;
+        transition: none;
+    }
+}

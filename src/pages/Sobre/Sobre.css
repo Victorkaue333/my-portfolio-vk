@@ -353,33 +353,9 @@
     transition: opacity var(--transition-normal);
 }
 
-/* Luz percorrendo a borda */
-.diferencial-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: conic-gradient(
-        from var(--border-angle),
-        transparent 0deg,
-        transparent 295deg,
-        rgba(255, 122, 0, 0.85) 335deg,
-        #ffbf80 360deg
-    );
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
-    pointer-events: none;
-    z-index: 1;
-    animation: borderLight 4s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .diferencial-card::after { animation: none; }
-}
+/* A luz que girava sozinha na borda (`borderLight`, 4s em loop nos três
+   cards) saiu a favor do Glowing Effect montado no JSX: acende só do lado
+   onde o cursor está, e não gasta quadro quando ninguém está interagindo. */
 
 .diferencial-card:hover {
     border-color: rgba(255, 122, 0, 0.4);

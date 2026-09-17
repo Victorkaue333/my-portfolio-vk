@@ -28,6 +28,7 @@ import { FloatingLines } from '../../components/ui/FloatingLines/FloatingLines';
 import { GithubActivity } from '../../components/ui/GithubActivity/GithubActivity';
 import { TextGenerate } from '../../components/ui/TextGenerate/TextGenerate';
 import { Spotlight } from '../../components/ui/Spotlight/Spotlight';
+import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
 import { srcFor, srcSetFor } from '../../utils/imageSrcSet';
 import './Home.css';
 
@@ -158,6 +159,10 @@ export default function Home() {
             {services.map((service, i) => (
               <Reveal key={service.id} delay={i * 0.2} width="100%" height="100%">
                 <div className="service-pro-card">
+                  {/* Glowing Effect no lugar da luz que girava sozinha na borda
+                      (keyframes `borderLight`): agora o anel só acende do lado
+                      onde o cursor está. */}
+                  <GlowingEffect spread={30} proximity={56} borderWidth={1.5} />
                   <div className="service-icon-box">{service.icon}</div>
                   <h3 className="service-title">{service.title}</h3>
                   <p className="service-description">{service.desc}</p>
