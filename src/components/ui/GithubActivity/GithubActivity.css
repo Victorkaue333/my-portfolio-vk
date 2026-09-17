@@ -68,7 +68,7 @@ html.light .gh-chart-card {
 
 .gh-chart-label {
     fill: var(--text-dim-color);
-    font-size: 9px;
+    font-size: 10px;
     font-family: inherit;
 }
 

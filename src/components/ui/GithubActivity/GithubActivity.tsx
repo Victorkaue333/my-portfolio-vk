@@ -186,11 +186,13 @@ type ChartState =
   | { status: 'idle' | 'loading' | 'error' }
   | { status: 'ready'; data: ContributionData };
 
-const CELL = 10;
+// Célula quadrada: mexer no CELL escala altura e largura juntas. Com 53
+// semanas, CELL 12 dá 825x123 — ainda cabe no card sem scroll no desktop.
+const CELL = 12;
 const GAP = 3;
 const STEP = CELL + GAP;
-const LEFT = 30; // coluna dos dias da semana
-const TOP = 18; // linha dos meses
+const LEFT = 32; // coluna dos dias da semana
+const TOP = 20; // linha dos meses
 
 function pickContributions(raw: unknown): ContributionData | null {
   const r = raw as { total?: { lastYear?: unknown }; contributions?: unknown };
