@@ -1,201 +1,175 @@
+/* Rodapé centrado: marca, links inline, divisor pontilhado e base
+   (copyright + redes). Mobile empilha a base e centraliza tudo. */
+
 .footer {
-    padding: 80px 0 40px;
-    background: 
+    position: relative;
+    padding: 72px 0 40px;
+    background:
         radial-gradient(circle at top center, rgba(255, 122, 0, 0.05), transparent 70%),
         var(--bg-color);
-    border-top: 1px solid rgba(255, 122, 0, 0.15);
-    position: relative;
+    border-top: 1px solid var(--border-subtle);
 }
 
+/* Fio de luz no topo, acompanhando a largura do container. */
 .footer::before {
     content: "";
     position: absolute;
     top: -1px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%;
+    width: min(1200px, calc(100% - 2rem));
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-    filter: blur(2px);
-    opacity: 0.6;
+    opacity: 0.5;
 }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr 1fr;
-    gap: 60px;
-    align-items: start;
-}
-
-.footer-brand {
+.footer-inner {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 28px;
 }
 
-.footer-brand .logo {
+/* Marca */
+
+.footer-brand {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    font-size: 1.8rem;
-    font-family: var(--font-secondary);
-    color: var(--text-color);
+    gap: 0.65rem;
     text-decoration: none;
+    color: var(--text-color);
 }
 
-.footer-brand .logo span:last-child {
+.footer-mark {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-md);
+    background: var(--accent-color);
+    color: #0a0a0a;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+}
+
+.footer-brand-name {
+    font-family: var(--font-secondary);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.footer-brand-name span {
     color: var(--accent-color);
 }
 
-.footer-brand p {
-    margin: 0;
-    color: var(--text-muted-color);
-    line-height: 1.8;
-    max-width: 400px;
-    font-size: 1.05rem;
-}
+/* Links inline */
 
-.footer-label {
-    margin: 0 0 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--text-color);
-    font-weight: 600;
-    font-size: 0.85rem;
-}
-
-.footer-nav ul,
-.footer-contact-icons {
+.footer-nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
-}
-
-.footer-nav ul {
-    display: grid;
-    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
 }
 
 .footer-nav a {
     color: var(--text-muted-color);
     text-decoration: none;
-    transition: var(--transition-ui-normal);
-    font-size: 1.05rem;
-    font-weight: 500;
-}
-
-.footer-nav a:hover {
-    color: var(--accent-color);
-    transform: translateX(5px);
-}
-
-/* New Availability Status */
-.availability-status {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-    background: #10B981;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #10B981;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.6; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0.6; transform: scale(1); }
-}
-
-.availability-status p {
-    margin: 0;
     font-size: 0.95rem;
-    color: var(--text-muted-color);
-    font-weight: 600;
+    font-weight: 500;
+    transition: var(--transition-ui-normal);
 }
 
-.footer-email-cta {
-    display: block;
-    font-size: 1.15rem;
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    transition: color var(--transition-normal);
-}
-
-.footer-email-cta:hover {
+.footer-nav a:hover,
+.footer-nav a:focus-visible {
     color: var(--accent-color);
 }
 
-.footer-contact-icons {
+/* Base: divisor pontilhado + copyright e redes nas extremidades */
+
+.footer-bottom {
+    width: 100%;
+    margin-top: 12px;
+    padding-top: 28px;
+    border-top: 1px dotted var(--border-color);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.footer-contact-icons a {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    border: 1px solid var(--border-subtle);
-    background: rgba(255, 255, 255, 0.03);
-    color: var(--text-muted-color);
+.footer-copy {
+    margin: 0;
+    color: var(--text-dim-color);
+    font-size: 0.9rem;
+}
+
+.footer-social {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.footer-social a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: var(--text-muted-color);
     transition: var(--transition-ui-normal);
 }
 
-/* Cor oficial de cada marca */
-.footer-contact-icons a.github { color: #ffffff; }
-.footer-contact-icons a.linkedin { color: #0a66c2; }
-.footer-contact-icons a.whatsapp { color: #25d366; }
-.footer-contact-icons a.email { color: #ea4335; }
-
-.footer-bottom {
-    margin-top: 60px;
-    border-top: 1px solid var(--border-subtle);
-    padding-top: 24px;
-    color: var(--text-dim-color);
-    font-size: 0.95rem;
-    text-align: center;
+.footer-social a:hover,
+.footer-social a:focus-visible {
+    transform: translateY(-2px);
 }
 
-.footer-bottom p {
-    margin: 0 auto;
-    max-width: none;
-}
+/* Cor oficial de cada marca no hover */
+.footer-social a.github:hover { color: var(--text-color); }
+.footer-social a.linkedin:hover { color: #0a66c2; }
+.footer-social a.whatsapp:hover { color: #25d366; }
+.footer-social a.email:hover { color: #ea4335; }
 
-@media (max-width: 1024px) {
-    .footer-grid {
-        gap: 40px;
+@media (max-width: 640px) {
+    .footer {
+        padding: 48px 0 32px;
+    }
+
+    .footer-inner {
+        gap: 22px;
+    }
+
+    .footer-nav ul {
+        gap: 0.5rem 1.15rem;
+    }
+
+    .footer-nav a {
+        font-size: 0.9rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column-reverse;
+        gap: 22px;
+        text-align: center;
+    }
+
+    .footer-copy {
+        font-size: 0.85rem;
     }
 }
 
-@media (max-width: 900px) {
-    .footer { padding: 40px 0 30px; }
-    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-    .footer-brand, .footer-nav, .footer-contact { text-align: center; }
-    .footer-brand, .footer-contact { align-items: center; }
-    .footer-brand p { max-width: 100%; font-size: 0.95rem; line-height: 1.6; }
-    .footer-brand .logo { font-size: 1.5rem; }
-    .availability-status { justify-content: center; margin-bottom: 0.5rem; }
-    .footer-contact-icons { justify-content: center; }
-    .footer-nav ul { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-    .footer-nav a { font-size: 0.95rem; }
-    .footer-nav a:hover { transform: translateY(-2px); }
-    .footer-label { margin-bottom: 1rem; }
-    .footer-bottom { margin-top: 40px; }
-}
-
-@media (max-width: 480px) {
-    .footer-grid { gap: 24px; }
-    .footer { padding: 30px 0 20px; }
+@media (prefers-reduced-motion: reduce) {
+    .footer-social a:hover,
+    .footer-social a:focus-visible {
+        transform: none;
+    }
 }

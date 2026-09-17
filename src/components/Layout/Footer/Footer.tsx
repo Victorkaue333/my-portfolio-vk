@@ -7,90 +7,65 @@ import { navPages } from '../../../config/pages';
 import { socialLinks } from '../../../data/social';
 import './Footer.css';
 
+const socialIconMap = {
+  mail: FiMail,
+  linkedin: FaLinkedin,
+  github: SiGithub,
+  whatsapp: SiWhatsapp,
+} as const;
+
 export function Footer() {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
 
-  const socialIconMap = {
-    mail: FiMail,
-    linkedin: FaLinkedin,
-    github: SiGithub,
-    whatsapp: SiWhatsapp,
-  } as const;
-
   return (
     <footer className="footer" id="footer">
-      <div className="container">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <Link to="/" className="logo">
-              <span>Victor</span>
-              <span>Kauê</span>
-            </Link>
-            <p>
-              Desenvolvedor full-stack com foco em sistemas web escaláveis, React, TypeScript, Python e Django.
-              Soluções pensadas com lógica e entregues com consistência.
-            </p>
-            <div className="footer-contact-icons">
-              {socialLinks.map((s) => (
-                <a
-                  key={s.name}
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.name}
-                  className={s.name.toLowerCase()}
-                >
-                  {(() => {
-                    const Icon = socialIconMap[s.icon as keyof typeof socialIconMap] || FiMail;
-                    return <Icon size={16} aria-hidden="true" />;
-                  })()}
-                </a>
-              ))}
-            </div>
-          </div>
+      <div className="container footer-inner">
+        <Link to="/" className="footer-brand" aria-label={t('footer.home')}>
+          <span className="footer-mark" aria-hidden="true">
+            VK
+          </span>
+          <span className="footer-brand-name">
+            Victor<span> Kauê</span>
+          </span>
+        </Link>
 
-          <div className="footer-nav">
-            <p className="footer-label">Navegação</p>
-            <ul>
-              {navPages.map((link) => (
-                <li key={link.path}>
-                  <Link to={link.path}>{t(`nav.${link.navKey}`)}</Link>
-                </li>
-              ))}
-              <li>
-                <Link to="/uses">{t('uses.footerLink')}</Link>
+        <nav className="footer-nav" aria-label={t('footer.navLabel')}>
+          <ul>
+            {navPages.map((page) => (
+              <li key={page.path}>
+                <Link to={page.path}>{t(`nav.${page.navKey}`)}</Link>
               </li>
-            </ul>
-          </div>
-
-          <div className="footer-contact">
-            <p className="footer-label">Ficou na dúvida? Fale Comigo:</p>
-            <a href="mailto:kaue.alves.pg@gmail.com" className="footer-email-cta">
-              kaue.alves.pg@gmail.com
-            </a>
-            <div className="footer-contact-icons">
-              {socialLinks.map((s) => (
-                <a
-                  key={s.name}
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.name}
-                  className={s.name.toLowerCase()}
-                >
-                  {(() => {
-                    const Icon = socialIconMap[s.icon as keyof typeof socialIconMap] || FiMail;
-                    return <Icon size={18} aria-hidden="true" />;
-                  })()}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+            ))}
+            <li>
+              <Link to="/uses">{t('uses.footerLink')}</Link>
+            </li>
+          </ul>
+        </nav>
 
         <div className="footer-bottom">
-          <p>© {year} Victor Kauê - Todos os direitos reservados.</p>
+          <p className="footer-copy">
+            © {year} Victor Kauê · {t('footer.rights')}
+          </p>
+
+          <ul className="footer-social" aria-label={t('footer.socialLabel')}>
+            {socialLinks.map((social) => {
+              const Icon = socialIconMap[social.icon as keyof typeof socialIconMap] ?? FiMail;
+              return (
+                <li key={social.name}>
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    className={social.name.toLowerCase()}
+                  >
+                    <Icon size={18} aria-hidden="true" />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </footer>

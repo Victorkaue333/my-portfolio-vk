@@ -19,6 +19,12 @@ const layout = {
     label: 'Idioma',
     change: 'Trocar idioma',
   },
+  footer: {
+    home: 'Victor Kauê — página inicial',
+    navLabel: 'Links do rodapé',
+    socialLabel: 'Redes sociais',
+    rights: 'Todos os direitos reservados.',
+  },
 };
 
 export default layout;

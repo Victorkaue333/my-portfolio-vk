@@ -20,6 +20,12 @@ const layout: typeof base = {
     label: 'Idioma',
     change: 'Mudar idioma',
   },
+  footer: {
+    home: 'Victor Kauê — página inicial',
+    navLabel: 'Ligações do rodapé',
+    socialLabel: 'Redes sociais',
+    rights: 'Todos os direitos reservados.',
+  },
 };
 
 export default layout;

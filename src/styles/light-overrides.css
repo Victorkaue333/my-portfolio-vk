@@ -59,8 +59,7 @@ html.light .pd-monogram { text-shadow: 0 0 30px rgba(249, 115, 22, 0.15); }
 
 /* Ícones com cor de marca branca → escuro no claro (GitHub, Next.js, OpenAI…).
    O TechIcon aplica a cor via style inline, por isso o seletor de atributo. */
-html.light .social-icon.github,
-html.light .footer-contact-icons a.github {
+html.light .social-icon.github {
     color: var(--text-color);
 }
 html.light svg[style*="rgb(255, 255, 255)"] {
@@ -490,17 +489,6 @@ html.light .mobile-nav-item.active {
 }
 html.light .mobile-nav-item.active .mobile-nav-icon {
     filter: none;
-}
-
-/* ===================== Footer ===================== */
-
-html.light .footer-contact-icons a {
-    background: var(--surface-color);
-    border-color: var(--border-color);
-}
-html.light .status-dot {
-    background: var(--success-color);
-    box-shadow: 0 0 10px rgba(22, 163, 74, 0.5);
 }
 
 /* ===================== Contato: form + inputs ===================== */
