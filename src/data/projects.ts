@@ -2,11 +2,11 @@ import type { Project } from '../types';
 import { agendeaqui } from './projects/pessoais/agendeaqui';
 import { meuPortfolio } from './projects/pessoais/meu-portfolio';
 import { oliveiraKids } from './projects/pessoais/oliveira-kids';
-import { saberesInterculturais } from './projects/pessoais/saberes-interculturais';
 import { transcritorEntrevistas } from './projects/pessoais/transcritor-entrevistas';
 import { maratonatech } from './projects/profissionais/maratonatech';
 import { ntidi } from './projects/profissionais/ntidi';
 import { queelvra } from './projects/profissionais/queelvra';
+import { saberesInterculturais } from './projects/profissionais/saberes-interculturais';
 import { sigref } from './projects/profissionais/sigref';
 import { vaSuplementos } from './projects/profissionais/va-suplementos';
 import { vksoftware } from './projects/profissionais/vksoftware';
@@ -19,10 +19,10 @@ const rawProjects: Project[] = [
   agendeaqui,
   oliveiraKids,
   transcritorEntrevistas,
-  saberesInterculturais,
   sigref,
   ntidi,
   maratonatech,
+  saberesInterculturais,
   vaSuplementos,
   queelvra,
   vksoftware,

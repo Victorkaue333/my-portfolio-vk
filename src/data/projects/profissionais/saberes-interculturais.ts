@@ -9,12 +9,14 @@ export const saberesInterculturais: Project = {
     'Site de extensão voltado a saberes interculturais e valorização cultural dos povos indígenas de Itaparica.',
   description:
     'Site de divulgação de projeto de extensão voltado aos saberes interculturais, práticas corporais e valorização cultural dos povos indígenas de Itaparica.',
-  image: '/images/fotos-projetos-pessoais/saberes-interculturais/saberes-interculturais.webp',
+  image: '/images/fotos-projetos-reais/saberes-interculturais/cover.webp',
   github: 'https://github.com/Victorkaue333/saberes-interculturais-itaparica',
+  online: 'https://saberes-interculturais-de-itaparica.vercel.app/',
   detailPath: '/projetos/saberes-interculturais',
   technologies: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'GSAP'],
   stack: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
-  category: 'pessoal',
+  category: 'real',
+  status: 'production',
   role: {
     title: 'Bolsista CNPq · desenvolvimento web',
     mine: [
@@ -43,7 +45,8 @@ export const saberesInterculturais: Project = {
       {
         title: 'Conteúdo',
         items: [
-          'Saberes em acordeão: Toré, jogos, futebol e rituais',
+          'Práticas corporais: Toré, jogos tradicionais, futebol indígena e rituais',
+          'Linha do tempo da pesquisa em três etapas',
           'Território com mapa do Google',
           'Galeria com lightbox',
           'Produção acadêmica, equipe e instituições',
@@ -100,6 +103,14 @@ export const saberesInterculturais: Project = {
       { name: 'Bootstrap', role: 'Grid e componentes (5.3)' },
       { name: 'GSAP', role: 'Animações de rolagem com ScrollTrigger' },
       { name: 'Lucide', role: 'Ícones' },
+      { name: 'Vercel', role: 'Hospedagem' },
     ],
   },
+  screenshots: [
+    '/images/fotos-projetos-reais/saberes-interculturais/cover.webp',
+    '/images/fotos-projetos-reais/saberes-interculturais/1.webp',
+    '/images/fotos-projetos-reais/saberes-interculturais/2.webp',
+    '/images/fotos-projetos-reais/saberes-interculturais/3.webp',
+    '/images/fotos-projetos-reais/saberes-interculturais/4.webp',
+  ],
 };

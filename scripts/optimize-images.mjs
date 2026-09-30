@@ -26,7 +26,7 @@ const PROJECT_COVERS = [
   'images/fotos-projetos-pessoais/agendeaqui/agendeaqui.webp',
   'images/fotos-projetos-pessoais/vk-portifolio/logotipo-vk.webp',
   'images/fotos-projetos-pessoais/oliveira-kids/oliveira-kids.webp',
-  'images/fotos-projetos-pessoais/saberes-interculturais/saberes-interculturais.webp',
+  'images/fotos-projetos-reais/saberes-interculturais/cover.webp',
   'images/fotos-projetos-pessoais/transcritor-de-entrevistas/Transcritor_de_Entrevistas.webp',
   'images/fotos-projetos-reais/maratonatech/MaratonaTech.webp',
   'images/fotos-projetos-reais/ntidi/NTIDI.webp',
