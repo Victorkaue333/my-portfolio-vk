@@ -10,7 +10,7 @@ export const transcritorEntrevistas: Project = {
   description:
     'Aplicativo desenvolvido para transcrever entrevistas de forma automática, facilitando a análise e organização dos dados coletados.',
   image: '/images/fotos-projetos-pessoais/transcritor-de-entrevistas/Transcritor_de_Entrevistas.webp',
-  github: 'https://github.com/Victorkaue333/transcritor-de-entrevistas',
+  github: 'https://github.com/Victorkaue333/Transcritor-de-Entrevistas',
   detailPath: '/projetos/transcritor-de-entrevistas',
   technologies: ['Python', 'FastAPI', 'Whisper', 'PyTorch'],
   stack: ['Python', 'FastAPI', 'Whisper', 'PyTorch'],
