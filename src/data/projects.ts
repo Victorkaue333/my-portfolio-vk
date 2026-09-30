@@ -1,8 +1,15 @@
 import type { Project } from '../types';
 import { agendeaqui } from './projects/pessoais/agendeaqui';
+import { aniversarioNamoro } from './projects/pessoais/aniversario-namoro';
+import { devJobAutomation } from './projects/pessoais/dev-job-automation';
+import { geradorCertificados } from './projects/pessoais/gerador-certificados';
 import { meuPortfolio } from './projects/pessoais/meu-portfolio';
 import { oliveiraKids } from './projects/pessoais/oliveira-kids';
+import { peNaEstrada } from './projects/pessoais/pe-na-estrada';
+import { petshop } from './projects/pessoais/petshop';
+import { suplastock } from './projects/pessoais/suplastock';
 import { transcritorEntrevistas } from './projects/pessoais/transcritor-entrevistas';
+import { vmedpharma } from './projects/pessoais/vmedpharma';
 import { cajiAgent } from './projects/profissionais/caji-agent';
 import { dataSertao } from './projects/profissionais/data-sertao';
 import { henriqueEnergiaSolar } from './projects/profissionais/henrique-energia-solar';
@@ -24,6 +31,13 @@ const rawProjects: Project[] = [
   agendeaqui,
   oliveiraKids,
   transcritorEntrevistas,
+  suplastock,
+  geradorCertificados,
+  devJobAutomation,
+  petshop,
+  peNaEstrada,
+  vmedpharma,
+  aniversarioNamoro,
   cajiAgent,
   sertaoConecta,
   sigref,

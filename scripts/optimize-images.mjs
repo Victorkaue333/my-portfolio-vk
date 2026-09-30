@@ -39,6 +39,13 @@ const PROJECT_COVERS = [
   'images/fotos-projetos-reais/henrique-energia-solar/cover.webp',
   'images/fotos-projetos-reais/mav-imob/cover.webp',
   'images/fotos-projetos-reais/data-sertao/cover.webp',
+  'images/fotos-projetos-pessoais/suplastock/cover.webp',
+  'images/fotos-projetos-pessoais/gerador-certificados/cover.webp',
+  'images/fotos-projetos-pessoais/dev-job-automation/cover.webp',
+  'images/fotos-projetos-pessoais/petshop/cover.webp',
+  'images/fotos-projetos-pessoais/pe-na-estrada/cover.webp',
+  'images/fotos-projetos-pessoais/vmedpharma/cover.webp',
+  'images/fotos-projetos-pessoais/aniversario-namoro/cover.webp',
 ];
 
 const TARGETS = [
@@ -83,6 +90,13 @@ const PROJECT_COVER_SLUGS = [
   'henrique-energia-solar',
   'mav-imob',
   'data-sertao',
+  'suplastock',
+  'gerador-certificados',
+  'dev-job-automation',
+  'ecommerce-petshop',
+  'pe-na-estrada',
+  'vmedpharma',
+  'aniversario-namoro',
 ];
 const OG_IMAGES = [
   // Foto: `cover` ancorado no topo para manter o rosto no recorte quadrado.

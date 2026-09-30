@@ -16,7 +16,8 @@ import {
   SiNextdotjs, SiNestjs, SiTailwindcss, SiShadcnui, SiFramer, SiRedis,
   SiJest, SiSupabase, SiFlutter, SiLinux, SiSocketdotio,
   SiClaude, SiGooglechrome, SiVercel, SiObsidian, SiTrello, SiGnubash, SiNpm, SiReactrouter,
-  SiGreensock, SiPrisma, SiVitest,
+  SiGreensock, SiPrisma, SiVitest, SiSelenium, SiGooglegemini, SiFlask, SiPandas, SiExpo,
+  SiChartdotjs, SiLibreoffice,
 } from 'react-icons/si';
 
 interface TechEntry {
@@ -68,6 +69,14 @@ const TECH_ICONS: Record<string, TechEntry> = {
   'Socket.io': { Icon: SiSocketdotio, color: '#FFFFFF' },
   Prisma: { Icon: SiPrisma, color: '#5A67D8' },
   Vitest: { Icon: SiVitest, color: '#729B1B' },
+  'React Native': { Icon: SiReact, color: '#61DAFB' },
+  Expo: { Icon: SiExpo, color: '#FFFFFF' },
+  Selenium: { Icon: SiSelenium, color: '#43B02A' },
+  Gemini: { Icon: SiGooglegemini, color: '#8E75B2' },
+  Flask: { Icon: SiFlask, color: '#FFFFFF' },
+  pandas: { Icon: SiPandas, color: '#E70488' },
+  'Chart.js': { Icon: SiChartdotjs, color: '#FF6384' },
+  LibreOffice: { Icon: SiLibreoffice, color: '#18A303' },
   // Simple Icons não tem i18next — globo na cor da marca.
   i18next: { Icon: FiGlobe, color: '#26A69A' },
 
