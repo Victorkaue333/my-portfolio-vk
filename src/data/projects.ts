@@ -3,10 +3,15 @@ import { agendeaqui } from './projects/pessoais/agendeaqui';
 import { meuPortfolio } from './projects/pessoais/meu-portfolio';
 import { oliveiraKids } from './projects/pessoais/oliveira-kids';
 import { transcritorEntrevistas } from './projects/pessoais/transcritor-entrevistas';
+import { cajiAgent } from './projects/profissionais/caji-agent';
+import { dataSertao } from './projects/profissionais/data-sertao';
+import { henriqueEnergiaSolar } from './projects/profissionais/henrique-energia-solar';
 import { maratonatech } from './projects/profissionais/maratonatech';
+import { mavImob } from './projects/profissionais/mav-imob';
 import { ntidi } from './projects/profissionais/ntidi';
 import { queelvra } from './projects/profissionais/queelvra';
 import { saberesInterculturais } from './projects/profissionais/saberes-interculturais';
+import { sertaoConecta } from './projects/profissionais/sertao-conecta';
 import { sigref } from './projects/profissionais/sigref';
 import { vaSuplementos } from './projects/profissionais/va-suplementos';
 import { vksoftware } from './projects/profissionais/vksoftware';
@@ -19,10 +24,15 @@ const rawProjects: Project[] = [
   agendeaqui,
   oliveiraKids,
   transcritorEntrevistas,
+  cajiAgent,
+  sertaoConecta,
   sigref,
   ntidi,
   maratonatech,
+  mavImob,
+  henriqueEnergiaSolar,
   saberesInterculturais,
+  dataSertao,
   vaSuplementos,
   queelvra,
   vksoftware,

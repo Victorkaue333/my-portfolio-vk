@@ -34,6 +34,11 @@ const PROJECT_COVERS = [
   'images/fotos-projetos-reais/sigref/sigrefsemfundo.webp',
   'images/fotos-projetos-reais/va_suplementos/va_suplementos.webp',
   'images/fotos-projetos-reais/vksoftware/1.webp',
+  'images/fotos-projetos-reais/caji-agent/cover.webp',
+  'images/fotos-projetos-reais/sertao-conecta/cover.webp',
+  'images/fotos-projetos-reais/henrique-energia-solar/cover.webp',
+  'images/fotos-projetos-reais/mav-imob/cover.webp',
+  'images/fotos-projetos-reais/data-sertao/cover.webp',
 ];
 
 const TARGETS = [
@@ -73,6 +78,11 @@ const PROJECT_COVER_SLUGS = [
   'sigref',
   'va-suplementos',
   'vksoftware',
+  'caji-agent',
+  'sertao-conecta',
+  'henrique-energia-solar',
+  'mav-imob',
+  'data-sertao',
 ];
 const OG_IMAGES = [
   // Foto: `cover` ancorado no topo para manter o rosto no recorte quadrado.
