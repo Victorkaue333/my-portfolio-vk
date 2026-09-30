@@ -21,8 +21,8 @@
                        │ title         │
                        │ category      │
                        │ technologies[]│
-                       │ summary?      │
-                       │ detailed_info?│
+                       │ status?       │
+                       │ caseStudy?    │
                        │ screenshots[] │
                        └──────┬────────┘
    agrega em projects.ts      │ 1..* referencia (nome)
@@ -63,9 +63,30 @@ Chave: `id`. Normalizado por `normalizeProject` (defaults para campos vazios).
 | `detailPath` | string | Default `/projetos/{slug}`. |
 | `technologies` / `stack` | string[] | Fallback entre si na normalização. |
 | `category` | `'pessoal' \| 'real'` | Filtro da página Projetos. |
-| `summary` | objeto? | `{ problema, solucao, stack }`. |
-| `detailed_info` | objeto? | Desafio, solução, impacto, arquitetura, decisões, `tech_v2[]`. |
+| `status` | `'production' \| 'delivered' \| 'mvp' \| 'development'`? | Selo no hero do detalhe. Só com status confirmado. |
+| `caseStudy` | `ProjectCaseStudy`? | Estudo de caso do detalhe (ver abaixo). |
+| `metrics` / `role` / `teamSize` / `duration` | opcionais | Só com dado real (ADR-0010). |
+| `featured` | boolean? | Destaque fixo na Home. |
 | `screenshots` | string[]? | Galeria do detalhe. |
+
+#### `ProjectCaseStudy` — ordem das seções no detalhe
+
+A página numera as seções na ordem abaixo e monta o sumário lateral a partir
+delas; campo opcional vazio some da página e do sumário.
+
+| Campo | Tipo | Seção |
+| --- | --- | --- |
+| `overview` | string[] | 01 Visão geral — 1º parágrafo é o destaque. |
+| `audiences` | `{ who, goal }[]`? | "Para quem", dentro da visão geral. |
+| `challenge` / `solution` / `result` | string | Do problema ao resultado (linha do tempo; `metrics` entram no resultado). |
+| `features` | `{ title?, items[] }[]` | Funcionalidades agrupadas por tema. |
+| `architecture` | `{ layers: { icon, label, detail }[], highlights?[] }` | Fluxo de camadas + pontos-chave. `icon`: `client`, `device`, `server`, `api`, `queue`, `ai`, `database`, `storage`, `cloud`, `integration`. |
+| `decisions` | `{ topic, choice, why }[]` | Decisões técnicas (escolha → porquê). |
+| `stack` | `{ name, role }[]` | Tabela tecnologia → função. Ícone por `name` em `TECH_ICONS`. |
+| `roadmap` | string[]? | Próximos passos. |
+
+Quando `role` existe, a seção "Meu papel" entra entre o resultado e as
+funcionalidades.
 
 ### Experience — `src/data/experiences.ts`
 `id` (PK), `title`, `company`, `period`, `location`, `type` (`current`|`past`),

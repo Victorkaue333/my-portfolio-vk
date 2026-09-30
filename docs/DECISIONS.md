@@ -7,6 +7,37 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 
 ---
 
+## ADR-0014 — Detalhe de projeto como estudo de caso no formato do README
+
+- **Data:** 2026-09-29
+- **Contexto:** A página `/projetos/:id` renderizava `detailed_info`, um objeto
+  de slots fixos: arquitetura sempre em três nós (Frontend → API/Backend →
+  Banco) e decisões sempre em quatro campos (autenticação, back-end, deploy,
+  banco). Projeto sem back-end ou sem banco preenchia com "Não aplicável" ou
+  forçava rótulos como "API: Dados estáticos tipados". `tech_v2` ainda
+  carregava classes do devicon (removido no ADR-0005) e repetia a stack do hero.
+  `summary` e `features` soltos não tinham mais uso na interface, e vários
+  "impactos" eram afirmações sem lastro, contra o ADR-0010.
+- **Decisão:** Trocar `summary`, `features` e `detailed_info` por
+  `caseStudy: ProjectCaseStudy`, na ordem dos READMEs dos projetos: visão geral
+  (+ públicos) → desafio/solução/resultado → funcionalidades agrupadas →
+  arquitetura com N camadas + pontos-chave → decisões `{ topic, choice, why }`
+  → stack `{ name, role }` → próximos passos. `status` opcional vira selo no
+  hero. A página numera as seções que existem e monta delas um sumário lateral
+  com scroll-spy (≥1100px). Copy reescrita a partir dos repositórios de cada
+  projeto; onde não havia fonte, o texto descreve o que foi construído sem
+  prometer resultado.
+- **Alternativas consideradas:** manter `detailed_info` e só restilizar (os
+  slots fixos continuariam gerando "Não aplicável"); campos livres em Markdown
+  (perde a checagem de tipos e a numeração/sumário automáticos); mover o texto
+  dos projetos para o i18n (fora de escopo — ver ADR-0006).
+- **Consequências:** Adicionar projeto exige preencher o estudo de caso — o
+  `tsc` cobra `overview`, `challenge`, `solution`, `result`, `features`,
+  `architecture`, `decisions` e `stack`. Tecnologia nova na tabela de stack sem
+  entrada em `TECH_ICONS` aparece com marcador neutro no lugar do ícone.
+
+---
+
 ## ADR-0013 — Terminal interativo com whitelist e Spotify em duas camadas
 
 - **Data:** 2026-09-17
