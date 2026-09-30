@@ -10,37 +10,68 @@ export const ntidi: Project = {
   description:
     'Ecossistema web da empresa NTIDI, incluindo site institucional e sistemas internos desenvolvidos com Django.',
   image: '/images/fotos-projetos-reais/ntidi/NTIDI.webp',
+  online: 'https://www.ntidi.com.br/',
   detailPath: '/projetos/ntidi',
   technologies: ['Django', 'Bootstrap', 'SEO'],
-  stack: ['Python', 'Django', 'Bootstrap'],
-  features: ['Site institucional', 'SEO técnico', 'Sistemas internos'],
+  stack: ['Python', 'Django', 'Bootstrap', 'Docker'],
   category: 'real',
+  status: 'production',
   featured: true,
-  summary: {
-    problema: 'Necessidade de presença digital e ferramentas de gestão interna',
-    solucao: 'Ecossistema web completo com site institucional e sistemas administrativos',
-    stack: 'Python, Django e Bootstrap',
-  },
-  detailed_info: {
-    desafio: 'Desenvolver uma identidade digital sólida integrada a sistemas de gestão de leads e processos internos.',
-    solucao: 'Criação de um site institucional de alta performance com painel administrativo Django customizado.',
-    impacto: 'Aumento na captura de leads e automação de processos internos de gerenciamento de dados.',
-    arquitetura: {
-      frontend: 'HTML5/CSS3 + Bootstrap 5',
-      api: 'Django Framework (Python)',
-      banco: 'PostgreSQL / SQLite',
+  caseStudy: {
+    overview: [
+      'Ecossistema web da NTIDI: site institucional com SEO técnico e, por trás dele, sistemas internos em Django para gestão de leads e de processos da empresa.',
+    ],
+    audiences: [
+      { who: 'Visitantes e clientes', goal: 'Conhecem a empresa pelo site e entram em contato.' },
+      { who: 'Equipe interna', goal: 'Organiza leads e processos no painel administrativo.' },
+    ],
+    challenge:
+      'Dar à empresa uma presença digital sólida e, ao mesmo tempo, ferramentas internas para tratar os contatos e processos que chegam por ela.',
+    solution:
+      'Site institucional renderizado no servidor, com SEO técnico, e painel administrativo Django customizado para os sistemas internos de leads e processos.',
+    result:
+      'Site institucional no ar e sistemas internos no mesmo ecossistema Django: a presença digital e a operação que ela gera ficam na mesma base.',
+    features: [
+      {
+        title: 'Site institucional',
+        items: ['Páginas institucionais responsivas', 'SEO técnico'],
+      },
+      {
+        title: 'Sistemas internos',
+        items: [
+          'Painel administrativo Django customizado',
+          'Gestão de leads',
+          'Gestão de processos internos',
+        ],
+      },
+    ],
+    architecture: {
+      layers: [
+        { icon: 'client', label: 'Site', detail: 'HTML5/CSS3 + Bootstrap 5' },
+        { icon: 'server', label: 'Aplicação', detail: 'Django: site e painel interno' },
+        { icon: 'database', label: 'Banco', detail: 'PostgreSQL' },
+        { icon: 'cloud', label: 'Execução', detail: 'Docker' },
+      ],
     },
-    decisoes: {
-      autenticacao: 'Dashboard administrativo nativo',
-      backend: 'Django para segurança e rapidez',
-      deploy: 'Heroku / VPS Dedicada',
-      banco: 'PostgreSQL estruturado',
-    },
-    tech_v2: [
-      { name: 'Python', icon: 'devicon-python-plain colored' },
-      { name: 'Django', icon: 'devicon-django-plain colored' },
-      { name: 'Bootstrap', icon: 'devicon-bootstrap-plain colored' },
-      { name: 'SEO', icon: 'devicon-google-plain colored' },
+    decisions: [
+      {
+        topic: 'Back-end',
+        choice: 'Django',
+        why: 'Admin pronto e personalizável para os sistemas internos, com autenticação e ORM de fábrica.',
+      },
+      {
+        topic: 'SEO',
+        choice: 'Páginas renderizadas no servidor',
+        why: 'O conteúdo chega indexável, sem depender de JavaScript no navegador.',
+      },
+    ],
+    stack: [
+      { name: 'Python', role: 'Linguagem' },
+      { name: 'Django', role: 'Site, painel e sistemas internos' },
+      { name: 'Bootstrap', role: 'Interface responsiva (5)' },
+      { name: 'PostgreSQL', role: 'Banco de dados' },
+      { name: 'Docker', role: 'Empacotamento e execução' },
+      { name: 'SEO', role: 'Estrutura técnica para indexação' },
     ],
   },
   screenshots: [

@@ -4,7 +4,7 @@ export const agendeaqui: Project = {
   id: 'agendeaqui',
   slug: 'agendeaqui',
   title: 'AgendeAqui',
-  shortDescription: 'Plataforma web para gestão de agendamentos.',
+  shortDescription: 'Reserva de salas e laboratórios com fluxo de aprovação.',
   detailedDescription:
     'Aplicação web desenvolvida em Django para autenticar usuários, organizar horários e centralizar o fluxo de agendamentos.',
   description:
@@ -12,35 +12,104 @@ export const agendeaqui: Project = {
   image: '/images/fotos-projetos-pessoais/agendeaqui/agendeaqui.webp',
   github: 'https://github.com/Victorkaue333/AgendeAqui',
   detailPath: '/projetos/agendeaqui',
-  technologies: ['Django', 'PostgreSQL', 'Bootstrap'],
-  stack: ['Python', 'Django', 'PostgreSQL', 'Bootstrap'],
-  features: ['Autenticação de usuários', 'Agenda por horários', 'Painel administrativo'],
+  technologies: ['Django', 'PostgreSQL', 'Redis', 'Docker', 'Bootstrap'],
+  stack: ['Python', 'Django', 'PostgreSQL', 'Redis', 'Docker', 'Bootstrap'],
   category: 'pessoal',
-  summary: {
-    problema: 'Dificuldade no gerenciamento de espaços acadêmicos e conflitos de horários',
-    solucao: 'Sistema centralizado com fluxos de aprovação e controle de permissões',
-    stack: 'Django 5 e PostgreSQL',
-  },
-  detailed_info: {
-    desafio: 'Prevenir conflitos de reserva e gerir permissões granulares entre professores e coordenação.',
-    solucao: 'Desenvolvimento de uma plataforma robusta com calendário interativo e automação de notificações.',
-    impacto: 'Gestão transparente e eficiente do uso de salas de aula no ambiente acadêmico.',
-    arquitetura: {
-      frontend: 'Django Templates + Bootstrap 5',
-      api: 'Arquitetura Monolítica (MVT)',
-      banco: 'PostgreSQL estruturado',
+  caseStudy: {
+    overview: [
+      'Sistema de reservas de salas, laboratórios e auditórios para instituições de ensino: o professor pede, a coordenação aprova ou reprova com justificativa, e ninguém descobre um conflito de horário na porta da sala.',
+      'Foi o trabalho de conclusão do curso FIC de Desenvolvimento Web com Django — construído com CI, filas assíncronas e deploy em containers, como um sistema de produção.',
+    ],
+    audiences: [
+      { who: 'Professores', goal: 'Solicitam reservas, acompanham o status e cancelam quando preciso.' },
+      { who: 'Coordenação', goal: 'Aprova ou reprova pedidos com justificativa e acompanha o uso das salas.' },
+      { who: 'Administração', goal: 'Cadastra blocos, salas, recursos e usuários.' },
+    ],
+    challenge:
+      'Evitar reservas conflitantes e dar a cada perfil só o que lhe cabe — quem pede não aprova, quem aprova não mexe no cadastro de salas — sem deixar a tela esperando o envio de e-mail.',
+    solution:
+      'Monolito Django com três perfis e fluxo Pendente → Aprovado/Reprovado. E-mails e lembretes saem por Celery com Redis, fora do ciclo da requisição, e cada ação relevante fica registrada em log de auditoria.',
+    result:
+      'Fluxo de reserva completo, do pedido à aprovação, com calendário, dashboards por perfil e relatórios em CSV — e um pipeline que testa, audita a segurança e empacota o sistema em containers a cada push.',
+    features: [
+      {
+        title: 'Reservas',
+        items: [
+          'Pedido com status Pendente, Aprovado ou Reprovado',
+          'Cancelamento pelo solicitante',
+          'Calendário de ocupação (FullCalendar)',
+          'Salas por bloco, com recursos vinculados',
+        ],
+      },
+      {
+        title: 'Gestão',
+        items: [
+          'Dashboard por perfil com gráficos',
+          'Top 5 salas e usuários e taxa de aprovação',
+          'Relatórios com exportação CSV',
+          'Log de auditoria das ações',
+        ],
+      },
+      {
+        title: 'Notificações',
+        items: [
+          'E-mails de aprovação, reprovação, cancelamento e boas-vindas',
+          'Até 3 novas tentativas quando o envio falha',
+          'Lembrete diário às 9h e limpeza de pendentes à 1h',
+          'Notificações dentro do sistema',
+        ],
+      },
+    ],
+    architecture: {
+      layers: [
+        { icon: 'client', label: 'Interface', detail: 'Django Templates + Bootstrap 5' },
+        { icon: 'server', label: 'Aplicação', detail: 'Django 5 com Gunicorn atrás do Nginx' },
+        { icon: 'queue', label: 'Tarefas', detail: 'Celery worker e beat, fila no Redis' },
+        { icon: 'database', label: 'Banco', detail: 'PostgreSQL 15 (SQLite em dev)' },
+      ],
+      highlights: [
+        'Sete apps Django com responsabilidades separadas, renderizados no servidor.',
+        'Docker Compose sobe web, PostgreSQL, Redis, worker e beat do Celery, Nginx e Certbot.',
+        'GitHub Actions roda lint, pytest com cobertura, Bandit e Safety antes de gerar a imagem.',
+      ],
     },
-    decisoes: {
-      autenticacao: 'Módulo nativo de Auth do Django',
-      backend: 'Django Framework (Python)',
-      deploy: 'Servidor local/Cloud Linux',
-      banco: 'PostgreSQL para robustez de dados',
-    },
-    tech_v2: [
-      { name: 'Python', icon: 'devicon-python-plain colored' },
-      { name: 'Django', icon: 'devicon-django-plain colored' },
-      { name: 'PostgreSQL', icon: 'devicon-postgresql-plain colored' },
-      { name: 'Bootstrap', icon: 'devicon-bootstrap-plain colored' },
+    decisions: [
+      {
+        topic: 'Permissões',
+        choice: 'Três perfis com papéis separados',
+        why: 'Quem pede não aprova; quem aprova não altera o cadastro de salas.',
+      },
+      {
+        topic: 'Tarefas lentas',
+        choice: 'Celery + Redis',
+        why: 'E-mail e lembrete não seguram a resposta da página, e uma falha de envio é repetida sem o usuário perceber.',
+      },
+      {
+        topic: 'Senhas',
+        choice: 'Hash Argon2',
+        why: 'Algoritmo que exige memória, mais resistente a força bruta do que o hasher padrão do Django.',
+      },
+      {
+        topic: 'Banco',
+        choice: 'SQLite em dev, PostgreSQL em produção',
+        why: 'Desenvolvimento sem setup; no servidor, concorrência e integridade de um banco completo.',
+      },
+      {
+        topic: 'Deploy',
+        choice: 'Docker Compose + Nginx',
+        why: 'O mesmo ambiente sobe em qualquer servidor Linux, com HTTPS via Certbot.',
+      },
+    ],
+    stack: [
+      { name: 'Python', role: 'Linguagem (3.11)' },
+      { name: 'Django', role: 'Aplicação, ORM, autenticação e admin (5.0)' },
+      { name: 'PostgreSQL', role: 'Banco em produção' },
+      { name: 'Redis', role: 'Broker do Celery e cache' },
+      { name: 'Celery', role: 'E-mails assíncronos e tarefas agendadas' },
+      { name: 'Bootstrap', role: 'Interface responsiva (5.3)' },
+      { name: 'Docker', role: 'Ambiente completo com Compose' },
+      { name: 'Nginx', role: 'Proxy reverso com HTTPS' },
+      { name: 'GitHub Actions', role: 'CI: lint, testes, segurança e deploy' },
     ],
   },
   screenshots: [

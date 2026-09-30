@@ -230,19 +230,9 @@ html.light .project-footer {
 
 html.light .sidebar-pill,
 html.light .detail-card-item,
-html.light .architecture-flow,
-html.light .decision-item,
-html.light .feature-item-detail,
 html.light .summary-card {
     background: var(--surface-soft-color);
     border-color: var(--border-color);
-}
-
-html.light .pd-tech-block { background: var(--surface-color); }
-
-html.light .feature-item-detail:hover {
-    background: var(--surface-hover-color);
-    border-color: rgba(249, 115, 22, 0.3);
 }
 
 /* ===================== Sobre ===================== */
@@ -456,7 +446,6 @@ html.light .cert-preview-open:hover { box-shadow: 0 4px 14px rgba(249, 115, 22, 
 /* ===================== ProjetoDetalhe ===================== */
 
 html.light .project-category-badge { border-color: var(--accent-border); }
-html.light .pd-role-col.is-mine { border-color: rgba(249, 115, 22, 0.35); }
 
 html.light .projeto-extended-info,
 html.light .projeto-summary-fallback {

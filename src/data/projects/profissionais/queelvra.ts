@@ -12,32 +12,49 @@ export const queelvra: Project = {
   detailPath: '/projetos/queelvra',
   technologies: ['Landing Page', 'Front-end', 'Conversão'],
   stack: ['HTML', 'CSS', 'JavaScript'],
-  features: ['Copy comercial', 'CTA estratégico', 'Layout de conversão'],
   category: 'real',
-  summary: {
-    problema: 'Baixa conversão de visitantes interessados nos serviços',
-    solucao: 'Landing page otimizada com foco em UX e gatilhos de conversão',
-    stack: 'HTML, CSS e JavaScript',
-  },
-  detailed_info: {
-    desafio: 'Criar uma página extremamente leve e rápida que transmita autoridade instantânea.',
-    solucao: 'Desenvolvimento em HTML/CSS puro com animações sutis e foco em copywriting.',
-    impacto: 'Aumento significativo na taxa de cliques e conversão de leads qualificados.',
-    arquitetura: {
-      frontend: 'HTML5 Semântico / CSS3 Moderno',
-      api: 'Integração de formulários via API',
-      banco: 'Não aplicável (Página estática)',
+  caseStudy: {
+    overview: [
+      'Landing page da Queelvra para divulgar serviços e transformar visitantes em contatos: leve, direta e construída em torno da copy comercial e das chamadas para ação.',
+    ],
+    challenge:
+      'Transmitir autoridade logo na primeira dobra e conduzir o visitante até o contato, numa página que carregue rápido.',
+    solution:
+      'HTML semântico e CSS puros, com animações sutis e seções organizadas a partir da copy comercial. O formulário de contato envia os dados por integração via API.',
+    result:
+      'Página enxuta, sem framework nem banco de dados, com CTAs posicionados ao longo do fluxo de leitura e captação de leads pelo formulário.',
+    features: [
+      {
+        items: [
+          'Copy comercial estruturada por seções',
+          'CTAs ao longo da página',
+          'Formulário de contato integrado via API',
+          'Animações sutis',
+        ],
+      },
+    ],
+    architecture: {
+      layers: [
+        { icon: 'client', label: 'Página', detail: 'HTML5 semântico + CSS3' },
+        { icon: 'integration', label: 'Formulário', detail: 'Envio de leads via API' },
+      ],
     },
-    decisoes: {
-      autenticacao: 'Não aplicável',
-      backend: 'Lógica mínima em JavaScript',
-      deploy: 'Hospedagem de alta performance',
-      banco: 'Sem necessidade de persistência local',
-    },
-    tech_v2: [
-      { name: 'HTML5', icon: 'devicon-html5-plain colored' },
-      { name: 'CSS3', icon: 'devicon-css3-plain colored' },
-      { name: 'JavaScript', icon: 'devicon-javascript-plain colored' },
+    decisions: [
+      {
+        topic: 'Stack',
+        choice: 'HTML e CSS puros',
+        why: 'Menos peso, carregamento imediato e nada para manter em servidor.',
+      },
+      {
+        topic: 'Estrutura',
+        choice: 'Seções guiadas pela copy',
+        why: 'A ordem da página segue o argumento de venda, não o contrário.',
+      },
+    ],
+    stack: [
+      { name: 'HTML5', role: 'Estrutura semântica' },
+      { name: 'CSS3', role: 'Layout e animações' },
+      { name: 'JavaScript', role: 'Interações e envio do formulário' },
     ],
   },
 };

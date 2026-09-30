@@ -15,7 +15,8 @@ import {
   SiGithub, SiGunicorn, SiNodedotjs, SiHtmx, SiDbeaver, SiBruno,
   SiNextdotjs, SiNestjs, SiTailwindcss, SiShadcnui, SiFramer, SiRedis,
   SiJest, SiSupabase, SiFlutter, SiLinux, SiSocketdotio,
-  SiClaude, SiGooglechrome, SiVercel, SiObsidian, SiTrello, SiGnubash, SiNpm,
+  SiClaude, SiGooglechrome, SiVercel, SiObsidian, SiTrello, SiGnubash, SiNpm, SiReactrouter,
+  SiGreensock,
 } from 'react-icons/si';
 
 interface TechEntry {
@@ -62,6 +63,10 @@ const TECH_ICONS: Record<string, TechEntry> = {
   Playwright: { Icon: FiPlayCircle, color: '#2EAD33' },
   Flutter: { Icon: SiFlutter, color: '#47C5FB' },
   WebSockets: { Icon: SiSocketdotio, color: '#FFFFFF' },
+  'React Router': { Icon: SiReactrouter, color: '#F44250' },
+  GSAP: { Icon: SiGreensock, color: '#88CE02' },
+  // Simple Icons não tem i18next — globo na cor da marca.
+  i18next: { Icon: FiGlobe, color: '#26A69A' },
 
   // Bancos de dados
   PostgreSQL: { Icon: SiPostgresql, color: '#4F86E6' },

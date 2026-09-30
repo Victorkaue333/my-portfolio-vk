@@ -14,6 +14,69 @@ export interface ProjectRole {
   team?: string[];
 }
 
+/** Estágio do projeto — vira o selo ao lado da categoria no detalhe. */
+export type ProjectStatus = 'production' | 'delivered' | 'mvp' | 'development';
+
+/** Ícone de uma camada da arquitetura — a página resolve para um ícone Feather. */
+export type ArchitectureIcon =
+  | 'client' | 'device' | 'server' | 'api' | 'queue' | 'ai' | 'database' | 'storage' | 'cloud' | 'integration';
+
+export interface ArchitectureLayer {
+  icon: ArchitectureIcon;
+  /** Papel da camada. Ex.: "Front-end", "Worker de IA". */
+  label: string;
+  /** Forma concreta. Ex.: "Django Templates + HTMX". */
+  detail: string;
+}
+
+/** Funcionalidades agrupadas por tema. Grupo sem título = lista simples. */
+export interface FeatureGroup {
+  title?: string;
+  items: string[];
+}
+
+/** Decisão técnica em formato de ADR curto: o que foi escolhido e por quê. */
+export interface ProjectDecision {
+  /** Assunto. Ex.: "Banco de dados". */
+  topic: string;
+  /** A escolha. Ex.: "PostgreSQL". */
+  choice: string;
+  /** O motivo/trade-off — não elogio à ferramenta. */
+  why: string;
+}
+
+/** Linha da tabela de stack. O ícone sai de TECH_ICONS pelo `name`. */
+export interface StackItem {
+  name: string;
+  /** Função no projeto. Ex.: "ORM, autenticação e admin". */
+  role: string;
+}
+
+/**
+ * Estudo de caso do detalhe (/projetos/:id). Segue a ordem do README dos
+ * projetos: visão geral → problema/solução/resultado → funcionalidades →
+ * arquitetura → decisões → stack → próximos passos. Opcionais somem da página
+ * (e do sumário) quando vazios. Só fato verificável — ver ADR-0010.
+ */
+export interface ProjectCaseStudy {
+  /** 1–2 parágrafos: o que é, para quem e por que existe. O 1º é o destaque. */
+  overview: string[];
+  /** Quem usa e o que vai fazer lá. */
+  audiences?: { who: string; goal: string }[];
+  challenge: string;
+  solution: string;
+  /** O que foi entregue/mudou. Número só em `Project.metrics`. */
+  result: string;
+  features: FeatureGroup[];
+  architecture: {
+    layers: ArchitectureLayer[];
+    highlights?: string[];
+  };
+  decisions: ProjectDecision[];
+  stack: StackItem[];
+  roadmap?: string[];
+}
+
 export interface Project {
   id: string;
   slug?: string;
@@ -26,35 +89,10 @@ export interface Project {
   online?: string;
   detailPath: string;
   stack?: string[];
-  features?: string[];
   technologies: string[];
   category: 'pessoal' | 'real';
-  summary?: {
-    problema: string;
-    solucao: string;
-    stack: string;
-  };
-  detailed_info?: {
-    desafio: string;
-    solucao: string;
-    impacto: string;
-    arquitetura: {
-      frontend: string;
-      api: string;
-      banco: string;
-    };
-    decisoes: {
-      autenticacao: string;
-      backend: string;
-      deploy: string;
-      banco: string;
-    };
-    tech_v2: {
-      name: string;
-      icon: string;
-      color?: string;
-    }[];
-  };
+  status?: ProjectStatus;
+  caseStudy?: ProjectCaseStudy;
   screenshots?: string[];
   /**
    * Campos de estudo de caso — todos opcionais; o bloco correspondente só

@@ -1,4 +1,11 @@
 .page-projeto-detalhe {
+    /* Tokens locais: derivados do texto, então invertem sozinhos no tema claro. */
+    --pd-surface: color-mix(in srgb, var(--text-color) 3%, transparent);
+    --pd-line: color-mix(in srgb, var(--text-color) 9%, transparent);
+    --pd-accent-line: color-mix(in srgb, var(--accent-color) 28%, transparent);
+    /* Laranja como texto pequeno: no claro existe --accent-text (AA). */
+    --pd-accent-text: var(--accent-text, var(--accent-color));
+
     padding-top: 8rem;
     padding-bottom: 5rem;
 }
@@ -26,7 +33,19 @@
     color: var(--accent-color);
 }
 
-/* ========== EYEBROW / SECTION TITLES (hierarquia de cor) ========== */
+.pd-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ========== RÓTULOS (hierarquia: laranja = marcador, cinza = legenda) ========== */
 .pd-eyebrow {
     display: inline-block;
     font-size: 0.78rem;
@@ -36,31 +55,26 @@
     color: var(--accent-color);
 }
 
-/* Título de seção: BRANCO com barra de acento — laranja fica reservado ao eyebrow/CTA */
-.pd-section-title {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: var(--font-secondary);
-    font-size: clamp(1.5rem, 3vw, 1.9rem);
+.pd-subtitle {
+    font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
-    color: var(--text-color);
-    margin-bottom: var(--spacing-md);
-}
-
-.pd-section-title::before {
-    content: "";
-    width: 4px;
-    height: 1.1em;
-    border-radius: var(--radius-full);
-    background: var(--gradient-primary);
-    flex-shrink: 0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+    margin-bottom: 1rem;
 }
 
 /* ========== HERO ========== */
 .pd-hero {
     margin-bottom: var(--spacing-xl);
+}
+
+.pd-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
 }
 
 .project-category-badge {
@@ -74,7 +88,39 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 1.25rem;
+}
+
+/* Selo de status (README: badge "status") */
+.pd-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--pd-line);
+    border-radius: var(--radius-md);
+    color: var(--text-muted-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pd-status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--radius-full);
+    background: var(--text-dim-color);
+}
+
+.pd-status.is-production .pd-status-dot,
+.pd-status.is-delivered .pd-status-dot {
+    background: var(--success-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--success-color) 22%, transparent);
+}
+
+.pd-status.is-mvp .pd-status-dot,
+.pd-status.is-development .pd-status-dot {
+    background: var(--accent-color);
 }
 
 .pd-hero-text h1 {
@@ -125,6 +171,33 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+/* ========== FATOS (papel, time, duração) ========== */
+.pd-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin: 0 0 2rem;
+}
+
+.pd-fact dt {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+}
+
+.pd-fact dt svg { color: var(--accent-color); }
+
+.pd-fact dd {
+    margin: 0.2rem 0 0;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 /* ========== SHOWCASE (visual full-width) ========== */
@@ -196,236 +269,233 @@
     object-fit: contain;
 }
 
-/* ========== HISTÓRIA (narrativa empilhada) ========== */
-.pd-story {
+/* ========== CORPO: SUMÁRIO + SEÇÕES NUMERADAS ========== */
+.pd-body {
+    display: grid;
+}
+
+/* Sumário só aparece com largura para a coluna lateral */
+.pd-toc {
+    display: none;
+}
+
+.pd-toc-title {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+    margin-bottom: 1rem;
+}
+
+.pd-toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pd-toc a {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-left: 2px solid var(--pd-line);
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: var(--text-dim-color);
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.pd-toc a:hover {
+    color: var(--text-color);
+}
+
+.pd-toc a.is-active {
+    color: var(--text-color);
+    border-left-color: var(--accent-color);
+}
+
+.pd-toc-index {
+    font-variant-numeric: tabular-nums;
+}
+
+.pd-toc a.is-active .pd-toc-index {
+    color: var(--pd-accent-text);
+}
+
+@media (min-width: 1100px) {
+    .pd-body {
+        grid-template-columns: 200px minmax(0, 1fr);
+        gap: 4rem;
+        align-items: start;
+    }
+
+    .pd-toc {
+        display: block;
+        position: sticky;
+        top: 7rem;
+    }
+}
+
+/* Seções separadas por filete — o "---" do README */
+.pd-section {
+    scroll-margin-top: 7rem;
+    padding-block: var(--spacing-xl);
+    border-top: 1px solid var(--pd-line);
+}
+
+.pd-section:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.pd-section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.pd-section-index {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+    color: var(--pd-accent-text);
+}
+
+.pd-section-head h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.pd-block {
+    margin-top: var(--spacing-lg);
+}
+
+/* ---------- 01 Visão geral ---------- */
+.pd-overview p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    max-width: 68ch;
+}
+
+/* 1º parágrafo = a frase que o recrutador precisa ler */
+.pd-overview p:first-child {
+    font-size: clamp(1.15rem, 2vw, 1.3rem);
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.pd-overview p + p {
+    margin-top: 1rem;
+}
+
+.pd-audiences {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pd-audience {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-2xl);
+    gap: 0.35rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--pd-surface);
+    border: 1px solid var(--pd-line);
+    border-radius: var(--radius-lg);
 }
 
-.pd-story-item {
-    padding-left: 1.5rem;
-    border-left: 2px solid var(--border-subtle);
+.pd-audience strong {
+    font-weight: 600;
+    color: var(--text-color);
 }
 
-.pd-story-item .pd-eyebrow {
-    margin-bottom: 0.6rem;
-}
-
-.pd-story-text {
-    font-size: 1.15rem;
-    line-height: 1.7;
+.pd-audience span {
+    font-size: 0.92rem;
+    line-height: 1.55;
     color: var(--text-muted-color);
-    max-width: 70ch;
 }
 
-/* Impacto: bloco de destaque (fecha o arco) */
-.pd-story-item.is-impact {
-    padding: 1.75rem 2rem;
-    border-left: 3px solid var(--accent-color);
+/* ---------- 02 Problema → resultado (linha do tempo) ---------- */
+.pd-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pd-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    gap: 1.25rem;
+    padding-bottom: var(--spacing-lg);
+}
+
+.pd-step:last-child {
+    padding-bottom: 0;
+}
+
+/* Trilho ligando os marcadores */
+.pd-step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: calc(1.125rem - 1px);
+    top: 2.25rem;
+    bottom: 0;
+    width: 2px;
+    background: var(--pd-line);
+}
+
+.pd-step-marker {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--pd-line);
+    border-radius: var(--radius-full);
+    background: var(--bg-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted-color);
+}
+
+.pd-step-body {
+    padding-top: 0.4rem;
+}
+
+.pd-step-body .pd-eyebrow {
+    margin-bottom: 0.5rem;
+}
+
+.pd-step-body p {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    max-width: 68ch;
+}
+
+/* Resultado fecha o arco: marcador cheio + bloco de destaque */
+.pd-step.is-result .pd-step-marker {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+}
+
+.pd-step.is-result .pd-step-body {
+    padding: 1.5rem 1.75rem;
     background: var(--gradient-orange-soft);
-    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    border: 1px solid var(--pd-accent-line);
+    border-radius: var(--radius-lg);
 }
 
-.pd-story-item.is-impact .pd-story-text {
+.pd-step.is-result .pd-step-body p {
     color: var(--text-color);
     font-weight: 500;
 }
 
-/* ========== SEÇÕES ========== */
-.pd-section {
-    margin-bottom: var(--spacing-2xl);
-}
-
-/* Features */
-.features-list-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-}
-
-.feature-item-detail {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md);
-    transition: var(--transition-ui-normal);
-}
-
-.feature-item-detail:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 122, 0, 0.2);
-    transform: translateX(4px);
-}
-
-.feature-check {
-    color: var(--accent-color);
-    flex-shrink: 0;
-}
-
-/* ========== SOB O CAPÔ (técnico, "quiet") ========== */
-.pd-tech-block {
-    background: rgba(255, 255, 255, 0.015);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-2xl);
-    padding: clamp(1.5rem, 4vw, 3rem);
-    margin-bottom: var(--spacing-2xl);
-}
-
-.pd-subsection + .pd-subsection {
-    margin-top: var(--spacing-xl);
-}
-
-.pd-subtitle {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--text-muted-color);
-    margin-bottom: var(--spacing-md);
-}
-
-/* Arquitetura */
-.architecture-flow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    padding: 2.5rem;
-    background: rgba(255, 255, 255, 0.01);
-    border-radius: var(--radius-xl);
-    border: 1px dashed var(--border-subtle);
-}
-
-.arch-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background: var(--gradient-surface);
-    border: 1px solid var(--border-subtle);
-    padding: 1.5rem;
-    border-radius: var(--radius-lg);
-    width: 200px;
-    box-shadow: var(--shadow-sm);
-}
-
-.node-icon {
-    width: 48px;
-    height: 48px;
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.arch-node span {
-    font-weight: 600;
-    font-size: 1.05rem;
-    margin-bottom: 0.25rem;
-}
-
-.arch-node small {
-    font-size: 0.8rem;
-    color: var(--text-dim-color);
-}
-
-/* Seta visível (antes era border-subtle, quase invisível) */
-.arch-arrow {
-    color: var(--text-dim-color);
-    flex-shrink: 0;
-}
-
-/* Decisões */
-.decisions-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-}
-
-.decision-item {
-    background: rgba(255, 255, 255, 0.02);
-    border-left: 3px solid var(--accent-color);
-    padding: 1.25rem 1.5rem;
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    font-size: 0.95rem;
-    color: var(--text-muted-color);
-    line-height: 1.6;
-}
-
-.decision-label {
-    display: inline-block;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-right: 0.5rem;
-}
-
-/* Stack detalhada */
-.tech-v2-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 1.25rem;
-}
-
-.tech-card-v2 {
-    background: var(--gradient-surface);
-    border: 1px solid var(--border-subtle);
-    padding: 1.75rem 1rem;
-    border-radius: var(--radius-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.85rem;
-    transition: var(--transition-ui-fast);
-}
-
-.tech-card-v2:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-glow);
-}
-
-.tech-card-v2 span {
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-/* ========== CTA FINAL ========== */
-.pd-final-cta {
-    text-align: center;
-}
-
-/* ========== FATOS (papel, time, duração) ========== */
-.pd-facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 2rem;
-    margin: 1.5rem 0 0;
-}
-
-.pd-fact dt {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim-color);
-}
-
-.pd-fact dt svg { color: var(--accent-color); }
-
-.pd-fact dd {
-    margin: 0.2rem 0 0;
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-/* ========== MÉTRICAS DE IMPACTO ========== */
 .pd-metrics {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -448,44 +518,312 @@
     color: var(--text-muted-color);
 }
 
-/* ========== MEU PAPEL ========== */
-.pd-role-grid {
+/* ---------- Cards (papel, funcionalidades) ---------- */
+.pd-role-grid,
+.pd-feature-groups {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
-.pd-role-col {
+/* 2 ou 4 grupos: grade 2×N, sem card órfão numa linha de 3 */
+@media (min-width: 700px) {
+    .pd-feature-groups.is-pairs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.pd-card {
     padding: 1.5rem;
-    border: 1px solid var(--border-subtle);
+    background: var(--pd-surface);
+    border: 1px solid var(--pd-line);
     border-radius: var(--radius-lg);
 }
 
-.pd-role-col.is-mine {
-    border-color: rgba(255, 122, 0, 0.3);
+.pd-card.is-accent {
+    border-color: var(--pd-accent-line);
 }
 
-.pd-role-col ul {
+.pd-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+}
+
+.pd-checklist {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.65rem;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.pd-role-col li {
+/* Lista única sem grupos: ocupa a largura em colunas */
+.pd-feature-groups > .pd-card:only-child .pd-checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.65rem 1.5rem;
+}
+
+.pd-checklist li {
     display: flex;
     align-items: flex-start;
-    gap: 0.6rem;
-    line-height: 1.5;
+    gap: 0.65rem;
+    line-height: 1.55;
     color: var(--text-muted-color);
 }
 
-.pd-role-col li svg {
+.pd-checklist svg {
     flex-shrink: 0;
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
     color: var(--accent-color);
+}
+
+.pd-checklist.is-muted svg {
+    color: var(--text-dim-color);
+}
+
+/* ---------- Arquitetura ---------- */
+.pd-arch {
+    display: grid;
+    grid-template-columns: repeat(var(--layers, 3), minmax(0, 1fr));
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--pd-surface);
+    border: 1px dashed var(--pd-line);
+    border-radius: var(--radius-xl);
+}
+
+.pd-arch-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    background: var(--gradient-surface);
+    border: 1px solid var(--pd-line);
+    border-radius: var(--radius-lg);
+}
+
+/* Seta no meio do gap entre camadas */
+.pd-arch-node + .pd-arch-node::before {
+    content: "→";
+    position: absolute;
+    left: -1.25rem;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.1rem;
+    color: var(--text-dim-color);
+}
+
+.pd-arch-icon {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 0.4rem;
+    border-radius: var(--radius-md);
+    background: var(--gradient-orange-soft);
+    color: var(--accent-color);
+}
+
+.pd-arch-node strong {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.pd-arch-node small {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--text-dim-color);
+}
+
+.pd-bullets {
+    display: grid;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pd-bullets li {
+    position: relative;
+    max-width: 72ch;
+    padding-left: 1.25rem;
+    line-height: 1.65;
+    color: var(--text-muted-color);
+}
+
+.pd-bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--accent-color);
+}
+
+/* ---------- Decisões (assunto | escolha + porquê) ---------- */
+.pd-decisions {
+    margin: 0;
+    border-top: 1px solid var(--pd-line);
+}
+
+.pd-decision {
+    display: grid;
+    grid-template-columns: minmax(140px, 200px) minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--pd-line);
+}
+
+.pd-decision dt {
+    padding-top: 0.2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+}
+
+.pd-decision dd {
+    margin: 0;
+}
+
+.pd-decision strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.pd-decision p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ---------- Stack (tecnologia | função) ---------- */
+.pd-stack-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.pd-stack-table thead th {
+    padding: 0 1rem 0.75rem 0;
+    border-bottom: 1px solid var(--pd-line);
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+}
+
+.pd-stack-table tbody th,
+.pd-stack-table td {
+    padding: 0.9rem 1rem 0.9rem 0;
+    border-bottom: 1px solid var(--pd-line);
+    text-align: left;
+    vertical-align: top;
+}
+
+.pd-stack-table tbody th {
+    width: 1%;
+    padding-right: 2.5rem;
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.pd-stack-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Tecnologia sem ícone em TECH_ICONS: marcador no mesmo slot de 18px */
+.pd-stack-dot {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.pd-stack-dot::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--text-dim-color);
+}
+
+.pd-stack-table td {
+    line-height: 1.55;
+    color: var(--text-muted-color);
+}
+
+/* ---------- Próximos passos ---------- */
+.pd-roadmap {
+    display: grid;
+    gap: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pd-roadmap li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    line-height: 1.6;
+    color: var(--text-muted-color);
+}
+
+.pd-roadmap svg {
+    flex-shrink: 0;
+    margin-top: 0.3rem;
+    color: var(--text-dim-color);
+}
+
+/* ========== CTA DE FECHAMENTO ========== */
+.pd-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    border: 1px solid var(--pd-accent-line);
+    border-radius: var(--radius-xl);
+    background:
+        radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--accent-color) 12%, transparent), transparent 60%),
+        var(--pd-surface);
+}
+
+.pd-cta h2 {
+    font-size: clamp(1.4rem, 3vw, 1.85rem);
+    margin-bottom: 0.5rem;
+}
+
+.pd-cta p {
+    max-width: 52ch;
+}
+
+.pd-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 /* ========== PRÓXIMO PROJETO ========== */
@@ -538,27 +876,50 @@
 }
 
 /* ========== RESPONSIVE ========== */
-@media (max-width: 1024px) {
-    .architecture-flow {
-        flex-direction: column;
-        gap: 1rem;
+@media (max-width: 900px) {
+    .pd-arch {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
-    .arch-arrow {
-        transform: rotate(90deg);
+    .pd-arch-node + .pd-arch-node::before {
+        content: "↓";
+        left: 50%;
+        top: -1rem;
     }
 }
 
 @media (max-width: 640px) {
-    .decisions-grid {
-        grid-template-columns: 1fr;
-    }
-
     .pd-hero-text h1 {
         font-size: 2.4rem;
     }
 
-    .pd-story-item.is-impact {
-        padding: 1.25rem 1.25rem;
+    .pd-decision {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .pd-step {
+        grid-template-columns: 1.75rem minmax(0, 1fr);
+        gap: 0.9rem;
+    }
+
+    .pd-step:not(:last-child)::before {
+        left: calc(0.875rem - 1px);
+        top: 1.75rem;
+    }
+
+    .pd-step-marker {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.78rem;
+    }
+
+    .pd-step.is-result .pd-step-body {
+        padding: 1.25rem;
+    }
+
+    .pd-stack-table tbody th {
+        padding-right: 1.25rem;
     }
 }
