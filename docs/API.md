@@ -1,15 +1,20 @@
 # API
 
-> **Este projeto não expõe nem consome uma API REST própria.** É uma SPA
-> front-end estática, sem backend. Este documento registra os **contratos
-> externos** que o app usa (deep-links) para que o
-> comportamento fique explícito.
+> **Este projeto não tem backend de aplicação.** É uma SPA front-end estática
+> que expõe **um único endpoint próprio** — a função serverless opcional
+> `/api/spotify/now-playing` (Contrato 4) — e consome serviços externos
+> públicos. Este documento registra esses contratos para que o comportamento
+> fique explícito.
 
 ## Convenções gerais
 
-- Não há servidor de aplicação, autenticação, tokens ou endpoints versionados.
-- Toda "integração" é deep-link/navegação para serviço externo em runtime.
-- Nenhum segredo é usado. Requisições são anônimas a recursos públicos.
+- Não há servidor de aplicação, autenticação de usuário nem endpoints
+  versionados.
+- Integrações do front: deep-link/navegação (WhatsApp, links sociais) e
+  leitura anônima de recursos públicos (GitHub). Fonte única de cada uma em
+  `src/utils/`.
+- O navegador nunca recebe segredo. As credenciais do Spotify ficam só na
+  função de `api/` (ver [ENVIRONMENT.md](ENVIRONMENT.md)).
 
 ## Contrato 1 — Deep-link de contato (WhatsApp)
 
@@ -108,13 +113,17 @@ card e o terminal não duplicarem a chamada.
 
 ## Formato de erros
 
-Não aplicável a um backend. Erros possíveis são de cliente:
+- **Endpoint próprio** (`/api/spotify/now-playing`): JSON `{ error:'<código>' }`
+  com o status HTTP correspondente (tabela do Contrato 4); falta de
+  configuração não é erro — `501 { configured:false }`. O detalhe fica no log
+  da função; o cliente só recebe o código.
+- **GitHub** (Contrato 3): qualquer não-2xx lança e o consumidor mostra o
+  fallback.
+- **Deep-link:** falha silenciosa se o dispositivo não tiver WhatsApp/handler.
 
-- Deep-link: falha silenciosa se o dispositivo não tiver WhatsApp/handler.
+## Roadmap (se novos endpoints forem adicionados)
 
-## Roadmap (se um backend for adicionado)
-
-Caso futuramente exista API real (ex.: envio de e-mail server-side), documentar
-aqui: base URL, autenticação, cada endpoint (método, rota, params, request,
-response) e o formato de erro padronizado. Registrar a decisão em
-[DECISIONS.md](DECISIONS.md).
+Seguir o Contrato 4 como modelo: base URL, autenticação, cada endpoint (método,
+rota, params, request, response), cache e o formato de erro acima. Registrar a
+decisão em [DECISIONS.md](DECISIONS.md) — novo endpoint é exceção ao "sem
+backend de aplicação", não regra.

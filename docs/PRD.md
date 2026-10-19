@@ -5,7 +5,7 @@ Requisitos do produto. Complementa [PROJECT_CONTEXT.md](../PROJECT_CONTEXT.md).
 ## Visão
 
 Uma SPA de portfólio que apresenta trajetória, projetos, serviços e
-certificações de forma premium, bilíngue (PT/EN) e responsiva, convertendo
+certificações de forma premium, em 4 idiomas (pt-BR, pt-PT, EN, ES) e responsiva, convertendo
 visitantes em contatos.
 
 ## Personas
@@ -28,7 +28,7 @@ visitantes em contatos.
 | RF-05 | Página **Serviços** listando ofertas. |
 | RF-06 | Página **Certificados** com visualização/links de PDF. |
 | RF-07 | Página **Contato** com formulário que encaminha via WhatsApp + links sociais. |
-| RF-08 | Alternância de idioma **PT/EN** com persistência local. |
+| RF-08 | Seletor de idioma **pt-BR / pt-PT / EN / ES** com persistência local. |
 | RF-09 | Download do currículo em PDF. |
 | RF-10 | Navegação com transições animadas e scroll gerenciado (topo ao trocar de rota, botão "voltar ao topo"). |
 
@@ -39,16 +39,17 @@ visitantes em contatos.
 | RNF-01 | Responsivo: mobile, tablet e desktop. |
 | RNF-02 | Performance: build com code-splitting por rota; alvo Lighthouse ≥ 90. |
 | RNF-03 | SEO básico: meta tags, Open Graph e Twitter Card (ver `index.html`). |
-| RNF-04 | Acessibilidade: navegação por teclado, `aria-*` em ícones/controles, contraste do tema dark. |
-| RNF-05 | Sem backend: hospedagem estática (Vercel), sem dados sensíveis. |
+| RNF-04 | Acessibilidade: navegação por teclado, `aria-*` em ícones/controles, contraste nos temas claro e escuro. |
+| RNF-05 | Sem backend de aplicação: hospedagem estática (Vercel), sem dados sensíveis no bundle. Exceção: função serverless opcional do Spotify, com credenciais só no servidor (ADR-0013). |
 | RNF-06 | Código tipado (TypeScript strict) e organizado por camadas. |
 | RNF-07 | Conteúdo editável via arquivos de dados, sem redeploy manual de código externo. |
+| RNF-08 | Smoke E2E (Playwright) passando: rotas do sitemap sem erro de console, 404 do app, fonte self-hosted e tema persistido. |
 
 ## Fluxos principais
 
 1. **Descoberta → Projeto → Contato**: Home → Projetos → detalhe → Contato (WhatsApp).
 2. **Avaliação de recrutador**: Home → Sobre → download CV → Contato.
-3. **Troca de idioma**: qualquer página → toggle PT/EN → preferência persiste em `localStorage`.
+3. **Troca de idioma**: qualquer página → seletor de idioma → preferência persiste em `localStorage`.
 
 ## Critérios de aceite (amostra)
 

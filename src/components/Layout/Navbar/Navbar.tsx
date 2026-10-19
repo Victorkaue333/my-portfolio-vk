@@ -5,17 +5,24 @@ import {
     FiSun,
 } from 'react-icons/fi';
 import { Link, NavLink } from 'react-router-dom';
+import { cvFor, sameLanguage } from '../../../config/cv';
 import { navIcons } from '../../../config/navIcons';
 import { navPages } from '../../../config/pages';
 import { prefetchRoute } from '../../../routes';
+import { useLanguage } from '../../../hooks/useLanguage';
 import { useScrollPosition } from '../../../hooks/useScrollPosition';
 import { useScrollDirection } from '../../../hooks/useScrollDirection';
 import { LanguageSwitcher } from '../../ui/LanguageSwitcher/LanguageSwitcher';
+import { languageMeta } from '../../../locales/languages';
 import { useTheme } from '../../../theme/ThemeProvider';
 import './Navbar.css';
 
 export function Navbar() {
   const { t } = useTranslation();
+  const { lang } = useLanguage();
+  const cv = cvFor(lang);
+  // Página em inglês entregando PDF em português: o botão avisa antes do clique.
+  const cvForeign = !sameLanguage(cv.lang, lang);
   const { scrolled } = useScrollPosition(60);
   // Floating Navbar (https://ui.aceternity.com/components/floating-navbar):
   // só o COMPORTAMENTO foi trazido — recolher ao descer, reaparecer ao subir,
@@ -77,14 +84,23 @@ export function Navbar() {
           </button>
 
           <a
-            href="/docs/Curriculo/Curriculo_Victor_Kaue.pdf"
+            href={cv.href}
+            hrefLang={cv.lang}
             className="btn-cv"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={t('nav.downloadCV')}
+            // Nome acessível começa pelo texto visível (label-in-name) e, quando
+            // o PDF é de outra língua, diz qual — o selo "PT" é aria-hidden.
+            aria-label={cvForeign ? `${t('nav.downloadCV')} – ${languageMeta(cv.lang).label}` : undefined}
+            title={cvForeign ? languageMeta(cv.lang).label : undefined}
           >
-            <FiDownload size={14} />
+            <FiDownload size={14} aria-hidden="true" />
             {t('nav.downloadCV')}
+            {cvForeign && (
+              <span className="btn-cv-lang" aria-hidden="true">
+                {cv.lang.slice(0, 2).toUpperCase()}
+              </span>
+            )}
           </a>
         </div>
       </div>

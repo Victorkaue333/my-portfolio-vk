@@ -4,7 +4,7 @@
 
 ### Portfólio Full Stack de Victor Kauê
 
-SPA premium, bilíngue (PT/EN) e responsiva, construída para demonstrar capacidade técnica em
+SPA premium, em 4 idiomas (pt-BR, pt-PT, EN, ES) e responsiva, construída para demonstrar capacidade técnica em
 **desenvolvimento web full stack** — backend (Python/Django) como especialidade e
 **front-end React de alto acabamento** como vitrine.
 
@@ -18,8 +18,8 @@ SPA premium, bilíngue (PT/EN) e responsiva, construída para demonstrar capacid
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
-[![Three.js](https://img.shields.io/badge/Three.js-R3F-000000?style=for-the-badge&logo=threedotjs&logoColor=white)](https://threejs.org/)
-[![i18next](https://img.shields.io/badge/i18next-PT%2FEN-26A69A?style=for-the-badge&logo=i18next&logoColor=white)](https://www.i18next.com/)
+[![i18next](https://img.shields.io/badge/i18next-4_idiomas-26A69A?style=for-the-badge&logo=i18next&logoColor=white)](https://www.i18next.com/)
+[![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
 [![Vercel](https://img.shields.io/badge/Vercel-Deploy-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 
 🌐 **Produção:** **<https://victor-kaue.vercel.app/>**
@@ -56,11 +56,11 @@ SPA premium, bilíngue (PT/EN) e responsiva, construída para demonstrar capacid
 
 ## 1. Sobre o projeto
 
-Este portfólio é uma **SPA React (single-page application) totalmente estática**, projetada
+Este portfólio é uma **SPA React (single-page application) estática**, projetada
 para converter visitantes — recrutadores, clientes e comunidade técnica — em contatos
 qualificados. É um projeto **real e em produção**, e a própria aplicação funciona como prova
-de competência: arquitetura por camadas, código 100% TypeScript, i18n com persistência,
-animações fluidas, elementos 3D e deploy contínuo.
+de competência: arquitetura por camadas, código TypeScript strict, i18n em 4 idiomas,
+animações fluidas, smoke E2E e deploy contínuo.
 
 Três públicos, três jornadas:
 
@@ -68,9 +68,11 @@ Três públicos, três jornadas:
 - **Clientes potenciais** conhecem os **serviços** e iniciam conversa direta via **WhatsApp**.
 - **Comunidade técnica** explora o detalhe de cada projeto: desafio, solução, impacto e decisões de arquitetura.
 
-Tecnicamente, **não há backend nem banco de dados**: todo o conteúdo (projetos, experiências,
-certificados, serviços) vive como **módulos TypeScript tipados** em `src/data/`, validados em
-build e compilados no bundle. **O repositório é a fonte de verdade do conteúdo.**
+Tecnicamente, **não há banco de dados nem backend de aplicação**: todo o conteúdo (projetos,
+experiências, certificados, serviços) vive como **módulos TypeScript tipados** em `src/data/`,
+validados em build e compilados no bundle. **O repositório é a fonte de verdade do conteúdo.**
+A única peça server-side é uma função serverless opcional (`api/spotify/now-playing.js`) que
+guarda as credenciais do Spotify fora do navegador — sem ela, o site funciona igual.
 
 > O contexto de negócio (problema, personas, métricas e escopo) está em
 > [`PROJECT_CONTEXT.md`](PROJECT_CONTEXT.md); os requisitos (RF/RNF), fluxos e critérios de
@@ -98,15 +100,17 @@ build e compilados no bundle. **O repositório é a fonte de verdade do conteúd
 
 ### 🧭 Navegação e experiência
 
-- [x] SPA com **transições animadas** entre rotas (framer-motion + `AnimatePresence`)
+- [x] SPA com **transições entre rotas** em CSS (`page-enter`) — sem framer-motion no bundle inicial
 - [x] **Lazy loading por rota** com `Suspense` + prefetch no hover (sem tela de loader)
-- [x] Fundo com **elementos 3D** (three.js / React Three Fiber) carregado de forma preguiçosa
+- [x] Fundo animado do Hero em **Canvas 2D** (`FloatingLines`)
 - [x] Scroll gerenciado: volta ao topo ao trocar de rota + botão "voltar ao topo"
-- [x] Navbar desktop + **navbar mobile dedicada**, tema dark premium com design tokens
+- [x] Navbar desktop + **navbar mobile dedicada**, tema **claro/escuro** persistido, design tokens
+- [x] **Terminal interativo** em `/sobre` (comandos por whitelist, não é um shell)
 
 ### 🌐 Conteúdo e internacionalização
 
-- [x] **PT/EN** com i18next; idioma detectado e **persistido em `localStorage`**
+- [x] **pt-BR, pt-PT, EN e ES** com i18next; seletor com bandeiras; idioma detectado e **persistido em `localStorage`**
+- [x] **Atividade pública do GitHub** (repositórios recentes e contribuições) e bloco de **Spotify**
 - [x] Catálogo de projetos com **filtro por categoria** (Todos / Pessoais / Profissionais)
 - [x] Página de **detalhe por projeto**: desafio, solução, impacto, arquitetura, stack e screenshots
 - [x] Experiências, formação, expertise e serviços renderizados a partir de **dados tipados**
@@ -123,7 +127,8 @@ build e compilados no bundle. **O repositório é a fonte de verdade do conteúd
 
 ## 4. Páginas da aplicação
 
-Sete rotas públicas — não há autenticação nem perfis (todo o conteúdo é aberto):
+Oito rotas públicas + 404 — não há autenticação nem perfis (todo o conteúdo é aberto). Fonte
+única: [`src/config/pages.ts`](src/config/pages.ts).
 
 | Rota | Página | Conteúdo |
 |---|---|---|
@@ -134,6 +139,8 @@ Sete rotas públicas — não há autenticação nem perfis (todo o conteúdo é
 | `/servicos` | **Serviços** | Ofertas de desenvolvimento e consultoria |
 | `/certificados` | **Certificados** | Certificações com PDFs |
 | `/contato` | **Contato** | Formulário → WhatsApp + links sociais |
+| `/uses` | **Uses** | Ferramentas e setup (link no Footer, fora do menu) |
+| `*` | **404** | Página "não encontrada" do próprio app |
 
 ---
 
@@ -164,32 +171,37 @@ Visão geral; detalhes completos em [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.m
 
 ```
 Browser (SPA)
-   │  HTTPS  →  https://victor-kaue.vercel.app  (arquivos estáticos)
+   │  HTTPS  →  https://victor-kaue.vercel.app
    ▼
-Vercel (CDN + fallback SPA)
-   └─ dist/  ←  npm run build (tsc -b + vite build)
-                   │
-                   ├─ src/pages/      rotas lazy (Home, Sobre, Projetos, ...)
-                   ├─ src/components/ Layout persistente + ui reutilizável
-                   ├─ src/data/       conteúdo tipado (bundled — sem fetch em runtime)
-                   └─ src/i18n.ts     PT/EN (persistência em localStorage)
+Vercel (CDN + rewrite SPA em vercel.json)
+   ├─ dist/  ←  npm run build (tsc -b + vite build + prerender-meta)
+   │               │
+   │               ├─ src/pages/      rotas lazy (Home, Sobre, Projetos, ...)
+   │               ├─ src/components/ Layout persistente + ui reutilizável
+   │               ├─ src/data/       conteúdo tipado (bundled — sem fetch em runtime)
+   │               └─ src/locales/    4 idiomas (persistência em localStorage)
+   │
+   └─ api/spotify/now-playing.js  função serverless opcional (credenciais só no servidor)
 ```
 
 **Pontos-chave:**
 
-- **Zero backend** — nenhuma API própria, nenhum banco: hospedagem estática, superfície de
-  ataque mínima e custo zero de infraestrutura.
+- **Sem backend de aplicação** — nenhum banco, nenhum estado no servidor: hospedagem estática,
+  superfície de ataque mínima e custo zero de infraestrutura. A função do Spotify é opcional
+  e stateless; sem as variáveis ela responde `501` e o site usa o Embed
+  ([ADR-0013](docs/DECISIONS.md)).
 - **Conteúdo como código** — dados em `.ts` validados pela interface `Project`
   (`src/types/index.ts`) e normalizados em `src/data/projects.ts`; erro de contrato quebra o
   build, nunca a produção.
 - **Contato sem servidor** — o formulário monta um deep-link `wa.me` com a mensagem
   pré-formatada; não há e-mail transacional nem armazenamento de mensagens.
 - **Bundle otimizado** — code-splitting por rota + `manualChunks` para vendors
-  (react, motion, i18n, icons) no `vite.config.ts`.
+  (react, motion, i18n) no `vite.config.ts`; `react-icons` fica de fora de propósito para
+  cada rota carregar só os seus ícones.
 
-Integrações externas: WhatsApp (`wa.me`), GitHub/LinkedIn (links), CDN devicon (ícones) e —
-apenas em build-time — `raw.githubusercontent.com` via script de enriquecimento
-(ver [`docs/API.md`](docs/API.md)).
+Integrações externas: WhatsApp (`wa.me`), GitHub/LinkedIn (links), API pública do GitHub
+(leitura anônima, cache em `sessionStorage`), Spotify (Embed + `/api/spotify/now-playing`) e
+Vercel Analytics (ver [`docs/API.md`](docs/API.md)).
 
 ---
 
@@ -198,23 +210,25 @@ apenas em build-time — `raw.githubusercontent.com` via script de enriqueciment
 O frontend é uma **SPA construída com React 19, Vite e TypeScript**. O fluxo básico:
 
 1. O navegador carrega `index.html` → `src/main.tsx` (fontes, estilos globais, i18n).
-2. `App.tsx` monta o `BrowserRouter`, o layout persistente (Navbar, Footer, MobileNavbar,
-   BackToTop) e o fundo 3D (`FloatingLines`, lazy).
+2. `App.tsx` monta o `BrowserRouter`, o layout persistente (Navbar, MobileNavbar, Footer,
+   BackToTop, ScrollReveal) e o `<Analytics />` da Vercel.
 3. O **React Router** resolve a rota; cada página é um chunk **lazy** com `Suspense`.
-4. As páginas consomem conteúdo **exclusivamente de `src/data/`** (módulos tipados).
+4. As páginas consomem conteúdo de **`src/data/`** (módulos tipados); só GitHub e Spotify
+   são buscados em runtime, via `src/utils/github.ts` e `src/utils/spotify.ts`.
 5. Textos passam pelo **i18next** (`t()`); o idioma persiste em `localStorage` (`portfolio-lang`).
-6. Transições de página são orquestradas pelo **framer-motion** (`AnimatePresence`).
+6. A transição de página é CSS (`page-enter`); o **framer-motion** fica nos componentes
+   interativos (carrossel, lupa, spotlight).
 
 ```mermaid
 flowchart LR
-    N["Navegador"] --> M["main.tsx (i18n + estilos + fontes)"] --> AP["App.tsx (BrowserRouter)"]
+    N["Navegador"] --> M["main.tsx (i18n + tema + estilos)"] --> AP["App.tsx (BrowserRouter)"]
     AP --> LY["Layout persistente (Navbar · Footer · BackToTop)"]
     AP --> RT["Rotas lazy + Suspense"]
     RT --> PG["Páginas (Home, Sobre, Projetos, ...)"]
     PG --> DT["src/data/ (conteúdo tipado)"]
-    PG --> I18["i18next (PT/EN)"]
+    PG --> I18["i18next (4 idiomas)"]
     I18 --> LS[("localStorage")]
-    PG --> FM["framer-motion (transições)"]
+    PG --> UT["src/utils/ (GitHub · Spotify)"]
 ```
 
 ---
@@ -269,24 +283,27 @@ Versões reais em [`package.json`](package.json).
 | **TypeScript ~5.7** | Tipagem estática (strict) |
 | **Vite 6** | Build e desenvolvimento |
 | **TailwindCSS 4** (`@tailwindcss/vite`) + `tw-animate-css` | Estilização utilitária |
-| CSS por componente + design tokens (`src/styles/variables.css`) | Tema dark premium |
+| CSS por componente + design tokens (`src/styles/variables.css`) | Temas claro e escuro |
 | **react-router-dom 7** | Roteamento SPA com lazy routes |
-| **framer-motion 12** | Animações e transições de página |
-| **three** + `@react-three/fiber` + `@react-three/drei` | Elementos 3D do fundo |
-| **i18next** + `react-i18next` + language detector | Internacionalização PT/EN |
-| `radix-ui` + shadcn + `cva` + `clsx` + `tailwind-merge` | Base de componentes acessíveis |
-| `lucide-react` · `react-icons` · `devicon` | Ícones |
-| `@fontsource` (Syne, DM Sans, Orbitron) | Fontes self-hosted |
-| `axios` | Cliente HTTP |
+| **framer-motion 12** | Animações dos componentes interativos |
+| Canvas 2D (`FloatingLines`) | Fundo animado do Hero |
+| **i18next** + `react-i18next` + language detector | Internacionalização (pt-BR, pt-PT, EN, ES) |
+| `country-flag-icons` | Bandeiras SVG do seletor de idioma |
+| `react-icons` (Simple Icons + Feather) | Ícones |
+| Manrope `.woff2` em `public/fonts/` | Fonte self-hosted (preload no `index.html`) |
+| `@vercel/analytics` | Métricas de visita |
 
 ### Build / Infra
 
 | Tecnologia | Função |
 |---|---|
-| **Vercel** | Hospedagem estática + deploy contínuo por push |
+| **Vercel** | Hospedagem estática + função serverless (`api/`) + deploy contínuo por push |
 | `tsc -b` + `vite build` | Checagem de tipos + bundle de produção |
-| `manualChunks` (react, motion, i18n, icons) | Split de vendors para cache eficiente |
+| `manualChunks` (react, motion, i18n) | Split de vendors para cache eficiente |
 | Node.js (`scripts/prerender-meta.mjs`) | `<head>` por rota + `sitemap.xml` pós-build |
+| `sharp` (`scripts/optimize-images.mjs`) | Variantes `.webp` responsivas |
+| **Playwright** | Smoke E2E contra o build de produção |
+| `react-doctor` · `react-scan` | Diagnóstico de código e de re-render |
 
 ---
 
@@ -294,31 +311,39 @@ Versões reais em [`package.json`](package.json).
 
 ```
 meu_portifolio/
+├── api/
+│   └── spotify/now-playing.js     # função serverless opcional (Vercel)
 ├── public/
 │   ├── Certificados/pdfs/         # PDFs de certificados (+ capas .webp)
 │   ├── docs/Curriculo/            # Currículo em PDF
+│   ├── fonts/                     # Manrope .woff2 (self-hosted)
 │   └── images/                    # fotos de projetos, galeria, backgrounds (.webp)
 ├── scripts/
 │   ├── optimize-images.mjs        # variantes .webp responsivas (npm run images:optimize)
 │   └── prerender-meta.mjs         # <head> por rota + sitemap.xml pós-build
 ├── src/
 │   ├── components/
-│   │   ├── Layout/                # Navbar, MobileNavbar, Footer, BackToTop, ScrollToTop
-│   │   └── ui/                    # Button, PageHero, ProjectCard, TechMarquee, 3D…
+│   │   ├── Layout/                # Navbar (+ MobileNavbar), Footer, BackToTop, ScrollToTop, ScrollReveal
+│   │   └── ui/                    # Button, PageHero, ProjectCard, FloatingLines, Terminal, Spotify…
+│   ├── config/                    # pages.ts (registro único de rotas), navIcons, site, spotify
 │   ├── data/
 │   │   ├── projects/pessoais/     # um arquivo .ts por projeto pessoal
 │   │   ├── projects/profissionais/# um arquivo .ts por projeto profissional
 │   │   └── *.ts                   # experiences, education, expertise, services, social…
-│   ├── hooks/                     # useScrollPosition, useLanguage…
+│   ├── hooks/                     # useSeo, useLanguage, useScrollPosition…
+│   ├── locales/                   # languages.ts + textos por idioma/tela (pt-BR, pt-PT, en, es)
 │   ├── pages/                     # uma pasta por rota (.tsx + .css)
 │   ├── styles/                    # variables, reset, global, animations
+│   ├── theme/                     # ThemeProvider (claro/escuro)
 │   ├── types/index.ts             # contratos (Project, Experience, …)
-│   ├── i18n.ts                    # recursos PT/EN + detecção de idioma
+│   ├── utils/                     # github.ts, spotify.ts, imageSrcSet…
+│   ├── i18n.ts                    # inicialização do i18next + detecção de idioma
 │   ├── App.tsx  main.tsx
 │   └── vite-env.d.ts
-├── docs/                          # documentação técnica (padrão de 11 documentos)
+├── tests/e2e/                     # smoke Playwright
+├── docs/                          # documentação técnica
 ├── CLAUDE.md · PROJECT_CONTEXT.md
-├── index.html · vite.config.ts · tsconfig*.json
+├── index.html · vite.config.ts · vercel.json · playwright.config.ts · tsconfig*.json
 └── README.md                      # você está aqui
 ```
 
@@ -327,7 +352,11 @@ meu_portifolio/
 | `src/data/` | **Fonte de verdade do conteúdo** — módulos TS tipados, sem fetch em runtime |
 | `src/components/` | Layout persistente e blocos de UI reutilizáveis (um componente por pasta) |
 | `src/pages/` | Uma pasta por rota; monta seções e consome `src/data/` |
-| `public/` | Assets estáticos: imagens `.webp`, PDFs de certificados e currículo |
+| `src/config/` | Registros únicos (rotas, SEO, sitemap, ícones do menu) |
+| `src/locales/` | Textos da UI em 4 idiomas; pt-BR é a base de tipos |
+| `api/` | Função serverless do Spotify — única peça server-side, opcional |
+| `tests/e2e/` | Smoke Playwright contra o build de produção |
+| `public/` | Assets estáticos: imagens `.webp`, fontes, PDFs de certificados e currículo |
 | `scripts/` | Utilitários Node de build-time |
 | `docs/` | Documentação viva (arquitetura, dados, deploy, ambiente…) |
 
@@ -350,7 +379,7 @@ npm install
 npm run dev
 ```
 
-- App: <http://localhost:3000> (abre automaticamente)
+- App: <http://localhost:5173> (abre automaticamente)
 
 > Build de produção local: `npm run build` e depois `npm run preview`.
 
@@ -358,16 +387,20 @@ npm run dev
 
 ## 13. Variáveis de ambiente
 
-**Nenhuma.** A aplicação não consome variáveis de ambiente em runtime — todo o conteúdo é
-estático e compilado no bundle. Clonou, instalou, rodou.
+**Nenhuma obrigatória.** O bundle não lê `import.meta.env.VITE_*` — todo o conteúdo é
+estático e compilado. Clonou, instalou, rodou.
+
+As três variáveis abaixo são **opcionais** e ativam o "Now Playing" do Spotify. São lidas
+**só** pela função `api/spotify/now-playing.js`, no servidor (sem prefixo `VITE_`, nunca
+chegam ao navegador). Sem elas, o endpoint responde `501` e o site usa o Spotify Embed.
 
 | Variável | Obrigatória | Observação |
 |---|---|---|
-| — | Não | O app não lê `import.meta.env.VITE_*` em nenhum ponto |
+| `SPOTIFY_CLIENT_ID` | Não | App no Spotify Developer Dashboard |
+| `SPOTIFY_CLIENT_SECRET` | Não | **Segredo** — só na Vercel / `.env` local |
+| `SPOTIFY_REFRESH_TOKEN` | Não | **Segredo** — passo a passo no [`.env.example`](.env.example) |
 
-> ⚠️ Os arquivos `.env` / `.env.example` presentes na raiz são resíduos de tooling externo e
-> **não são usados pelo app**. Detalhes e recomendação de limpeza em
-> [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md).
+Detalhes em [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md).
 
 ---
 
@@ -377,16 +410,37 @@ Scripts reais de [`package.json`](package.json):
 
 | Comando | Descrição |
 |---|---|
-| `npm run dev` | Inicia o Vite em modo desenvolvimento (porta 3000) |
-| `npm run build` | `tsc -b && vite build` (checagem de tipos + build de produção) |
+| `npm run dev` | Inicia o Vite em modo desenvolvimento (porta 5173) |
+| `npm run build` | `tsc -b && vite build` + `prerender-meta.mjs` (tipos + bundle + `<head>`/sitemap) |
 | `npm run preview` | Serve o build de produção localmente |
+| `npm run prerender` | Só o prerender de `<head>` por rota e `sitemap.xml` |
+| `npm run images:optimize` | Gera variantes `.webp` responsivas + `src/data/image-variants.json` |
+| `npm run test:e2e` | Build + smoke Playwright |
+| `npm run test:e2e:ui` | Playwright em modo interativo (sem rebuild) |
+| `npm run doctor` | Diagnóstico do react-doctor (`doctor:supply-chain` inclui dependências) |
 
 ---
 
 ## 15. Testes
 
-**Não há suíte de testes automatizados** (é um roadmap declarado — ver [§18](#18-roadmap)).
-A validação atual tem três camadas manuais:
+**Smoke E2E com Playwright** ([`tests/e2e/smoke.spec.ts`](tests/e2e/smoke.spec.ts)), rodando
+contra o build de produção (`vite preview`), onde existem o prerender e os chunks por rota.
+Projetos: Chromium desktop e Pixel 5.
+
+```bash
+npx playwright install chromium   # só na primeira vez
+npm run test:e2e
+```
+
+O que o smoke cobre:
+
+- cada rota do sitemap responde `200`, tem `<title>` e não emite erro no console — as rotas
+  saem de `src/config/pages.ts`, então página nova entra no teste sozinha;
+- rota inexistente cai na 404 do app, não em erro do servidor;
+- Manrope carrega do próprio domínio, sem requisição ao Google Fonts;
+- o tema alternado sobrevive a um reload (só desktop).
+
+Não há testes unitários. As outras camadas de validação:
 
 | Camada | Ferramenta | Como rodar |
 |---|---|---|
@@ -410,22 +464,25 @@ flowchart LR
 ```
 
 - **Build command:** `npm run build` · **Output:** `dist/`
+- **Função serverless:** a Vercel publica `api/` junto; as variáveis do Spotify (opcionais) ficam
+  em *Project → Settings → Environment Variables*.
 - **Rollback:** dashboard Vercel → *Deployments* → **Promote to Production** em um deploy
   anterior (instantâneo, sem rebuild).
-- **Roteamento SPA:** `BrowserRouter` exige fallback para `index.html` em rotas profundas
-  (ex.: `/projetos/:id`); a Vercel aplica automaticamente em projetos Vite — se surgir 404 em
-  rota direta, adicionar o `vercel.json` documentado em [`docs/DEPLOY.md`](docs/DEPLOY.md).
+- **Roteamento SPA:** [`vercel.json`](vercel.json) reescreve rotas profundas (ex.:
+  `/projetos/:id`) para `index.html`, exceto `api/`, assets e arquivos estáticos, e define cache
+  imutável para `/assets` e `/fonts`.
 
 ---
 
 ## 17. SEO, performance e acessibilidade
 
-- **SEO:** meta description/keywords, **Open Graph** e **Twitter Card** configurados em
-  [`index.html`](index.html); título por página via `document.title`.
-- **Performance:** lazy loading por rota, `manualChunks` para vendors, imagens `.webp`,
-  fontes self-hosted (`@fontsource`) e 3D carregado fora do caminho crítico.
-- **Acessibilidade:** componentes base acessíveis (radix), `aria-*` em ícones e controles,
-  navegação por teclado e contraste do tema dark.
+- **SEO:** meta description/keywords, **Open Graph** e **Twitter Card** em
+  [`index.html`](index.html); `<head>` por rota e `sitemap.xml` gerados no build
+  (`scripts/prerender-meta.mjs`) e atualizados em runtime por `useSeo`/`usePageSeo`.
+- **Performance:** lazy loading por rota, `manualChunks` para vendors, imagens `.webp`
+  responsivas, Manrope self-hosted com preload e fundo do Hero em Canvas 2D (sem WebGL).
+- **Acessibilidade:** `aria-*` em ícones e controles, navegação por teclado e contraste nos
+  temas claro e escuro.
 - **Alvo:** Lighthouse ≥ 90 em Performance e SEO (aferição manual — ver [`docs/PRD.md`](docs/PRD.md), RNF-02).
 
 ---
@@ -434,10 +491,8 @@ flowchart LR
 
 Itens em evolução — **não** são funcionalidades já concluídas:
 
-- Testes automatizados (unitários com Vitest; E2E com Playwright);
-- Analytics de visitas e conversão (hoje as métricas são qualitativas);
-- Limpeza do `.env.example` legado (ver [`docs/DECISIONS.md`](docs/DECISIONS.md), ADR-0002);
-- `vercel.json` explícito com rewrite SPA;
+- Testes unitários (ex.: Vitest) — hoje só há o smoke E2E;
+- Eventos de conversão (cliques no WhatsApp, download do CV) — hoje o Vercel Analytics mede só visitas;
 - Novos projetos no catálogo e screenshots adicionais no README;
 - Melhorias contínuas de acessibilidade.
 
@@ -461,10 +516,11 @@ versionados junto ao código.
 |---|---|
 | [PRD](docs/PRD.md) | Produto, requisitos (RF/RNF), fluxos e critérios de aceite |
 | [ARCHITECTURE](docs/ARCHITECTURE.md) | Arquitetura da SPA, camadas e integrações |
-| [API](docs/API.md) | Contratos externos (WhatsApp, enriquecimento GitHub) — sem API própria |
+| [API](docs/API.md) | Contratos externos (WhatsApp, GitHub) + endpoint `/api/spotify/now-playing` |
 | [DATABASE](docs/DATABASE.md) | Modelo de conteúdo estático (entidades e relações) |
 | [DEPLOY](docs/DEPLOY.md) | Vercel, pipeline, rollback e checklist |
-| [ENVIRONMENT](docs/ENVIRONMENT.md) | Variáveis de ambiente (nenhuma) + aviso sobre `.env` legado |
+| [ENVIRONMENT](docs/ENVIRONMENT.md) | Variáveis de ambiente (só as opcionais do Spotify) |
+| [DESIGN](docs/DESIGN.md) | Design system: tokens, tipografia, componentes |
 | [DECISIONS](docs/DECISIONS.md) | Decisões técnicas (ADRs) e histórico |
 | [CHANGELOG](docs/CHANGELOG.md) | Histórico de mudanças por versão (SemVer) |
 

@@ -1,0 +1,137 @@
+/* Faixa de projetos — a rolagem vem do Infinite Moving Cards
+   (components/ui/InfiniteMovingCards). Aqui fica o cabeçalho e o card compacto.
+   Cores do tema claro em styles/light-overrides.css. */
+
+.project-marquee {
+    margin-top: 4.5rem;
+}
+
+/* Cabeçalho no mesmo desenho do de /projetos (ícone + título + contagem). */
+.pm-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.35rem;
+    line-height: 1.2;
+}
+
+.pm-header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(255, 122, 0, 0.1);
+    color: var(--color-primary-500);
+    border: 1px solid rgba(255, 122, 0, 0.18);
+}
+
+.pm-header-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    padding: 0 0.5rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Respiro vertical para o translateY do hover não ser cortado pelo
+   overflow: hidden da faixa. */
+.project-marquee .moving-track {
+    gap: 1.25rem;
+    padding-block: 0.75rem;
+}
+
+.pm-card {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 1.25rem;
+    background: var(--bg-alt);
+    color: inherit;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.pm-card:hover,
+.pm-card:focus-visible {
+    border-color: rgba(255, 122, 0, 0.4);
+    transform: translateY(-4px);
+}
+
+.pm-image {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #111;
+}
+
+.pm-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.pm-card:hover .pm-image img { transform: scale(1.04); }
+
+.pm-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.1rem 1.15rem;
+}
+
+.pm-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-color);
+}
+
+/* Duas linhas fixas: todos os cards com a mesma altura na faixa. */
+.pm-desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    min-height: calc(2 * 1.45em);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--text-muted-color);
+}
+
+@media (max-width: 768px) {
+    .project-marquee {
+        margin-top: 3.5rem;
+    }
+
+    .pm-header {
+        font-size: 1.15rem;
+    }
+
+    .pm-header-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .pm-card {
+        width: 220px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pm-card,
+    .pm-image img { transition: none; }
+    .pm-card:hover { transform: none; }
+    .pm-card:hover .pm-image img { transform: none; }
+}

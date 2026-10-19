@@ -16,7 +16,7 @@ import { FaLinkedin } from 'react-icons/fa6';
 import { SiGithub } from 'react-icons/si';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { featuredProjects } from '../../data/projects';
+import { featuredProjects, projects } from '../../data/projects';
 import { homeMetrics } from '../../data/profile';
 import { usePageSeo } from '../../hooks/useSeo';
 import { Button } from '../../components/ui/Button/Button';
@@ -30,8 +30,11 @@ import { TextGenerate } from '../../components/ui/TextGenerate/TextGenerate';
 import { Spotlight } from '../../components/ui/Spotlight/Spotlight';
 import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
 import { GlareCard } from '../../components/ui/GlareCard/GlareCard';
+import { ProjectMarquee } from '../../components/ui/ProjectMarquee/ProjectMarquee';
 import { srcFor, srcSetFor } from '../../utils/imageSrcSet';
 import './Home.css';
+
+const professionalProjects = projects.filter((p) => p.category === 'real');
 
 export default function Home() {
   const { t } = useTranslation();
@@ -269,6 +272,14 @@ export default function Home() {
               );
             })}
           </div>
+
+          {/* Todos os profissionais passando, abaixo dos destaques fixos: os
+              três cards dão o contexto, a faixa mostra a amplitude. */}
+          <ProjectMarquee
+            projects={professionalProjects}
+            title={t('projects.sections.real')}
+            icon={<FiBriefcase size={20} />}
+          />
         </div>
       </section>
 

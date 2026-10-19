@@ -71,8 +71,10 @@ export function InfiniteMovingCards({
             </li>
           ))}
         </ul>
-        {/* Cópia que fecha o loop — invisível para tecnologia assistiva. */}
-        <ul className="moving-track" aria-hidden="true">
+        {/* Cópia que fecha o loop — invisível para tecnologia assistiva.
+            `inert` tira do Tab os links da cópia: `aria-hidden` sozinho
+            esconde do leitor de tela mas deixa o foco cair num item "fantasma". */}
+        <ul className="moving-track" aria-hidden="true" inert>
           {items.map((item) => (
             <li key={`clone-${item.key}`} className="moving-item">
               {item.content}

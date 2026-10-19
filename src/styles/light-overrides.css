@@ -190,6 +190,26 @@ html.light .featured-card:focus-visible {
 html.light .featured-image,
 html.light .project-image { background: var(--bg-alt); }
 
+/* ===================== ProjectMarquee ===================== */
+
+html.light .pm-card {
+    background: var(--surface-color);
+    border-color: var(--border-color);
+}
+html.light .pm-card:hover,
+html.light .pm-card:focus-visible {
+    border-color: rgba(249, 115, 22, 0.4);
+}
+html.light .pm-image { background: var(--bg-alt); }
+html.light .pm-header-icon {
+    background: var(--accent-soft);
+    border-color: var(--accent-border);
+}
+html.light .pm-header-count {
+    background: var(--bg-alt);
+    color: var(--text-subtle-color);
+}
+
 /* ===================== ProjectCard ===================== */
 
 html.light .project-card { box-shadow: var(--shadow-sm); }

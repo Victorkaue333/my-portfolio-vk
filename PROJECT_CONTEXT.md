@@ -45,23 +45,27 @@ capacidade em front-end.
 | Tempo de navegação e páginas por sessão | Conteúdo prende atenção |
 | Performance (Lighthouse / Core Web Vitals) | ≥ 90 em Performance e SEO |
 
-> As métricas são qualitativas por ora — não há analytics instrumentado no
-> código. Ver [DECISIONS.md](docs/DECISIONS.md) e roadmap.
+> Visitas e páginas por sessão vêm do Vercel Analytics (`<Analytics />` no
+> `App`, ADR-0010 em [DECISIONS.md](docs/DECISIONS.md)). Contatos, cliques e
+> downloads ainda não têm evento instrumentado — seguem qualitativos.
 
 ## Escopo
 
 **Dentro do escopo**
 
-- Site institucional/portfólio estático (SPA) com PT/EN.
+- Site institucional/portfólio estático (SPA) em pt-BR, pt-PT, EN e ES.
 - Páginas: Home, Sobre, Projetos, Detalhe de projeto, Serviços,
-  Certificados, Contato.
+  Certificados, Contato, Uses e 404.
 - Conteúdo (projetos, experiências, certificados) versionado como dados no
   próprio repositório.
 - Contato via deep-link de WhatsApp e links sociais.
+- Integrações de leitura: atividade pública do GitHub e bloco de Spotify
+  (Embed; "Now Playing" opcional via uma função serverless — ADR-0013).
 
 **Fora do escopo (explicitamente)**
 
-- Backend próprio, banco de dados ou autenticação.
+- Backend de aplicação, banco de dados ou autenticação. A função serverless
+  do Spotify é a única exceção: opcional, sem estado, só lê a API do Spotify.
 - CMS / painel administrativo para editar conteúdo em runtime.
 - Envio de e-mail transacional server-side (o formulário abre o WhatsApp).
 - Blog com publicação dinâmica, comentários ou área logada.

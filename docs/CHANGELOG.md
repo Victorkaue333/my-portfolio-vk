@@ -10,6 +10,35 @@ Tipos: **Adicionado**, **Alterado**, **Corrigido**, **Removido**.
 
 ## [Não lançado]
 
+### Adicionado (Home)
+- **Faixa de projetos profissionais** abaixo dos destaques: todos os projetos
+  `category: 'real'` passando em loop (`components/ui/ProjectMarquee`, sobre o
+  `InfiniteMovingCards`), com card compacto — capa, título e descrição curta —
+  que leva ao estudo de caso. Pausa no hover/foco; parada em
+  `prefers-reduced-motion`. Os três destaques fixos continuam.
+
+### Adicionado (currículo por idioma)
+- Botão "Baixar CV" escolhe o PDF pelo idioma da página (`src/config/cv.ts`).
+  Idioma sem arquivo próprio cai no mais próximo (pt-PT → pt-BR; es → en →
+  pt-BR) e o botão mostra um selo com a língua do PDF (ex.: `PT`) quando ela
+  difere da página. Hoje só existe o PDF em pt-BR.
+
+### Corrigido
+- `InfiniteMovingCards`: a cópia que fecha o loop ganhou `inert` — com links
+  dentro, `aria-hidden` sozinho deixava o Tab passar pelos itens duplicados.
+
+### Adicionado (testes)
+- **Smoke E2E com Playwright** (`tests/e2e/smoke.spec.ts`, `npm run test:e2e`)
+  contra o build de produção: cada rota do sitemap responde 200 com `<title>` e
+  sem erro de console (rotas lidas de `src/config/pages.ts`), 404 do app,
+  Manrope self-hosted sem Google Fonts e tema persistido após reload.
+
+### Alterado (documentação)
+- `CLAUDE.md`, `README.md`, `PROJECT_CONTEXT.md` e `docs/` alinhados ao código:
+  função serverless `api/` como exceção ao "sem backend", Playwright, Vercel
+  Analytics, 4 idiomas, `vercel.json` existente e remoção de referências a
+  three.js, devicon, radix, axios e `@fontsource`.
+
 ### Adicionado (camada de interação — parte 2)
 - **Terminal interativo** em `/sobre`: depois da abertura animada, a sessão
   aceita digitação. Comandos: `help`, `about`, `projects`, `stack`, `github`,

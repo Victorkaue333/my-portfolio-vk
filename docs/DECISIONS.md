@@ -326,6 +326,8 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 - **Alternativas consideradas:** apagar ambos; reescrever `.env.example` já.
 - **Consequências:** Nenhum risco de quebrar tooling externo; pendência aberta
   para limpar o `.env.example` quando confirmado.
+- **Status:** Superado pelo ADR-0013 — o `.env.example` foi reescrito com os
+  nomes das variáveis do Spotify e deixou de ser enganoso.
 
 ## ADR-0001 — Stack front-end: React 19 + TypeScript + Vite, SPA estática
 
