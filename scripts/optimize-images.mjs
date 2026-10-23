@@ -46,6 +46,7 @@ const PROJECT_COVERS = [
   'images/fotos-projetos-pessoais/pe-na-estrada/cover.webp',
   'images/fotos-projetos-pessoais/vmedpharma/cover.webp',
   'images/fotos-projetos-pessoais/aniversario-namoro/cover.webp',
+  'images/fotos-projetos-pessoais/touch-speaker/cover.webp',
 ];
 
 const TARGETS = [
@@ -97,6 +98,7 @@ const PROJECT_COVER_SLUGS = [
   'pe-na-estrada',
   'vmedpharma',
   'aniversario-namoro',
+  'touch-speaker',
 ];
 const OG_IMAGES = [
   // Foto: `cover` ancorado no topo para manter o rosto no recorte quadrado.

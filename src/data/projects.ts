@@ -8,6 +8,7 @@ import { oliveiraKids } from './projects/pessoais/oliveira-kids';
 import { peNaEstrada } from './projects/pessoais/pe-na-estrada';
 import { petshop } from './projects/pessoais/petshop';
 import { suplastock } from './projects/pessoais/suplastock';
+import { touchSpeaker } from './projects/pessoais/touch-speaker';
 import { transcritorEntrevistas } from './projects/pessoais/transcritor-entrevistas';
 import { vmedpharma } from './projects/pessoais/vmedpharma';
 import { cajiAgent } from './projects/profissionais/caji-agent';
@@ -28,6 +29,7 @@ const DEFAULT_PROJECT_IMAGE = '/images/placeholders/project-placeholder.svg';
 const rawProjects: Project[] = [
   meuPortfolio,
   agendeaqui,
+  touchSpeaker,
   oliveiraKids,
   transcritorEntrevistas,
   suplastock,

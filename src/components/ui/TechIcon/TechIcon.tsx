@@ -17,7 +17,7 @@ import {
   SiJest, SiSupabase, SiFlutter, SiLinux, SiSocketdotio,
   SiClaude, SiGooglechrome, SiVercel, SiObsidian, SiTrello, SiGnubash, SiNpm, SiReactrouter,
   SiGreensock, SiPrisma, SiVitest, SiSelenium, SiGooglegemini, SiFlask, SiPandas, SiExpo,
-  SiChartdotjs, SiLibreoffice,
+  SiChartdotjs, SiLibreoffice, SiElectron,
 } from 'react-icons/si';
 
 interface TechEntry {
@@ -77,6 +77,7 @@ const TECH_ICONS: Record<string, TechEntry> = {
   pandas: { Icon: SiPandas, color: '#E70488' },
   'Chart.js': { Icon: SiChartdotjs, color: '#FF6384' },
   LibreOffice: { Icon: SiLibreoffice, color: '#18A303' },
+  Electron: { Icon: SiElectron, color: '#9FEAF9' },
   // Simple Icons não tem i18next — globo na cor da marca.
   i18next: { Icon: FiGlobe, color: '#26A69A' },
 
