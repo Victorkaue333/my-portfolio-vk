@@ -10,6 +10,31 @@ Tipos: **Adicionado**, **Alterado**, **Corrigido**, **Removido**.
 
 ## [Não lançado]
 
+### Adicionado (auditoria de conteúdo — 23/10/2026)
+- Projeto **Touch Speaker** (ditado por voz em Electron), com case completo.
+- Case: seções **Engenharia e qualidade** e **Limitações e pendências**; custo
+  aceito nas decisões; tipo de equipe e experiência vinculada no topo; selo
+  "Código privado" no lugar do "Ver código" falso.
+- Galeria com alt e legenda por imagem, suporte a diagramas (moldura clara) e
+  lightbox acessível (`role="dialog"`, foco gerenciado, labels traduzidos).
+- Sobre reorganizado: apresentação, trajetória (duração calculada, períodos no
+  idioma da página, projetos relacionados), experiências em destaque,
+  especialidades por domínio, como trabalho (com case de evidência), formação e
+  projetos acadêmicos, links e contato com currículo.
+- Serviços em três grupos (11 serviços) com problema resolvido, entregáveis,
+  tecnologias e projetos relacionados; CTA leva o assunto para o formulário.
+- `docs/auditoria/` (inventário, divergências, mídias) e `docs/diagramas/`
+  (especificações Mermaid).
+
+### Corrigido (auditoria de conteúdo)
+- Afirmações refutadas pelo código: Caji Agent (Cakto, acesso ao banco,
+  réplicas), Sertão Conecta (contagens, divisão de trabalho, vídeo), MaratonaTech
+  (Bootstrap, Chart.js, 1–2 votos, desempate), Mav Imob (portal com mock,
+  webhook), AgendeAqui (conflito de horário, CI, auditoria), SuplaStock (landing
+  em app separado), Henrique Energia Solar (Lighthouse sem Performance).
+- Textos fixos em PT no Sobre, Projetos e ProjectCard passaram para o i18n.
+- Rolagem horizontal de 12 px no detalhe de projeto no celular.
+
 ### Adicionado (Home)
 - **Faixa de projetos profissionais** abaixo dos destaques: todos os projetos
   `category: 'real'` passando em loop (`components/ui/ProjectMarquee`, sobre o

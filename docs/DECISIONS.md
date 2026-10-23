@@ -7,6 +7,30 @@ Formato de cada entrada: data · contexto · decisão · alternativas · consequ
 
 ---
 
+## ADR-0015 — Estudos de caso auditáveis: campos opcionais, autoria explícita e serviços com evidência
+- **Data:** 2026-10-23
+- **Contexto:** A auditoria de 23/10/2026 (`docs/auditoria/auditoria-2026-10-23.md`)
+  cruzou cada case com o código do projeto e achou afirmações refutadas ou
+  exageradas (ex.: validação de conflito removida no AgendeAqui, métricas do
+  Lighthouse sem a Performance, "Ver código" apontando para o perfil em projetos
+  privados). O briefing pede autoria, qualidade e limitações explícitas.
+- **Decisão:** Estender `Project` só com campos **opcionais** — `privateCode`,
+  `teamType`, `experienceId`, `media` (alt/legenda/tipo `diagram`) e, no case,
+  `quality`, `limitations` e `tradeoff` nas decisões. Nenhum arquivo de dados
+  precisou mudar para compilar. `Project.experienceId` liga projeto ↔
+  experiência, e o Sobre deriva "projetos relacionados" daí (sem lista
+  duplicada). Serviços passam a ser dados (`data/services.ts`) com os projetos
+  que comprovam cada um. Durações de experiência são calculadas do período
+  (`utils/period.ts`). Diagramas ficam como especificação Mermaid em
+  `docs/diagramas/` — sem runtime de Mermaid no bundle.
+- **Alternativas consideradas:** reescrever `Project` com campos obrigatórios
+  (quebraria 23 arquivos de dados); renderizar Mermaid no navegador (dependência
+  pesada); placeholders visuais para mídias futuras (pareceriam prova falsa).
+- **Consequências:** Bloco sem dado real continua sumindo da página. O texto
+  dos cases e das experiências segue só em pt-BR (pendência registrada); a
+  interface nova está nos 4 idiomas. Pendências que dependem do autor estão na
+  auditoria §5.
+
 ## ADR-0014 — Detalhe de projeto como estudo de caso no formato do README
 
 - **Data:** 2026-09-29

@@ -79,7 +79,12 @@ no servidor (ADR-0013).
 ### Dados (`src/data/`)
 - Conteúdo como módulos TypeScript tipados (não há fetch em runtime).
 - `projects.ts` agrega arquivos de `projects/pessoais/` e
-  `projects/profissionais/`, normaliza e exporta `projects` e `featuredProjects`.
+  `projects/profissionais/`, normaliza e exporta `projects`, `featuredProjects` e
+  `projectsByExperience` (projeto ↔ experiência via `experienceId`).
+- `services.ts` é dado estruturado (grupo, tecnologias, projetos de evidência);
+  o texto de cada serviço fica no i18n (`servicos.items.<id>`).
+- Períodos de experiência são interpretados em `utils/period.ts` (duração
+  calculada, data no idioma da página).
 - Demais: `experiences.ts`, `education.ts`, `expertise.ts`, `services.ts`,
   `social.ts`, `certificates.ts`.
 - Contratos em `src/types/index.ts`.

@@ -59,15 +59,19 @@ Chave: `id`. Normalizado por `normalizeProject` (defaults para campos vazios).
 | `title` | string | — |
 | `description` | string | Resumo curto exibido nos cards. |
 | `image` | string | Caminho em `/images/...` (default placeholder). |
-| `github` / `online` | string? | Links do repositório / site publicado. |
+| `github` / `online` | string? | Links do repositório / site publicado. Sem `github`, não há botão de código (nada de apontar para o perfil). |
+| `privateCode` | boolean? | Código de cliente/empresa: mostra o selo "Código privado". |
 | `detailPath` | string | Default `/projetos/{slug}`. |
 | `technologies` / `stack` | string[] | Fallback entre si na normalização. |
 | `category` | `'pessoal' \| 'real'` | Filtro da página Projetos. |
 | `status` | `'production' \| 'delivered' \| 'mvp' \| 'development'`? | Selo no hero do detalhe. Só com status confirmado. |
 | `caseStudy` | `ProjectCaseStudy`? | Estudo de caso do detalhe (ver abaixo). |
 | `metrics` / `role` / `teamSize` / `duration` | opcionais | Só com dado real (ADR-0010). |
+| `teamType` | `'solo' \| 'pair' \| 'team'`? | Composição do time; tem precedência sobre `teamSize` no rótulo. |
+| `experienceId` | string? | `id` do grupo em `experiences.ts`. Alimenta "Experiência" no detalhe e "Projetos relacionados" no Sobre. |
 | `featured` | boolean? | Destaque fixo na Home. |
-| `screenshots` | string[]? | Galeria do detalhe. |
+| `screenshots` | string[]? | Galeria do detalhe (alt automático). |
+| `media` | `{ src, type: 'screenshot' \| 'diagram', alt, caption? }[]`? | Galeria com alt/legenda; tem precedência sobre `screenshots`. Diagrama ganha moldura clara. Inventário em `docs/auditoria/midias.md`. |
 
 #### `ProjectCaseStudy` — ordem das seções no detalhe
 
@@ -81,29 +85,39 @@ delas; campo opcional vazio some da página e do sumário.
 | `challenge` / `solution` / `result` | string | Do problema ao resultado (linha do tempo; `metrics` entram no resultado). |
 | `features` | `{ title?, items[] }[]` | Funcionalidades agrupadas por tema. |
 | `architecture` | `{ layers: { icon, label, detail }[], highlights?[] }` | Fluxo de camadas + pontos-chave. `icon`: `client`, `device`, `server`, `api`, `queue`, `ai`, `database`, `storage`, `cloud`, `integration`. |
-| `decisions` | `{ topic, choice, why }[]` | Decisões técnicas (escolha → porquê). |
+| `decisions` | `{ topic, choice, why, tradeoff? }[]` | Decisões técnicas (escolha → porquê → custo aceito). `tradeoff` só quando estiver escrito no repositório do projeto. |
+| `quality` | string[]? | Engenharia e qualidade: testes, CI, segurança, observabilidade. |
 | `stack` | `{ name, role }[]` | Tabela tecnologia → função. Ícone por `name` em `TECH_ICONS`. |
+| `limitations` | string[]? | Limitações e pendências conhecidas. |
 | `roadmap` | string[]? | Próximos passos. |
 
-Quando `role` existe, a seção "Meu papel" entra entre o resultado e as
-funcionalidades.
+Quando `role` existe, a seção "Minha contribuição" entra entre o resultado e
+as funcionalidades.
 
-### Experience — `src/data/experiences.ts`
-`id` (PK), `title`, `company`, `period`, `location`, `type` (`current`|`past`),
-`icon`, `achievements[]`, `description?`.
+### ExperienceGroup / ExperienceRole — `src/data/experiences.ts`
+Grupo (empresa): `id` (PK, referenciado por `Project.experienceId`), `company`,
+`logo?`, `employmentType?`, `location?`, `roles[]`. Cargo: `title`, `period`
+(formato LinkedIn em pt-BR, ex.: `jun 2026 - o momento`), `employmentType?`,
+`location?`, `workMode?`, `description?`, `activities[]?`, `skills[]?`.
+A duração e o período no idioma da página são calculados em `utils/period.ts`
+(`duration`/`totalDuration` digitados ficaram só como fallback).
 
 ### Education — `src/data/education.ts`
 `id` (PK), `institution`, `course`, `period`, `icon`.
 
 ### ExpertiseCategory / ExpertiseItem — `src/data/expertise.ts`
-Categoria: `title`, `items[]`. Item: `name`, `icon`, `iconType`
-(`devicon`|`lucide`|`svg`).
+Categoria: `id` (`backend` | `frontend` | `data` | `infra` | `ai` | `history` |
+`tools`; título em `about.domains.<id>`), `items[]`. Item: `name` (ícone por
+nome em `TECH_ICONS`). A ordem importa: CodeWindow e o terminal leem os
+primeiros itens de `backend` e `frontend`.
 
 ### Certificate — `src/data/certificates.ts`
 `id` (PK), `title`, `issuer`, `category`, `image?`, `pdf?`.
 
 ### Service — `src/data/services.ts`
-`id` (PK), `title`, `description`, `icon`, `features[]`.
+`id` (PK; textos em `servicos.items.<id>`), `group` (`build` | `automation` |
+`engineering`), `icon`, `tech[]` (nomes de `TECH_ICONS`), `projects[]` (`id` dos
+projetos que comprovam o serviço — serviço sem evidência não entra).
 
 ### SocialLink — `src/data/social.ts`
 `name` (PK), `url`, `icon`, `detail`, `iconType` (`react`|`lucide`|`bootstrap`).

@@ -83,3 +83,5 @@ self-hosted e tema persistido após reload. Não há testes unitários.
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [docs/DATABASE.md](docs/DATABASE.md) · [docs/DEPLOY.md](docs/DEPLOY.md)
 - [docs/API.md](docs/API.md) — contratos externos + endpoint `/api/spotify/now-playing` · [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md) — variáveis opcionais
 - [docs/DECISIONS.md](docs/DECISIONS.md) — histórico de decisões técnicas.
+- [docs/auditoria/](docs/auditoria/) — auditoria de conteúdo (divergências, pendências, inventário de mídias). Consultar antes de alterar um estudo de caso.
+- [docs/diagramas/](docs/diagramas/) — especificações Mermaid dos diagramas de arquitetura (só componentes que existem no código).
