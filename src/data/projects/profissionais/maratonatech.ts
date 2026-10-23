@@ -14,11 +14,27 @@ export const maratonatech: Project = {
   technologies: ['Python', 'Django', 'Docker', 'Eventos'],
   stack: ['Python', 'Django', 'SQLite', 'Docker'],
   category: 'real',
+  status: 'delivered',
   featured: true,
+  privateCode: true,
+  teamType: 'team',
+  experienceId: 'if-sertao',
+  role: {
+    title: 'Desenvolvedor Full Stack · extensionista',
+    mine: [
+      'Levantamento de requisitos e definição da arquitetura',
+      'Sistema de votação com voto único e rastreabilidade',
+      'Interfaces e integração entre front-end e back-end',
+      'Empacotamento em Docker para o deploy',
+      'Apoio técnico à equipe',
+    ],
+    team: ['Outros três contribuidores no histórico original do repositório (nov/2025–abr/2026)'],
+  },
   caseStudy: {
     overview: [
       'Plataforma criada para conduzir a votação de um evento de pitch da SNCT (Semana Nacional de Ciência e Tecnologia): cadastro das startups, abertura e encerramento das rodadas pelo organizador e voto do público pelo celular.',
       'O foco é a regra de negócio da votação: cada pessoa vota uma vez por sessão, a sessão só aceita voto dentro da janela definida e o pódio sai calculado quando ela encerra.',
+      'A plataforma — chamada Maratona Pitch — foi usada na edição 2025 do evento e está encerrada desde dezembro de 2025.',
     ],
     audiences: [
       { who: 'Organização', goal: 'Cadastra startups, abre e encerra sessões e acompanha o painel.' },
@@ -28,17 +44,16 @@ export const maratonatech: Project = {
     challenge:
       'Votação ao vivo não admite erro: um voto duplicado ou um pódio errado na frente da plateia derruba a credibilidade do evento — e a janela para corrigir é de minutos.',
     solution:
-      'Sessões de votação com estado (agendada, aberta, encerrada), janela de horário e limite de votos por pessoa. O voto único é garantido pelo banco, não só pela tela, e o Top 3 é calculado automaticamente no encerramento, com critério de desempate definido.',
+      'Sessões de votação com estado (agendada, aberta, encerrada), janela de horário e voto único por pessoa e sessão, garantido pelo banco e não só pela tela. O Top 3 é calculado automaticamente no encerramento.',
     result:
-      'O organizador abre, encerra e apura cada rodada pelo painel, sem planilha: o pódio sai no fechamento da sessão, com trilha de auditoria dos votos e das alterações nas startups.',
+      'O organizador abre, encerra e apura cada rodada pelo painel, sem planilha: o pódio sai no fechamento da sessão, com auditoria das ações de cada sessão, IP e horário de cada voto e histórico de alterações das startups.',
     features: [
       {
         title: 'Votação',
         items: [
           'Sessões agendadas, abertas ou encerradas, com janela de horário',
-          '1 ou 2 votos por pessoa, definido por sessão',
           'Voto único por pessoa e sessão, com IP registrado',
-          'Top 3 automático no encerramento, com desempate',
+          'Top 3 automático no encerramento (desempate alfabético)',
         ],
       },
       {
@@ -46,13 +61,13 @@ export const maratonatech: Project = {
         items: [
           'Cadastro de startups com equipe, categoria, problema e diferencial',
           'Cadastro de jurados',
-          'Painel com gráficos da votação',
+          'Painel administrativo do evento',
         ],
       },
       {
         title: 'Controle',
         items: [
-          'Auditoria de votos',
+          'Auditoria das ações de sessão: criar, abrir, encerrar',
           'Histórico de alterações das startups',
           'Endpoints JSON para abrir, encerrar e apurar a votação',
         ],
@@ -80,7 +95,8 @@ export const maratonatech: Project = {
       {
         topic: 'Apuração',
         choice: 'Top 3 calculado no encerramento',
-        why: 'O resultado sai na hora, sem contagem manual, e o desempate segue regra definida antes do evento.',
+        why: 'O resultado sai na hora, sem contagem manual.',
+        tradeoff: 'O desempate ficou só alfabético; a regra configurável por sessão não chegou a ser usada.',
       },
       {
         topic: 'Sessões',
@@ -96,12 +112,18 @@ export const maratonatech: Project = {
     stack: [
       { name: 'Python', role: 'Linguagem (3.11)' },
       { name: 'Django', role: 'Aplicação, ORM, autenticação e admin (5.1)' },
-      { name: 'SQLite', role: 'Banco de dados' },
-      { name: 'Bootstrap', role: 'Interface responsiva' },
-      { name: 'Chart.js', role: 'Gráficos do painel (django-chartjs)' },
+      { name: 'SQLite', role: 'Banco padrão (DATABASE_URL para produção)' },
       { name: 'Docker', role: 'Imagem multi-stage para deploy' },
       { name: 'Gunicorn', role: 'Servidor WSGI' },
     ],
-    roadmap: ['Documentação da API', 'Testes automatizados', 'Observabilidade'],
+    limitations: [
+      'Sistema encerrado no código desde dezembro de 2025',
+      'Sem suíte de testes automatizados (só scripts manuais)',
+      'Pontuação técnica dos jurados não implementada: o voto do jurado vale como os demais',
+    ],
+    roadmap: [
+      'Nova geração planejada em ADRs: Next.js, NestJS, Prisma e PostgreSQL (ainda não implementada)',
+      'Suíte de testes automatizados',
+    ],
   },
 };

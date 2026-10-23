@@ -16,6 +16,8 @@ export const vksoftware: Project = {
   stack: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
   category: 'real',
   status: 'production',
+  privateCode: true,
+  experienceId: 'vk-software',
   caseStudy: {
     overview: [
       'Site institucional da VK Software, a empresa pela qual desenvolvo sites e sistemas para negócios: apresenta os serviços, o processo de trabalho e os projetos entregues, e leva o visitante direto a uma conversa no WhatsApp.',

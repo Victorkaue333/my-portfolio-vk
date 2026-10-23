@@ -15,6 +15,7 @@ export const suplastock: Project = {
   technologies: ['Django', 'Python', 'PostgreSQL', 'Tailwind CSS', 'GSAP'],
   stack: ['Python', 'Django', 'PostgreSQL'],
   category: 'pessoal',
+  teamSize: 1,
   caseStudy: {
     overview: [
       'Versão produto do sistema que desenvolvi para a VA Suplementos: o mesmo núcleo de estoque, vendas, fiado e financeiro, agora com marca própria, landing pública e fluxo de solicitação de acesso para outras lojas.',
@@ -27,7 +28,7 @@ export const suplastock: Project = {
     challenge:
       'Um sistema sob medida resolve um cliente; para virar produto, ele precisa se apresentar sozinho — explicar o que faz e levar o visitante até o pedido de acesso — sem mexer no núcleo que já funciona.',
     solution:
-      'Um app Django novo só para a apresentação: landing em Tailwind com animações GSAP (hero em sequência, contadores, parallax e revelação ao rolar), mockup do painel feito em HTML e CSS, telas de login e recuperação de senha redesenhadas e uma rota de solicitação de acesso. O domínio de negócio veio do sistema da VA Suplementos sem alterações.',
+      'Uma camada de apresentação servida pelo próprio Django: landing em Tailwind com animações GSAP (hero em sequência, contadores, parallax e revelação ao rolar), mockup do painel feito em HTML e CSS, telas de login e recuperação de senha redesenhadas e uma rota de solicitação de acesso, por enquanto só registrada em log. O domínio de negócio veio do sistema da VA Suplementos sem alterações.',
     result:
       'Produto com vitrine pública sobre o mesmo núcleo de gestão da VA: estoque com validade e margem, vendas com carrinho, fiado com contas a receber e relatórios em PDF e Excel.',
     features: [
@@ -58,7 +59,7 @@ export const suplastock: Project = {
         { icon: 'database', label: 'Banco', detail: 'PostgreSQL (SQLite local)' },
       ],
       highlights: [
-        'A landing é um app separado: a vitrine pública não se mistura com as telas autenticadas.',
+        'A landing usa Tailwind e GSAP; as telas autenticadas seguem em Bootstrap, com estilos e estáticos separados.',
         'Deploy configurado para a Railway, com health check e Gunicorn.',
       ],
     },
@@ -67,11 +68,6 @@ export const suplastock: Project = {
         topic: 'Evolução',
         choice: 'Produto derivado do sistema do cliente',
         why: 'O núcleo já validado em uso real não precisa ser reescrito; o esforço vai para a apresentação.',
-      },
-      {
-        topic: 'Landing',
-        choice: 'App Django separado',
-        why: 'Rotas públicas e autenticadas ficam isoladas, cada uma com seu template e seus estáticos.',
       },
       {
         topic: 'Animações',
@@ -88,6 +84,15 @@ export const suplastock: Project = {
       { name: 'Bootstrap', role: 'Telas do sistema (5.3)' },
       { name: 'ReportLab', role: 'Relatórios em PDF' },
       { name: 'Chart.js', role: 'Gráficos do painel' },
+    ],
+    quality: [
+      'Pré-deploy idempotente na Railway: migrações e dados iniciais sem duplicar',
+      'Liveness (/healthz/) separado do check de banco, cache e storage',
+      'Recebimentos com chave de idempotência e travas de linha no banco',
+    ],
+    limitations: [
+      'Sem testes automatizados; o CI aponta para um app que não existe mais',
+      'A solicitação de acesso não é salva nem notifica ninguém',
     ],
     roadmap: [
       'Salvar e notificar as solicitações de acesso',

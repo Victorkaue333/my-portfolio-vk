@@ -17,6 +17,19 @@ export const ntidi: Project = {
   category: 'real',
   status: 'production',
   featured: true,
+  privateCode: true,
+  teamType: 'team',
+  experienceId: 'ntidi',
+  role: {
+    title: 'Desenvolvedor Full Stack',
+    mine: [
+      'Back-end em Python e Django',
+      'APIs e integrações',
+      'Desenvolvimento web',
+      'Infraestrutura e deploy: Linux, Docker, Gunicorn e Nginx',
+    ],
+    team: ['Demais módulos e produtos da empresa: equipe NTIDI'],
+  },
   caseStudy: {
     overview: [
       'Ecossistema web da NTIDI: site institucional com SEO técnico e, por trás dele, sistemas internos em Django para gestão de leads e de processos da empresa.',

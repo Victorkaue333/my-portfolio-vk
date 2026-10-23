@@ -15,6 +15,8 @@ export const mavImob: Project = {
   stack: ['NestJS', 'React', 'TypeScript', 'PostgreSQL', 'Redis'],
   category: 'real',
   status: 'mvp',
+  privateCode: true,
+  teamType: 'team',
   role: {
     title: 'Líder técnico',
     mine: [
@@ -22,12 +24,13 @@ export const mavImob: Project = {
       'Integração com o Mavis OS por webhook assinado',
       'Regras de comissão, vendas e repasses',
       'Testes unitários e E2E',
+      'Imagens Docker e pipeline de CI',
     ],
   },
   caseStudy: {
     overview: [
       'Plataforma da Mav Imob, imobiliária digital da AEX Hub que funciona sem loja física: imobiliárias parceiras enviam imóveis pelo Mavis OS, a Mav anuncia e vende com equipe própria, e a comissão de cada venda é dividida entre as duas.',
-      'Sou o líder técnico do projeto, hoje em fase de MVP.',
+      'Sou o líder técnico do projeto, ainda em MVP e sem deploy em produção.',
     ],
     audiences: [
       { who: 'Equipe da Mav', goal: 'Gerencia imóveis, vendas, repasses e o resultado financeiro.' },
@@ -37,16 +40,17 @@ export const mavImob: Project = {
     challenge:
       'Dinheiro de terceiro não admite erro de centavo: cada venda divide a comissão entre a Mav e a parceira, e a soma das partes precisa fechar sempre — do cálculo ao repasse.',
     solution:
-      'API NestJS com a regra de comissão numa função única, valores em Decimal e arredondamento half-even; a parte da Mav é o resto da subtração, então a soma sempre fecha. Imóveis chegam do Mavis OS por webhook com assinatura HMAC e são publicados por um worker em fila.',
+      'API NestJS com a regra de comissão numa função única, valores em Decimal e arredondamento half-even; a parte da Mav é o resto da subtração, então a soma sempre fecha. O recebimento de imóveis do Mavis OS por webhook com assinatura HMAC está pronto e testado contra um simulador; um worker em fila sincroniza os imóveis na vitrine.',
     result:
-      'MVP com painel administrativo de 10 telas, vendas, repasses com pagamento idempotente, DRE e ranking de parceiras, coberto por testes unitários e E2E. O portal do parceiro ainda usa dados simulados.',
+      'MVP com painel administrativo e portal do parceiro lendo a API real, vendas, repasses com pagamento idempotente, DRE e ranking de parceiras, coberto por testes unitários e E2E. Ainda sem deploy em produção.',
     features: [
       {
         title: 'Imóveis',
         items: [
           'Recebimento de imóveis por webhook assinado',
-          'Publicação na vitrine por worker em fila',
-          'Cadastro da equipe e das parceiras',
+          'Sincronização dos imóveis na vitrine por worker em fila',
+          'Fotos enviadas direto ao storage por URL assinada',
+          'Cadastro da equipe e das parceiras, com senha temporária e troca obrigatória',
         ],
       },
       {
@@ -111,6 +115,17 @@ export const mavImob: Project = {
       { name: 'Supabase', role: 'Autenticação' },
       { name: 'Vitest', role: 'Testes unitários' },
       { name: 'Playwright', role: 'Testes E2E' },
+    ],
+    quality: [
+      '98 arquivos de teste: Vitest na API (unitário e e2e) e Playwright nos dois front-ends',
+      'CI no GitHub Actions: build e testes da API, qualidade dos front-ends e imagens Docker',
+      'Teste-guardião que quebra o CI se a divisão da comissão for calculada fora da função oficial',
+      'Guards globais de rate limit (Redis), autenticação e escopo, com isolamento por tenant',
+    ],
+    limitations: [
+      'Sem deploy em produção',
+      'O envio de imóveis pelo lado do Mavis OS ainda não foi implementado',
+      'Os testes e2e da API ainda não rodam no CI',
     ],
     roadmap: ['Deploy em produção', 'Vitrine pública de imóveis', 'Login único com o Mavis OS'],
   },

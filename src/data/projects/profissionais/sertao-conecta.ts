@@ -16,25 +16,31 @@ export const sertaoConecta: Project = {
   stack: ['React', 'TypeScript', 'Supabase', 'PostgreSQL', 'Docker'],
   category: 'real',
   status: 'production',
+  privateCode: true,
+  teamType: 'pair',
+  experienceId: 'if-sertao',
   role: {
     title: 'Tech lead · aluno extensionista',
     mine: [
+      'Definição da stack e da arquitetura',
       'Back-end e modelagem do banco',
       'Segurança: autorização por RLS, LGPD e auditoria',
       'Infraestrutura: migração para servidor próprio e CI/CD',
       'Gamificação e certificados no servidor',
     ],
-    team: ['Front-end: Giselle Novaes'],
+    team: [
+      'Giselle Novaes: aplicação React (telas de aluno e professor), motores dos minijogos, player de vídeo e parte das migrations e do certificado',
+    ],
   },
   metrics: [
     { value: '16', label: 'Edge Functions no servidor' },
-    { value: '215', label: 'migrations versionadas' },
-    { value: '109', label: 'arquivos de teste' },
+    { value: '212', label: 'migrations versionadas' },
+    { value: '110', label: 'arquivos de teste (Vitest e Playwright)' },
   ],
   caseStudy: {
     overview: [
       'Plataforma de cursos online gratuitos do IF Sertão-PE Campus Floresta, instalável como app: trilhas, minijogos configurados pelo professor, gamificação com XP e ranking, e certificado digital com validação pública.',
-      'Nasceu como projeto de extensão. Fui o tech lead — back-end, banco, segurança e infraestrutura —, com a Giselle Novaes no front-end.',
+      'Nasceu como projeto de extensão. Fui o tech lead — stack, back-end, banco, segurança e infraestrutura —, com a Giselle Novaes na aplicação React; os dois atuaram full stack, com focos diferentes.',
     ],
     audiences: [
       { who: 'Alunos', goal: 'Estudam pelo celular, jogam, sobem no ranking e emitem certificado.' },
@@ -53,7 +59,7 @@ export const sertaoConecta: Project = {
         items: [
           'Vitrine de cursos e trilhas',
           'Matrícula por ciclos, com expiração automática',
-          'Vídeo com trava contra pular conteúdo',
+          'Vídeo só conta como assistido com 98% visto, conferido no servidor',
           'Fórum em tempo real',
         ],
       },
@@ -100,6 +106,7 @@ export const sertaoConecta: Project = {
         topic: 'Hospedagem',
         choice: 'Supabase auto-hospedado no instituto',
         why: 'Saiu de Vercel + Supabase Cloud por soberania dos dados dos alunos, LGPD, custo e independência de fornecedor.',
+        tradeoff: 'Mudança de configuração do Supabase não tem deploy automático: é feita no servidor.',
       },
       {
         topic: 'Pontuação',
@@ -124,6 +131,14 @@ export const sertaoConecta: Project = {
       { name: 'GitHub Actions', role: 'CI/CD' },
       { name: 'Vitest', role: 'Testes unitários' },
       { name: 'Playwright', role: 'Testes E2E' },
+    ],
+    quality: [
+      '110 arquivos de teste (105 Vitest, 5 Playwright) e pentests de RLS em SQL — contagem de 23/10/2026',
+      'CI: lint, testes, build e E2E; migrations; deploy das funções; revisão de segurança com gitleaks e cobertura de RLS',
+      'Deploy por runner self-hosted no servidor do instituto',
+      'Observabilidade com Sentry (só com consentimento), Prometheus e Grafana',
+      'LGPD: exportação e exclusão de dados e auditoria das ações administrativas',
+      '23 decisões registradas em ADR, com as alternativas consideradas',
     ],
   },
   screenshots: [

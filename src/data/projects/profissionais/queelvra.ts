@@ -13,6 +13,8 @@ export const queelvra: Project = {
   technologies: ['Landing Page', 'Front-end', 'Conversão'],
   stack: ['HTML', 'CSS', 'JavaScript'],
   category: 'real',
+  privateCode: true,
+  experienceId: 'ntidi',
   caseStudy: {
     overview: [
       'Landing page da Queelvra para divulgar serviços e transformar visitantes em contatos: leve, direta e construída em torno da copy comercial e das chamadas para ação.',

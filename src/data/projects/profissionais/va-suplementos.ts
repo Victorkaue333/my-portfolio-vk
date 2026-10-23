@@ -13,6 +13,7 @@ export const vaSuplementos: Project = {
   technologies: ['Django', 'PostgreSQL', 'Bootstrap', 'Controle de Estoque'],
   stack: ['Python', 'Django', 'PostgreSQL'],
   category: 'real',
+  privateCode: true,
   caseStudy: {
     overview: [
       'Sistema de gestão sob medida para uma loja de suplementos em Itacuruba-PE: estoque com validade e margem, vendas com carrinho, venda fiada com contas a receber e relatórios financeiros.',

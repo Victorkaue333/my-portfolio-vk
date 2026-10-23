@@ -16,21 +16,28 @@ export const cajiAgent: Project = {
   stack: ['React', 'TypeScript', 'Node.js', 'FastAPI', 'PostgreSQL'],
   category: 'real',
   status: 'production',
+  privateCode: true,
+  teamType: 'team',
+  experienceId: 'caji-solutions',
   role: {
     title: 'Desenvolvedor full stack · time Caji Solutions',
     mine: [
-      'Onboarding com endereço por CEP e moeda sugerida pela localização',
-      'Catálogo de serviços no onboarding',
+      'Onboarding: endereço por CEP ou texto livre, com camada de provedores no back-end',
+      'Moeda sugerida pela localização e catálogo de serviços no onboarding',
       'Idioma do agente separado do idioma do painel',
-      'Conexão do WhatsApp por QR Code ou código numérico',
-      'CI/CD do painel na Vercel',
+      'Conexão do WhatsApp por código numérico, unificada ao fluxo de QR Code',
+      'Mudança agendada de plano de assinatura',
+      'Medição de uso e cotas, com tela de consumo no painel administrativo',
+      'Correções no WhatsApp: leitura de imagem e PDF, mensagens com agente pausado ou sessão reconectando',
+      'Pipeline de CI no GitHub Actions e verificação pós-deploy da Vercel',
+      'Testes automatizados das funcionalidades que entreguei',
     ],
-    team: ['Arquitetura, motor de IA e demais módulos: time da Caji Solutions'],
+    team: ['Arquitetura, motor de IA e a maior parte dos módulos: time da Caji Solutions'],
   },
   caseStudy: {
     overview: [
       'SaaS da Caji Solutions que coloca um agente de IA no WhatsApp da empresa: responde, qualifica o lead, agenda no Google Calendar, envia o link de pagamento e faz o follow-up — 24 horas por dia.',
-      'Faço parte do time de desenvolvimento do produto, que está em produção, atuando em onboarding, internacionalização e conexão com o WhatsApp.',
+      'Faço parte do time de desenvolvimento do produto, que está em produção, atuando em onboarding, internacionalização, WhatsApp, assinaturas e medição de uso.',
     ],
     audiences: [
       { who: 'Pequenas e médias empresas', goal: 'Atendem, agendam e vendem pelo WhatsApp sem aumentar a equipe.' },
@@ -59,7 +66,7 @@ export const cajiAgent: Project = {
           'Qualificação e follow-up de leads',
           'CRM em kanban',
           'Agendamento no Google Calendar',
-          'Links de pagamento (Stripe, Mercado Pago, Cakto)',
+          'Links de pagamento (Stripe e Mercado Pago/Pix)',
         ],
       },
       {
@@ -81,10 +88,10 @@ export const cajiAgent: Project = {
         { icon: 'integration', label: 'Canais', detail: 'WhatsApp, agenda e pagamentos' },
       ],
       highlights: [
-        'Só o back-end executa efeitos externos — enviar mensagem, criar evento, cobrar; o motor de IA não acessa o banco.',
+        'Só o back-end executa efeitos externos — enviar mensagem, criar evento, cobrar; o motor de IA decide e devolve ações.',
         'Painel e back-end conversam por REST e Socket.io, com atualização em tempo real.',
-        'Fila de envios e controle de sessão no banco permitem rodar várias réplicas do back-end.',
-        'Cada cliente usa a própria chave do modelo de linguagem.',
+        'Fila de envios e controle de sessão no banco, projetados para o back-end escalar horizontalmente.',
+        'Cada cliente usa a própria chave do modelo de linguagem (Gemini).',
       ],
     },
     decisions: [
@@ -97,11 +104,6 @@ export const cajiAgent: Project = {
         topic: 'Efeitos externos',
         choice: 'Centralizados no back-end',
         why: 'Um só lugar envia, agenda e cobra — o motor de IA decide, mas não age sozinho.',
-      },
-      {
-        topic: 'WhatsApp',
-        choice: 'Baileys em vez da API oficial',
-        why: 'Evita o custo por conversa e a exigência de templates aprovados.',
       },
       {
         topic: 'Busca semântica',
@@ -120,6 +122,11 @@ export const cajiAgent: Project = {
       { name: 'PostgreSQL', role: 'Banco e busca vetorial (pgvector)' },
       { name: 'Prisma', role: 'ORM do back-end' },
       { name: 'Vercel', role: 'Deploy do painel' },
+    ],
+    quality: [
+      'CI no GitHub Actions para back-end, painéis e motor de IA',
+      'Testes automatizados nos três serviços (node:test, Vitest e pytest) e E2E com Playwright',
+      'Auditoria Lighthouse agendada no CI',
     ],
   },
   screenshots: [

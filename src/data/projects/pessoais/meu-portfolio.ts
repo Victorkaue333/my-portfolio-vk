@@ -128,6 +128,15 @@ export const meuPortfolio: Project = {
       { name: 'Playwright', role: 'Smoke E2E de rotas, fonte e tema' },
       { name: 'Vercel', role: 'Hospedagem, deploy por push e Analytics' },
     ],
+    quality: [
+      'Smoke E2E com Playwright contra o build de produção: rotas do sitemap, 404, fonte e tema',
+      'TypeScript strict no build; chave de tradução faltando em qualquer idioma quebra o tsc',
+      'Decisões registradas em ADR (docs/DECISIONS.md)',
+    ],
+    limitations: [
+      'Sem testes unitários',
+      'Textos dos estudos de caso e das experiências só em pt-BR',
+    ],
     roadmap: [
       'Ampliar os testes E2E além do smoke de rotas',
       'Testes unitários com Vitest',

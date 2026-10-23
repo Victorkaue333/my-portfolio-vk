@@ -17,10 +17,13 @@ export const henriqueEnergiaSolar: Project = {
   category: 'real',
   status: 'production',
   teamSize: 1,
+  privateCode: true,
+  experienceId: 'henrique-energia-solar',
   metrics: [
-    { value: '100', label: 'SEO no Lighthouse (mobile)' },
-    { value: '100', label: 'Boas práticas no Lighthouse' },
-    { value: '97', label: 'Acessibilidade no Lighthouse' },
+    { value: '73', label: 'Performance (Lighthouse mobile)' },
+    { value: '97', label: 'Acessibilidade' },
+    { value: '100', label: 'Boas práticas' },
+    { value: '100', label: 'SEO' },
   ],
   caseStudy: {
     overview: [
@@ -36,7 +39,7 @@ export const henriqueEnergiaSolar: Project = {
     solution:
       'SPA em React sem servidor: o simulador estima a economia e já monta a mensagem para o WhatsApp, os formulários validam os dados antes do envio, e o analytics só coleta com consentimento.',
     result:
-      'Site no ar com 10 páginas, simulador de economia, portfólio com filtro, depoimentos e blog — com a última auditoria local do Lighthouse abaixo.',
+      'Site no ar com 10 páginas, simulador de economia, portfólio com filtro, depoimentos e blog — abaixo, a auditoria Lighthouse mobile de 31/05/2026, feita num build local (vite preview).',
     features: [
       {
         title: 'Conversão',
@@ -73,7 +76,7 @@ export const henriqueEnergiaSolar: Project = {
       ],
       highlights: [
         'Sem back-end: todas as integrações rodam no navegador.',
-        'Blog com posts de reserva no código, então a página nunca fica vazia.',
+        'Sem o Sanity configurado, o blog usa posts de reserva do próprio código.',
         'Animações com GSAP e rolagem suave com Lenis.',
       ],
     },
@@ -113,6 +116,16 @@ export const henriqueEnergiaSolar: Project = {
       { name: 'Sanity', role: 'CMS do blog' },
       { name: 'EmailJS', role: 'Envio de formulários por e-mail' },
       { name: 'Vercel', role: 'Hospedagem' },
+    ],
+    quality: [
+      'ESLint com zero avisos permitidos e Prettier',
+      'Testes com Vitest no simulador de economia e na página 404',
+      '8 decisões registradas em ADR, com alternativas e consequências',
+    ],
+    limitations: [
+      'Sem pipeline de CI',
+      'Performance 73 no Lighthouse mobile, abaixo da meta de 90 do próprio projeto',
+      'SPA sem pré-renderização por rota, o que limita o SEO das páginas internas',
     ],
     roadmap: [
       'Ativar o Sanity para o cliente publicar no blog',

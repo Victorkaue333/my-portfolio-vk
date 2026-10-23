@@ -11,10 +11,26 @@ export const sigref: Project = {
     'Sistema de gestão educacional para a Gerência Regional de Educação, com foco em organização de demandas escolares e processos administrativos.',
   image: '/images/fotos-projetos-reais/sigref/sigrefsemfundo.webp',
   detailPath: '/projetos/sigref',
-  technologies: ['Django', 'MySQL', 'SaaS'],
+  technologies: ['Django', 'MySQL', 'JavaScript'],
   stack: ['Python', 'Django', 'MySQL'],
   category: 'real',
   featured: true,
+  privateCode: true,
+  experienceId: 'gre-estagio',
+  role: {
+    title: 'Estagiário · desenvolvimento web',
+    mine: [
+      'Interfaces e funcionalidades em Python e Django',
+      'Regras de negócio, gestão de usuários e refatoração',
+      'Testes',
+      'Organização das demandas do sistema',
+      'Treinamento e suporte aos usuários',
+    ],
+  },
+  metrics: [
+    { value: '100+', label: 'escolas na abrangência da regional' },
+    { value: '200+', label: 'usuários do sistema' },
+  ],
   caseStudy: {
     overview: [
       'Sistema web para a Gerência Regional de Educação centralizar as demandas das escolas da regional e os processos administrativos que antes corriam de forma descentralizada e manual.',

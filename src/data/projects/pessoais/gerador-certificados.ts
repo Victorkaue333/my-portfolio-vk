@@ -15,6 +15,7 @@ export const geradorCertificados: Project = {
   stack: ['Python', 'pandas', 'LibreOffice'],
   category: 'pessoal',
   teamSize: 2,
+  teamType: 'pair',
   role: {
     title: 'Desenvolvedor · em dupla',
     mine: [

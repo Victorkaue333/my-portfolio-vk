@@ -17,6 +17,7 @@ export const saberesInterculturais: Project = {
   stack: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
   category: 'real',
   status: 'production',
+  experienceId: 'cnpq',
   role: {
     title: 'Bolsista CNPq · desenvolvimento web',
     mine: [
