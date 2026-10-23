@@ -1,27 +1,41 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
+import type { IconType } from 'react-icons';
 import {
   FiArrowRight,
+  FiBarChart2,
   FiCheckCircle,
+  FiCloud,
   FiCode,
   FiCpu,
   FiDatabase,
+  FiGlobe,
+  FiLayers,
   FiLayout,
+  FiLink,
   FiMessageCircle,
   FiPenTool,
   FiPlus,
+  FiRefreshCw,
   FiSearch,
   FiSend,
+  FiServer,
+  FiTool,
+  FiZap,
 } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { Button } from '../../components/ui/Button/Button';
 import { PageHero } from '../../components/ui/PageHero/PageHero';
 import { Reveal } from '../../components/ui/Reveal/Reveal';
-import { CardSpotlight } from '../../components/ui/CardSpotlight/CardSpotlight';
+import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { TechMarquee } from '../../components/ui/TechMarquee/TechMarquee';
 import { useLanguage } from '../../hooks/useLanguage';
 import { usePageSeo } from '../../hooks/useSeo';
+import { projects } from '../../data/projects';
+import { SERVICE_GROUPS, services } from '../../data/services';
 import { testimonials } from '../../data/testimonials';
+import type { Service } from '../../types';
 import './Servicos.css';
 
 /** Etapas do processo — o número casa com as chaves `servicos.stepNTitle` / `stepNDesc`. */
@@ -31,6 +45,108 @@ const APPROACH_STEPS = [
   { n: 3, Icon: FiCode },
   { n: 4, Icon: FiSend },
 ];
+
+const SERVICE_ICONS: Record<Service['icon'], IconType> = {
+  layout: FiLayout,
+  layers: FiLayers,
+  globe: FiGlobe,
+  server: FiServer,
+  zap: FiZap,
+  cpu: FiCpu,
+  link: FiLink,
+  refresh: FiRefreshCw,
+  'bar-chart': FiBarChart2,
+  cloud: FiCloud,
+  tool: FiTool,
+};
+
+/** Um serviço: o que resolve, o que entrega, com que tecnologia e onde já foi feito. */
+function ServiceCard({ service }: { service: Service }) {
+  const { t } = useTranslation();
+  const Icon = SERVICE_ICONS[service.icon];
+  const k = (field: string) => t(`servicos.items.${service.id}.${field}`);
+  const related = service.projects
+    .map((id) => projects.find((p) => p.id === id))
+    .filter((p) => p !== undefined);
+  const subject = encodeURIComponent(k('title'));
+
+  return (
+    <article className="svc-card" id={`servico-${service.id}`}>
+      <header className="svc-head">
+        <span className="service-icon" aria-hidden="true"><Icon /></span>
+        <h3>{k('title')}</h3>
+      </header>
+      <p className="svc-desc">{k('desc')}</p>
+      <dl className="svc-facts">
+        <div>
+          <dt>{t('servicos.labels.solves')}</dt>
+          <dd>{k('solves')}</dd>
+        </div>
+        <div>
+          <dt>{t('servicos.labels.deliverables')}</dt>
+          <dd>
+            <ul>
+              {(['d1', 'd2', 'd3'] as const).map((d) => (
+                <li key={d}><FiCheckCircle aria-hidden="true" />{k(d)}</li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      </dl>
+      <div className="svc-tech" aria-label={t('servicos.labels.tech')}>
+        {service.tech.map((name) => (
+          <span key={name} className="svc-chip">
+            <TechGlyph name={name} size={13} />
+            {name}
+          </span>
+        ))}
+      </div>
+      {related.length > 0 && (
+        <div className="svc-related">
+          <span className="svc-related-label">{t('servicos.labels.related')}</span>
+          <ul>
+            {related.map((p) => (
+              <li key={p.id}><Link to={p.detailPath}>{p.title}</Link></li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <Link to={`/contato?assunto=${subject}`} className="svc-cta">
+        {t('servicos.labels.cta')}
+        <FiArrowRight aria-hidden="true" />
+      </Link>
+    </article>
+  );
+}
+
+/** Catálogo em três grupos, cada um com peso visual próprio — não doze cards iguais. */
+function ServiceCatalog() {
+  const { t } = useTranslation();
+  return (
+    <div className="svc-catalog">
+      {SERVICE_GROUPS.map((group, gi) => {
+        const items = services.filter((s) => s.group === group);
+        return (
+        <section key={group} className={`svc-group is-${group}`} aria-labelledby={`svc-group-${group}`}>
+          <header className="svc-group-head reveal-on-scroll">
+            <span className="svc-group-index" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span>
+            <div>
+              <h2 id={`svc-group-${group}`}>{t(`servicos.groups.${group}.title`)}</h2>
+              <p>{t(`servicos.groups.${group}.desc`)}</p>
+            </div>
+          </header>
+          {/* Número par de serviços: 2 colunas, para não sobrar um card órfão. */}
+          <div className={`svc-grid${items.length % 2 === 0 ? ' is-even' : ''}`}>
+            {items.map((service) => (
+              <ServiceCard key={service.id} service={service} />
+            ))}
+          </div>
+        </section>
+        );
+      })}
+    </div>
+  );
+}
 
 /** Seção "Como eu trabalho" — os passos deslizam na horizontal conforme a página rola. */
 function ApproachHorizontal() {
@@ -218,55 +334,7 @@ export default function Servicos() {
         </div>
 
         <div className="container">
-          <div className="services-grid">
-            <Reveal delay={0.1}>
-              <CardSpotlight className="service-card" radius={300}>
-                <div className="service-icon">
-                  <FiDatabase />
-                </div>
-                <h3>{t('servicos.card1Title')}</h3>
-                <p>{t('servicos.card1Desc')}</p>
-                <ul>
-                  <li><FiCheckCircle /> {t('servicos.card1Item1')}</li>
-                  <li><FiCheckCircle /> {t('servicos.card1Item2')}</li>
-                  <li><FiCheckCircle /> {t('servicos.card1Item3')}</li>
-                </ul>
-              </CardSpotlight>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <CardSpotlight className="service-card featured" radius={300}>
-                <div className="service-icon">
-                  <FiLayout />
-                </div>
-                <h3>{t('servicos.card2Title')}</h3>
-                <p>{t('servicos.card2Desc')}</p>
-                <ul>
-                  <li><FiCheckCircle /> {t('servicos.card2Item1')}</li>
-                  <li><FiCheckCircle /> {t('servicos.card2Item2')}</li>
-                  <li><FiCheckCircle /> {t('servicos.card2Item3')}</li>
-                </ul>
-                <Button href="/contato" variant="primary">
-                  {t('servicos.card2Cta')} <FiArrowRight />
-                </Button>
-              </CardSpotlight>
-            </Reveal>
-
-            <Reveal delay={0.3}>
-              <CardSpotlight className="service-card" radius={300}>
-                <div className="service-icon">
-                  <FiCpu />
-                </div>
-                <h3>{t('servicos.card3Title')}</h3>
-                <p>{t('servicos.card3Desc')}</p>
-                <ul>
-                  <li><FiCheckCircle /> {t('servicos.card3Item1')}</li>
-                  <li><FiCheckCircle /> {t('servicos.card3Item2')}</li>
-                  <li><FiCheckCircle /> {t('servicos.card3Item3')}</li>
-                </ul>
-              </CardSpotlight>
-            </Reveal>
-          </div>
+          <ServiceCatalog />
         </div>
       </section>
 

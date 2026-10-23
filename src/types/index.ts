@@ -211,12 +211,22 @@ export interface Certificate {
   credentialId?: string;
 }
 
+/** Grupo de serviços — título e descrição em `servicos.groups.<id>`. */
+export type ServiceGroupId = 'build' | 'automation' | 'engineering';
+
+/**
+ * Serviço oferecido. Os textos ficam em `servicos.items.<id>` (4 idiomas);
+ * aqui só a estrutura e as evidências: tecnologias e projetos que comprovam.
+ */
 export interface Service {
   id: string;
-  title: string;
-  description: string;
-  icon: string;
-  features: string[];
+  group: ServiceGroupId;
+  /** Chave do ícone resolvida na página (Feather). */
+  icon: 'layout' | 'layers' | 'globe' | 'server' | 'zap' | 'cpu' | 'link' | 'refresh' | 'bar-chart' | 'cloud' | 'tool';
+  /** Nomes de TECH_ICONS. */
+  tech: string[];
+  /** `id` dos projetos em data/projects que servem de evidência. */
+  projects: string[];
 }
 
 export interface SocialLink {

@@ -12,41 +12,6 @@
     margin-right: auto;
 }
 
-.services-grid {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.4rem;
-}
-
-.service-card {
-    position: relative;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 2rem 1.5rem;
-    border-radius: var(--radius-xl);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(155deg, #121212, #0a0a0a);
-    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-/* A luz que girava na borda saiu: estes cards passaram a usar o Card
-   Spotlight (o foco radial que segue o cursor, montado no JSX). Os dois
-   juntos seriam dois efeitos disputando o mesmo card — regra 18. */
-
-.service-card.featured {
-    border-color: rgba(255, 122, 0, 0.42);
-    box-shadow: 0 0 0 1px rgba(255, 122, 0, 0.2), 0 14px 30px rgba(0, 0, 0, 0.45);
-}
-
-.service-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(255, 122, 0, 0.4);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.42), 0 0 24px rgba(255, 122, 0, 0.12);
-}
-
 .service-icon {
     width: 52px;
     height: 52px;
@@ -61,33 +26,6 @@
 
 .service-icon svg {
     font-size: 1.3rem;
-}
-
-.service-card h3 {
-    font-size: 1.26rem;
-}
-
-.service-card p {
-    font-size: 0.95rem;
-}
-
-.service-card ul {
-    display: grid;
-    gap: 0.6rem;
-    margin-top: auto;
-}
-
-.service-card li {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    color: var(--text-muted-color);
-    font-size: 0.9rem;
-}
-
-.service-card li svg {
-    color: var(--color-primary-500);
-    flex-shrink: 0;
 }
 
 /* ========== "Como eu trabalho" — scroll horizontal fixado ========== */
@@ -488,10 +426,6 @@
 }
 
 @media (max-width: 1280px) {
-    .services-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .testimonials-grid {
         grid-template-columns: 1fr 1fr;
     }
@@ -502,7 +436,6 @@
         padding-top: 6.4rem;
     }
 
-    .services-grid,
     .testimonials-grid {
         grid-template-columns: 1fr;
     }
@@ -567,3 +500,173 @@
         padding: 1.75rem;
     }
 }
+
+/* ========== Catálogo de serviços (data/services.ts) ========== */
+.svc-catalog {
+    display: grid;
+    gap: 4rem;
+    margin-top: 3rem;
+}
+
+.svc-group-head {
+    display: flex;
+    gap: 1.25rem;
+    align-items: baseline;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.svc-group-index {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent-color);
+}
+
+.svc-group-head h2 {
+    font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+}
+
+.svc-group-head p {
+    margin-top: 0.35rem;
+    max-width: 62ch;
+    color: var(--text-dim-color);
+}
+
+.svc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 1.25rem;
+}
+
+.svc-grid.is-even {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+}
+
+.svc-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--glass-bg);
+    transition: border-color var(--transition-normal);
+}
+
+.svc-card:hover,
+.svc-card:focus-within {
+    border-color: rgba(255, 122, 0, 0.35);
+}
+
+.svc-head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.svc-head .service-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+}
+
+.svc-head h3 {
+    font-size: 1.1rem;
+}
+
+.svc-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted-color);
+}
+
+.svc-facts {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+}
+
+.svc-facts dt,
+.svc-related-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+}
+
+.svc-facts dd {
+    margin: 0.3rem 0 0;
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+}
+
+.svc-facts ul {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.svc-facts li {
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-start;
+}
+
+.svc-facts li svg {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    color: var(--accent-color);
+}
+
+.svc-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.svc-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    color: var(--text-muted-color);
+}
+
+.svc-related ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.9rem;
+    margin-top: 0.35rem;
+}
+
+.svc-related a {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: underline;
+    text-decoration-color: var(--border-color);
+    text-underline-offset: 3px;
+}
+
+.svc-related a:hover,
+.svc-related a:focus-visible {
+    color: var(--accent-color);
+    text-decoration-color: var(--accent-color);
+}
+
+.svc-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.svc-cta:hover { gap: 0.6rem; }

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FaLinkedin } from 'react-icons/fa6';
 import { FiClock, FiExternalLink, FiFileText, FiMail, FiMapPin, FiMessageSquare, FiSend, FiUser } from 'react-icons/fi';
 import { SiGithub, SiWhatsapp } from 'react-icons/si';
+import { useSearchParams } from 'react-router-dom';
 import { Button } from '../../components/ui/Button/Button';
 import { PageHero } from '../../components/ui/PageHero/PageHero';
 import { socialLinks } from '../../data/social';
@@ -65,6 +66,14 @@ export default function Contato() {
   const channel = useRef<Channel>('whatsapp');
 
   usePageSeo('contact');
+
+  // Vindo de um serviço (/contato?assunto=...): preenche o assunto se o
+  // rascunho ainda não tiver um — nunca sobrescreve o que a pessoa digitou.
+  const [searchParams] = useSearchParams();
+  const presetSubject = searchParams.get('assunto');
+  useEffect(() => {
+    if (presetSubject) setForm((prev) => (prev.assunto ? prev : { ...prev, assunto: presetSubject.slice(0, 120) }));
+  }, [presetSubject, setForm]);
 
   useEffect(() => {
     return () => { if (sentTimer.current) clearTimeout(sentTimer.current); };
