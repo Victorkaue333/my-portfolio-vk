@@ -1,47 +1,56 @@
 import type { ExpertiseCategory } from '../types';
 
-// Ícones são resolvidos por nome em TechIcon (TECH_ICONS) — sem classes devicon.
+/**
+ * Especialidades por domínio, na ordem do posicionamento atual. Cada item tem
+ * uso comprovado em algum projeto de data/projects/ ou cargo de
+ * data/experiences.ts. Django, PHP e afins ficam em `history`: experiência
+ * real, mas não a especialização de hoje.
+ *
+ * A ordem importa: CodeWindow e o terminal de /sobre leem os primeiros itens
+ * de `backend` e `frontend`. Ícones: resolvidos por nome em TechIcon.
+ */
 export const expertise: ExpertiseCategory[] = [
   {
-    title: 'Linguagens e Tecnologias',
+    id: 'backend',
+    items: [{ name: 'Python' }, { name: 'FastAPI' }, { name: 'Node.js' }, { name: 'NestJS' }],
+  },
+  {
+    id: 'frontend',
+    items: [{ name: 'TypeScript' }, { name: 'React' }, { name: 'Next.js' }, { name: 'Tailwind CSS' }, { name: 'Vite' }],
+  },
+  {
+    id: 'data',
+    items: [{ name: 'PostgreSQL' }, { name: 'Redis' }, { name: 'Supabase' }, { name: 'Prisma' }],
+  },
+  {
+    id: 'infra',
     items: [
-      { name: 'Python' },
-      { name: 'JavaScript' },
-      { name: 'TypeScript' },
-      { name: 'Node.js' },
-      { name: 'PHP' },
-      { name: 'HTML5' },
-      { name: 'CSS3' },
-      { name: 'SQL' },
+      { name: 'Docker' },
+      { name: 'GitHub Actions' },
+      { name: 'Nginx' },
+      { name: 'Linux' },
+      { name: 'Vercel' },
+      { name: 'Playwright' },
+      { name: 'Vitest' },
     ],
   },
   {
-    title: 'Frameworks/Bibliotecas',
+    id: 'ai',
+    items: [{ name: 'Whisper' }, { name: 'Gemini' }, { name: 'PyTorch' }, { name: 'Selenium' }, { name: 'pandas' }],
+  },
+  {
+    id: 'history',
     items: [
-      { name: 'React' },
-      { name: 'Next.js' },
-      { name: 'Nest.js' },
       { name: 'Django' },
+      { name: 'PHP' },
       { name: 'Laravel' },
+      { name: 'MySQL' },
+      { name: 'JavaScript' },
       { name: 'Bootstrap' },
     ],
   },
   {
-    title: 'Bancos de dados',
-    items: [{ name: 'PostgreSQL' }, { name: 'MySQL' }, { name: 'MongoDB' }],
-  },
-  {
-    title: 'CI/CD & DevOps',
-    items: [
-      { name: 'Docker' },
-      { name: 'GitHub Actions' },
-      { name: 'Gunicorn' },
-      { name: 'Nginx' },
-      { name: 'Git' },
-    ],
-  },
-  {
-    title: 'Ferramentas',
-    items: [{ name: 'VS Code' }, { name: 'DBeaver' }, { name: 'Bruno' }, { name: 'GitHub' }],
+    id: 'tools',
+    items: [{ name: 'Git' }, { name: 'GitHub' }, { name: 'VS Code' }, { name: 'DBeaver' }, { name: 'Bruno' }],
   },
 ];

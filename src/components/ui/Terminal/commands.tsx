@@ -101,10 +101,10 @@ function projectLines(t: TFunction): ReactNode[] {
   ];
 }
 
-function stackLines(): ReactNode[] {
+function stackLines(t: TFunction): ReactNode[] {
   return expertise.map((cat) => (
-    <span key={cat.title} className="terminal-out-group">
-      <span className="terminal-out-key">{cat.title}: </span>
+    <span key={cat.id} className="terminal-out-group">
+      <span className="terminal-out-key">{t(`about.domains.${cat.id}.title`)}: </span>
       {cat.items.map((i) => i.name).join(', ')}
     </span>
   ));
@@ -228,7 +228,7 @@ export function createTerminalResolver({ t, navigate, pathname }: TerminalDeps):
       }
 
       case 'stack':
-        return out([t('terminal.stack.title'), '', ...stackLines()]);
+        return out([t('terminal.stack.title'), '', ...stackLines(t)]);
 
       case 'github':
         return githubLines(t).then(out);

@@ -185,8 +185,11 @@ export interface Education {
   icon: string;
 }
 
+/** Domínio técnico — o título sai de `about.domains.<id>.title` no i18n. */
+export type ExpertiseDomain = 'backend' | 'frontend' | 'data' | 'infra' | 'ai' | 'history' | 'tools';
+
 export interface ExpertiseCategory {
-  title: string;
+  id: ExpertiseDomain;
   items: ExpertiseItem[];
 }
 

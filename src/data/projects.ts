@@ -89,3 +89,6 @@ export const featuredProjects = (() => {
   return (marked.length > 0 ? marked : projects.filter((p) => p.category === 'real')).slice(0, 3);
 })();
 
+/** Projetos ligados a uma experiência de data/experiences.ts (via `experienceId`). */
+export const projectsByExperience = (experienceId: string) =>
+  projects.filter((p) => p.experienceId === experienceId);
