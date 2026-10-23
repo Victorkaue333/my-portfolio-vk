@@ -112,7 +112,13 @@ export default function Projetos() {
               )}
             </div>
           </div>
+        </div>
 
+        {/* Prova social logo depois dos filtros, antes dos cases. Fora do
+            .container para a faixa ocupar a largura toda. */}
+        <TrustedBy compact />
+
+        <div className="container">
           {visible.map((s) => {
             const isCollapsed = collapsed.includes(s.key);
             const gridId = `projects-grid-${s.key}`;
@@ -155,9 +161,6 @@ export default function Projetos() {
           )}
         </div>
       </section>
-
-      {/* Abaixo de Pessoais e Profissionais: quem contratou ou participou do trabalho. */}
-      <TrustedBy />
     </main>
   );
 }

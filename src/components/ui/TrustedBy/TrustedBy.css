@@ -3,6 +3,15 @@
     padding: var(--spacing-2xl, 4rem) 0;
 }
 
+/* Entre os filtros e as seções de /projetos: menos respiro. */
+.trusted-by.is-compact {
+    padding: 2rem 0 1rem;
+}
+
+.trusted-by.is-compact .trusted-head {
+    margin-bottom: 1rem;
+}
+
 .trusted-head {
     margin-bottom: 1.75rem;
     text-align: center;

@@ -14,7 +14,7 @@ import './TrustedBy.css';
  * (ou à experiência em /sobre). Loop, pausa no hover/foco e movimento reduzido
  * vêm do InfiniteMovingCards.
  */
-export function TrustedBy({ className }: { className?: string }) {
+export function TrustedBy({ className, compact = false }: { className?: string; compact?: boolean }) {
   const { t } = useTranslation();
   if (partners.length === 0) return null;
 
@@ -43,7 +43,10 @@ export function TrustedBy({ className }: { className?: string }) {
   });
 
   return (
-    <section className={`trusted-by${className ? ` ${className}` : ''}`} aria-labelledby="trusted-by-title">
+    <section
+      className={['trusted-by', compact && 'is-compact', className].filter(Boolean).join(' ')}
+      aria-labelledby="trusted-by-title"
+    >
       <div className="container trusted-head">
         <h2 id="trusted-by-title" className="trusted-title">{t('common.trustedBy.title')}</h2>
         <p className="trusted-subtitle">{t('common.trustedBy.subtitle')}</p>
