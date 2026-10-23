@@ -3,6 +3,16 @@ import type base from '../pt-BR/projetos';
 
 const projetos: typeof base = {
   projects: {
+    heroMain: 'Proyectos &',
+    heroAccent: 'Casos de estudio',
+    heroSubtitle:
+      'Sistemas personales y profesionales presentados como casos de estudio: problema, solución, mi contribución, arquitectura y decisiones técnicas.',
+    card: {
+      details: 'Ver detalles',
+      live: 'Ver proyecto',
+      repo: 'Repositorio en GitHub',
+      private: 'Código privado',
+    },
     title: 'Mis Proyectos',
     subtitle: 'Proyectos personales y profesionales desarrollados desde cero hasta el despliegue.',
     categories: {

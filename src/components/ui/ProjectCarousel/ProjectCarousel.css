@@ -109,9 +109,62 @@
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.project-carousel-main:hover .carousel-zoom-hint {
+.project-carousel-main:hover .carousel-zoom-hint,
+.carousel-zoom-hint:focus-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Virou <button>: herda o visual da dica e ganha clique/foco próprios. */
+button.carousel-zoom-hint {
+    font-family: inherit;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.carousel-nav:focus-visible,
+.carousel-zoom-hint:focus-visible,
+.lightbox-close:focus-visible,
+.lightbox-nav:focus-visible,
+.indicator-dot:focus-visible {
+    opacity: 1;
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+/* Legenda da imagem atual (vem de `media[].caption`). */
+.carousel-caption {
+    margin: -0.5rem 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-dim-color);
+}
+
+.carousel-caption-tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Diagrama: inteiro (sem corte) sobre fundo claro, legível nos dois temas. */
+.project-carousel-main.is-diagram {
+    background: #f8fafc;
+}
+
+.project-carousel-main.is-diagram .carousel-image {
+    object-fit: contain;
+    padding: 1rem;
+}
+
+.lightbox-image.is-diagram {
+    background: #f8fafc;
+    padding: 1rem;
 }
 
 /* Indicators - Redesigned to Pills */

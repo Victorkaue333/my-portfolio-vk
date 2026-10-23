@@ -43,6 +43,28 @@ export interface ProjectDecision {
   choice: string;
   /** O motivo/trade-off — não elogio à ferramenta. */
   why: string;
+  /**
+   * Alternativa descartada ou custo aceito. Só quando estiver escrito no
+   * repositório/ADR do projeto — nada de justificativa retrospectiva.
+   */
+  tradeoff?: string;
+}
+
+/** Composição do time: individual, em dupla ou equipe. */
+export type ProjectTeamType = 'solo' | 'pair' | 'team';
+
+/**
+ * Item da galeria do detalhe. `type: 'diagram'` ganha moldura clara para leitura
+ * nos dois temas. Só mídia real: screenshot do sistema ou diagrama fiel ao
+ * código — o que ainda não existe fica no inventário (docs/auditoria/midias.md),
+ * nunca como placeholder na página.
+ */
+export interface ProjectMedia {
+  src: string;
+  type: 'screenshot' | 'diagram';
+  /** Texto alternativo descritivo (o que a imagem mostra). */
+  alt: string;
+  caption?: string;
 }
 
 /** Linha da tabela de stack. O ícone sai de TECH_ICONS pelo `name`. */
@@ -74,6 +96,10 @@ export interface ProjectCaseStudy {
   };
   decisions: ProjectDecision[];
   stack: StackItem[];
+  /** Testes, CI/CD, validação, autenticação, observabilidade — só o que existe no repositório. */
+  quality?: string[];
+  /** Restrições conhecidas e o que ficou de fora. */
+  limitations?: string[];
   roadmap?: string[];
 }
 
@@ -94,6 +120,17 @@ export interface Project {
   status?: ProjectStatus;
   caseStudy?: ProjectCaseStudy;
   screenshots?: string[];
+  /** Galeria com alt/legenda. Quando presente, substitui `screenshots` no detalhe. */
+  media?: ProjectMedia[];
+  /**
+   * Código fechado (cliente/empresa). Sem `github`, o detalhe mostra "código
+   * privado" em vez de apontar para o perfil — evita um "Ver código" falso.
+   */
+  privateCode?: boolean;
+  /** Composição do time. Complementa `teamSize` quando o número não é conhecido. */
+  teamType?: ProjectTeamType;
+  /** `id` do grupo em data/experiences.ts a que o projeto pertence. */
+  experienceId?: string;
   /**
    * Campos de estudo de caso — todos opcionais; o bloco correspondente só
    * aparece quando o dado existe. Preencher só com números reais.

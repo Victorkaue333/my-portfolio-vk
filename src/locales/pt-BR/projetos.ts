@@ -2,6 +2,16 @@
 
 const projetos = {
   projects: {
+    heroMain: 'Projetos &',
+    heroAccent: 'Estudos de caso',
+    heroSubtitle:
+      'Sistemas pessoais e profissionais apresentados como estudo de caso: problema, solução, minha contribuição, arquitetura e decisões técnicas.',
+    card: {
+      details: 'Ver detalhes',
+      live: 'Ver projeto',
+      repo: 'Repositório no GitHub',
+      private: 'Código privado',
+    },
     title: 'Meus Projetos',
     subtitle: 'Projetos pessoais e profissionais desenvolvidos do zero ao deploy.',
     categories: {

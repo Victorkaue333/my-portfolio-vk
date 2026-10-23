@@ -2,6 +2,27 @@
 
 const projetoDetalhe = {
   projectDetail: {
+    contribution: 'Minha contribuição',
+    teamType: {
+      solo: 'Individual',
+      pair: 'Em dupla',
+      team: 'Equipe',
+    },
+    experience: 'Experiência',
+    privateCode: 'Código privado',
+    privateCodeHint: 'Projeto de cliente/empresa: o código-fonte não é público.',
+    quality: 'Engenharia e qualidade',
+    limitations: 'Limitações e pendências',
+    tradeoff: 'Custo aceito',
+    gallery: {
+      label: 'Galeria de {{title}}',
+      prev: 'Imagem anterior',
+      next: 'Próxima imagem',
+      close: 'Fechar galeria',
+      goTo: 'Ir para a imagem {{n}}',
+      shotAlt: '{{title}} — tela {{n}} de {{total}}',
+      diagram: 'Diagrama',
+    },
     back: 'Voltar para Projetos',
     notFoundTitle: 'Projeto não encontrado',
     notFoundText: 'O projeto que você procura não existe ou foi movido.',

@@ -170,8 +170,31 @@
 .pd-actions {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 1rem;
 }
+
+/* Projeto de cliente/empresa: no lugar do "Ver código", um selo discreto. */
+.pd-private {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1rem;
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dim-color);
+}
+
+.pd-fact dd a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--accent-color);
+    text-underline-offset: 3px;
+}
+
+.pd-fact dd a:hover { color: var(--accent-color); }
 
 /* ========== FATOS (papel, time, duração) ========== */
 .pd-facts {
@@ -209,6 +232,14 @@
     position: relative;
     max-width: 960px;
     margin: 0 auto;
+}
+
+/* O brilho passa 12% para fora da imagem; no celular isso vazava da tela e
+   criava rolagem horizontal (regra 21). Corta só no eixo X. */
+@media (max-width: 768px) {
+    .pd-showcase {
+        overflow-x: clip;
+    }
 }
 
 .pd-visual-glow {
@@ -708,6 +739,17 @@
 .pd-decision p {
     font-size: 0.95rem;
     line-height: 1.6;
+}
+
+.pd-decision .pd-decision-tradeoff {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-dim-color);
+}
+
+.pd-decision-tradeoff-label {
+    font-weight: 600;
+    color: var(--text-muted-color);
 }
 
 /* ---------- Stack (tecnologia | função) ---------- */

@@ -3,6 +3,27 @@ import type base from '../pt-BR/projetoDetalhe';
 
 const projetoDetalhe: typeof base = {
   projectDetail: {
+    contribution: 'Mi contribución',
+    teamType: {
+      solo: 'Individual',
+      pair: 'En pareja',
+      team: 'Equipo',
+    },
+    experience: 'Experiencia',
+    privateCode: 'Código privado',
+    privateCodeHint: 'Proyecto de cliente/empresa: el código fuente no es público.',
+    quality: 'Ingeniería y calidad',
+    limitations: 'Limitaciones y pendientes',
+    tradeoff: 'Costo aceptado',
+    gallery: {
+      label: 'Galería de {{title}}',
+      prev: 'Imagen anterior',
+      next: 'Imagen siguiente',
+      close: 'Cerrar galería',
+      goTo: 'Ir a la imagen {{n}}',
+      shotAlt: '{{title}} — pantalla {{n}} de {{total}}',
+      diagram: 'Diagrama',
+    },
     back: 'Volver a Proyectos',
     notFoundTitle: 'Proyecto no encontrado',
     notFoundText: 'El proyecto que buscas no existe o fue movido.',

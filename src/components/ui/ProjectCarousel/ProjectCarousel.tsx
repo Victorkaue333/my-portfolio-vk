@@ -1,22 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronLeft, FiChevronRight, FiMaximize2, FiX } from 'react-icons/fi';
 import { Lens } from '../Lens/Lens';
+import type { ProjectMedia } from '../../../types';
 import './ProjectCarousel.css';
 
+/** Item da galeria. `alt` vazio = o carrossel monta "<título> — tela n de N". */
+export type CarouselItem = Pick<ProjectMedia, 'src'> & Partial<Pick<ProjectMedia, 'alt' | 'caption' | 'type'>>;
+
 interface ProjectCarouselProps {
-  images: string[];
+  items: CarouselItem[];
   title: string;
 }
 
-export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title }) => {
+export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ items, title }) => {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const openerRef = useRef<HTMLButtonElement>(null);
 
-  const count = images?.length ?? 0;
+  const count = items?.length ?? 0;
+  const current = items[currentIndex];
+  const altOf = (item: CarouselItem | undefined, i: number) =>
+    item?.alt || t('projectDetail.gallery.shotAlt', { title, n: i + 1, total: count });
+  const isDiagram = current?.type === 'diagram';
 
   const paginate = (newDirection: number) => {
     if (count === 0) return;
@@ -43,15 +53,32 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title 
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLightboxOpen, count]);
 
-  // Scroll-lock enquanto o lightbox está aberto
+  // Scroll-lock enquanto o lightbox está aberto; foco entra no botão de
+  // fechar e volta para quem abriu quando o diálogo fecha.
   useEffect(() => {
     if (!isLightboxOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+    closeRef.current?.focus();
+    const opener = openerRef.current;
+    return () => {
+      document.body.style.overflow = prev;
+      opener?.focus();
+    };
   }, [isLightboxOpen]);
 
-  if (count === 0) return null;
+  // Tab não sai do diálogo: os únicos focáveis são os botões dele.
+  const trapFocus = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== 'Tab') return;
+    const focusable = Array.from(e.currentTarget.querySelectorAll<HTMLElement>('button'));
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (!first || !last) return;
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+
+  if (count === 0 || !current) return null;
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -75,8 +102,11 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title 
 
   return (
     <div className="project-carousel-wrapper">
-      <div className="project-carousel-container" tabIndex={0}>
-        <div className="project-carousel-main" onClick={() => setIsLightboxOpen(true)}>
+      <div className="project-carousel-container" tabIndex={0} role="group" aria-roledescription="carousel" aria-label={t('projectDetail.gallery.label', { title })}>
+        <div
+          className={`project-carousel-main${isDiagram ? ' is-diagram' : ''}`}
+          onClick={() => setIsLightboxOpen(true)}
+        >
           {/* Lens: as screenshots são o único lugar do site onde ampliar tem
               função — capas de projeto são logotipos, e o briefing (regra 4)
               exclui logo/avatar/ícone. `zoomed` recebe uma cópia estática da
@@ -87,7 +117,7 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title 
             lensSize={160}
             zoomed={
               <img
-                src={images[currentIndex]}
+                src={current.src}
                 className="carousel-image"
                 alt=""
                 aria-hidden="true"
@@ -98,7 +128,7 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title 
           <AnimatePresence initial={false} custom={direction}>
             <motion.img
               key={currentIndex}
-              src={images[currentIndex]}
+              src={current.src}
               custom={direction}
               variants={slideVariants}
               initial="enter"
@@ -120,52 +150,72 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title 
                 else if (swipe > 10000) paginate(-1);
               }}
               className="carousel-image"
-              alt={`${title} - screenshot ${currentIndex + 1}`}
+              alt={altOf(current, currentIndex)}
+              loading={currentIndex === 0 ? 'eager' : 'lazy'}
+              decoding="async"
             />
           </AnimatePresence>
           </Lens>
 
           <div className="carousel-ui-overlay">
-            {images.length > 1 && (
+            {count > 1 && (
               <>
                 <button
+                  type="button"
                   className="carousel-nav prev"
                   onClick={(e) => { e.stopPropagation(); paginate(-1); }}
-                  aria-label="Previous image"
+                  aria-label={t('projectDetail.gallery.prev')}
                 >
                   <FiChevronLeft />
                 </button>
                 <button
+                  type="button"
                   className="carousel-nav next"
                   onClick={(e) => { e.stopPropagation(); paginate(1); }}
-                  aria-label="Next image"
+                  aria-label={t('projectDetail.gallery.next')}
                 >
                   <FiChevronRight />
                 </button>
               </>
             )}
 
-            <div className="carousel-zoom-hint">
-              <FiMaximize2 />
+            {/* Botão de verdade: abre a ampliação pelo teclado também. */}
+            <button
+              ref={openerRef}
+              type="button"
+              className="carousel-zoom-hint"
+              onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(true); }}
+              aria-haspopup="dialog"
+            >
+              <FiMaximize2 aria-hidden="true" />
               <span>{t('projectDetail.zoomHint')}</span>
-            </div>
+            </button>
           </div>
         </div>
 
-        {images.length > 1 && (
+        {current.caption && (
+          <p className="carousel-caption">
+            {isDiagram && <span className="carousel-caption-tag">{t('projectDetail.gallery.diagram')}</span>}
+            {current.caption}
+          </p>
+        )}
+
+        {count > 1 && (
           <div className="carousel-indicators">
-            {images.map((_, index) => (
+            {items.map((_, index) => (
               <button
                 key={index}
+                type="button"
                 className={`indicator-dot ${index === currentIndex ? 'active' : ''}`}
                 onClick={() => {
                   setDirection(index > currentIndex ? 1 : -1);
                   setCurrentIndex(index);
                 }}
-                aria-label={`Go to image ${index + 1}`}
+                aria-label={t('projectDetail.gallery.goTo', { n: index + 1 })}
+                aria-current={index === currentIndex ? 'true' : undefined}
               >
                 {index === currentIndex && (
-                  <motion.div 
+                  <motion.div
                       layoutId="active-indicator"
                       className="active-pillar"
                   />
@@ -188,36 +238,46 @@ export const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ images, title 
           >
             <motion.div
               className="lightbox-content"
+              role="dialog"
+              aria-modal="true"
+              aria-label={t('projectDetail.gallery.label', { title })}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
+              onKeyDown={trapFocus}
             >
               <img
-                src={images[currentIndex]}
-                className="lightbox-image"
-                alt={`${title} full size`}
+                src={current.src}
+                className={`lightbox-image${isDiagram ? ' is-diagram' : ''}`}
+                alt={altOf(current, currentIndex)}
               />
-              
-              <button className="lightbox-close" onClick={() => setIsLightboxOpen(false)}>
-                <FiX />
+
+              <button
+                ref={closeRef}
+                type="button"
+                className="lightbox-close"
+                onClick={() => setIsLightboxOpen(false)}
+                aria-label={t('projectDetail.gallery.close')}
+              >
+                <FiX aria-hidden="true" />
               </button>
 
-              {images.length > 1 && (
+              {count > 1 && (
                 <div className="lightbox-nav-container">
-                    <button className="lightbox-nav prev" onClick={() => paginate(-1)}>
-                        <FiChevronLeft />
+                    <button type="button" className="lightbox-nav prev" onClick={() => paginate(-1)} aria-label={t('projectDetail.gallery.prev')}>
+                        <FiChevronLeft aria-hidden="true" />
                     </button>
-                    <span className="lightbox-counter">
-                        {currentIndex + 1} / {images.length}
+                    <span className="lightbox-counter" aria-live="polite">
+                        {currentIndex + 1} / {count}
                     </span>
-                    <button className="lightbox-nav next" onClick={() => paginate(1)}>
-                        <FiChevronRight />
+                    <button type="button" className="lightbox-nav next" onClick={() => paginate(1)} aria-label={t('projectDetail.gallery.next')}>
+                        <FiChevronRight aria-hidden="true" />
                     </button>
                 </div>
               )}
 
-              <p className="lightbox-title">{title}</p>
+              <p className="lightbox-title">{current.caption || title}</p>
             </motion.div>
           </motion.div>
         )}

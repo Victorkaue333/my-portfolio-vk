@@ -2,6 +2,7 @@ import {
     FiChevronRight,
     FiExternalLink,
     FiGithub,
+    FiLock,
 } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -31,7 +32,6 @@ export function ProjectCard({ project, withReveal = true, lastViewed = false }: 
       : ['Stack em atualização'];
   const detailPath = project.detailPath || `/projetos/${project.slug || project.id}`;
   const imageSrc = project.image || '/images/placeholders/project-placeholder.svg';
-  const githubUrl = project.github || 'https://github.com/Victorkaue333';
 
   return (
     <div
@@ -59,7 +59,7 @@ export function ProjectCard({ project, withReveal = true, lastViewed = false }: 
           />
           <div className="project-overlay">
             <span className="project-overlay-text">
-              Ver detalhes <FiChevronRight size={16} />
+              {t('projects.card.details')} <FiChevronRight size={16} />
             </span>
           </div>
         </div>
@@ -94,22 +94,32 @@ export function ProjectCard({ project, withReveal = true, lastViewed = false }: 
         </div>
       </Link>
 
+      {(project.online || project.github || project.privateCode) && (
       <div className="project-footer">
         {project.online && (
           <a href={project.online} target="_blank" rel="noopener noreferrer" className="footer-action-link">
-            Ver projeto <FiExternalLink size={14} />
+            {t('projects.card.live')} <FiExternalLink size={14} />
           </a>
         )}
-        <a
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="footer-icon-link"
-          aria-label="GitHub Repository"
-        >
-          <FiGithub size={18} />
-        </a>
+        {project.github && (
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-icon-link"
+            aria-label={t('projects.card.repo')}
+          >
+            <FiGithub size={18} />
+          </a>
+        )}
+        {!project.github && project.privateCode && (
+          <span className="footer-private">
+            <FiLock size={13} aria-hidden="true" />
+            {t('projects.card.private')}
+          </span>
+        )}
       </div>
+      )}
     </div>
   );
 }

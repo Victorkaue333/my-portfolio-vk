@@ -23,7 +23,6 @@ import { sigref } from './projects/profissionais/sigref';
 import { vaSuplementos } from './projects/profissionais/va-suplementos';
 import { vksoftware } from './projects/profissionais/vksoftware';
 
-const DEFAULT_GITHUB_PROFILE = 'https://github.com/Victorkaue333';
 const DEFAULT_PROJECT_IMAGE = '/images/placeholders/project-placeholder.svg';
 
 const rawProjects: Project[] = [
@@ -74,7 +73,8 @@ function normalizeProject(project: Project): Project {
     title: safeTitle,
     description: safeDescription,
     image: project.image || DEFAULT_PROJECT_IMAGE,
-    github: project.github || DEFAULT_GITHUB_PROFILE,
+    // Sem repositório público, sem link: apontar para o perfil fingiria um
+    // "Ver código" que não existe (ver `privateCode`).
     detailPath: project.detailPath || `/projetos/${safeSlug}`,
     technologies: safeTechnologies,
   };

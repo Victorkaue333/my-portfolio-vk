@@ -3,16 +3,18 @@ import { useTranslation } from 'react-i18next';
 import type { IconType } from 'react-icons';
 import {
   FiArrowLeft, FiArrowRight, FiCheck, FiCircle, FiClock, FiCloud, FiCode, FiCpu,
-  FiDatabase, FiExternalLink, FiGithub, FiHardDrive, FiLayers, FiLink, FiMessageCircle, FiMonitor, FiServer,
-  FiTablet, FiUser, FiUsers,
+  FiBriefcase, FiDatabase, FiExternalLink, FiGithub, FiHardDrive, FiLayers, FiLink, FiLock, FiMessageCircle,
+  FiMonitor, FiServer, FiShield, FiTablet, FiUser, FiUsers,
 } from 'react-icons/fi';
 import { Link, useParams } from 'react-router-dom';
 import { Button } from '../../components/ui/Button/Button';
 import { TechGlyph, hasTechIcon } from '../../components/ui/TechIcon/TechIcon';
+import { experiences } from '../../data/experiences';
 import { projects } from '../../data/projects';
 import { LAST_PROJECT_KEY, writeStorage } from '../../hooks/useLocalStorage';
 import { useSeo } from '../../hooks/useSeo';
 import type { ArchitectureIcon, Project } from '../../types';
+import type { CarouselItem } from '../../components/ui/ProjectCarousel/ProjectCarousel';
 import { projectOgImage, projectSeoDescription, projectSeoTitle } from '../../utils/projectSeo';
 import { ProjectCarousel } from '../../components/ui/ProjectCarousel/ProjectCarousel';
 import './ProjetoDetalhe.css';
@@ -136,7 +138,7 @@ function CaseStudy({ project }: { project: Project }) {
     const { role } = project;
     sections.push({
       id: 'meu-papel',
-      label: t('projectDetail.myRole'),
+      label: t('projectDetail.contribution'),
       body: (
         <div className="pd-role-grid">
           <div className="pd-card is-accent">
@@ -224,10 +226,29 @@ function CaseStudy({ project }: { project: Project }) {
               <dd>
                 <strong>{d.choice}</strong>
                 <p><span className="pd-sr-only">{t('projectDetail.decisionWhy')}: </span>{d.why}</p>
+                {d.tradeoff && (
+                  <p className="pd-decision-tradeoff">
+                    <span className="pd-decision-tradeoff-label">{t('projectDetail.tradeoff')}:</span> {d.tradeoff}
+                  </p>
+                )}
               </dd>
             </div>
           ))}
         </dl>
+      ),
+    });
+  }
+
+  if (cs.quality && cs.quality.length > 0) {
+    sections.push({
+      id: 'qualidade',
+      label: t('projectDetail.quality'),
+      body: (
+        <ul className="pd-checklist pd-quality">
+          {cs.quality.map((item) => (
+            <li key={item}><FiShield size={16} aria-hidden="true" />{item}</li>
+          ))}
+        </ul>
       ),
     });
   }
@@ -260,6 +281,18 @@ function CaseStudy({ project }: { project: Project }) {
             ))}
           </tbody>
         </table>
+      ),
+    });
+  }
+
+  if (cs.limitations && cs.limitations.length > 0) {
+    sections.push({
+      id: 'limitacoes',
+      label: t('projectDetail.limitations'),
+      body: (
+        <ul className="pd-bullets">
+          {cs.limitations.map((item) => <li key={item}>{item}</li>)}
+        </ul>
       ),
     });
   }
@@ -354,7 +387,10 @@ export default function ProjetoDetalhe() {
   const techs = project.technologies?.length ? project.technologies : project.stack ?? [];
   const heroTechs = techs.slice(0, 6);
   const extraTechs = Math.max(0, techs.length - heroTechs.length);
-  const github = project.github || 'https://github.com/Victorkaue333';
+  const github = project.github;
+  const experience = project.experienceId
+    ? experiences.find((e) => e.id === project.experienceId)
+    : undefined;
 
   // Próximo projeto na ordem de data/projects.ts, dando a volta no fim.
   const index = projects.indexOf(project);
@@ -362,16 +398,29 @@ export default function ProjetoDetalhe() {
 
   const facts = [
     project.role && { key: 'role', icon: <FiUser size={15} />, label: t('projectDetail.myRole'), value: project.role.title },
-    project.teamSize && {
+    (project.teamSize || project.teamType) && {
       key: 'team',
       icon: <FiUsers size={15} />,
       label: t('projectDetail.team'),
-      value: t('projectDetail.teamSize', { count: project.teamSize }),
+      value: project.teamType
+        ? t(`projectDetail.teamType.${project.teamType}`)
+        : t('projectDetail.teamSize', { count: project.teamSize }),
     },
     project.duration && { key: 'duration', icon: <FiClock size={15} />, label: t('projectDetail.duration'), value: project.duration },
-  ].filter(Boolean) as { key: string; icon: React.ReactNode; label: string; value: string }[];
+    experience && {
+      key: 'experience',
+      icon: <FiBriefcase size={15} />,
+      label: t('projectDetail.experience'),
+      value: <Link to={`/sobre#exp-${experience.id}`}>{experience.company}</Link>,
+    },
+  ].filter(Boolean) as { key: string; icon: React.ReactNode; label: string; value: ReactNode }[];
 
-  const hasShots = !!project.screenshots && project.screenshots.length > 0;
+  // Galeria: `media` (com alt/legenda) tem precedência sobre a lista simples.
+  const gallery: CarouselItem[] = project.media?.length
+    ? project.media
+    : (project.screenshots ?? []).map((src) => ({ src }));
+
+  const hasShots = gallery.length > 0;
   const isPlaceholder = !project.image || project.image.includes('placeholder');
 
   return (
@@ -423,10 +472,18 @@ export default function ProjetoDetalhe() {
             )}
 
             <div className="pd-actions">
-              <Button href={github} target="_blank" rel="noopener noreferrer" variant="secondary">
-                <FiGithub size={18} />
-                {t('projectDetail.viewCode')}
-              </Button>
+              {github ? (
+                <Button href={github} target="_blank" rel="noopener noreferrer" variant="secondary">
+                  <FiGithub size={18} />
+                  {t('projectDetail.viewCode')}
+                </Button>
+              ) : project.privateCode && (
+                <span className="pd-private" title={t('projectDetail.privateCodeHint')}>
+                  <FiLock size={15} aria-hidden="true" />
+                  {t('projectDetail.privateCode')}
+                  <span className="pd-sr-only">: {t('projectDetail.privateCodeHint')}</span>
+                </span>
+              )}
               {project.online && (
                 <Button href={project.online} target="_blank" rel="noopener noreferrer" variant="primary">
                   <FiExternalLink size={18} />
@@ -442,7 +499,7 @@ export default function ProjetoDetalhe() {
           <div className="pd-showcase-inner">
             <div className="pd-visual-glow" aria-hidden="true" />
             {hasShots ? (
-              <ProjectCarousel images={project.screenshots!} title={title} />
+              <ProjectCarousel items={gallery} title={title} />
             ) : isPlaceholder ? (
               <div className="pd-monogram" aria-hidden="true">{projectInitials(title)}</div>
             ) : (
@@ -471,7 +528,7 @@ export default function ProjetoDetalhe() {
                 <FiExternalLink size={18} />
                 {t('projectDetail.viewOnline')}
               </Button>
-            ) : (
+            ) : github && (
               <Button href={github} target="_blank" rel="noopener noreferrer" variant="secondary">
                 <FiGithub size={18} />
                 {t('projectDetail.viewCode')}

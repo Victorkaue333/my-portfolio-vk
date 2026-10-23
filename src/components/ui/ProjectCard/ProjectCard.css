@@ -243,8 +243,20 @@
 }
 
 .footer-icon-link {
+    margin-left: auto;
     color: var(--text-muted-color);
     transition: color 0.2s ease;
+}
+
+/* Projeto de cliente/empresa: diz que o código é fechado em vez de apontar
+   para o perfil do GitHub. */
+.footer-private {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-dim-color);
 }
 
 .footer-icon-link:hover {

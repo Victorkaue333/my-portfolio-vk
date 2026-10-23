@@ -71,9 +71,9 @@ export default function Projetos() {
       <section className="content-section">
         <div className="container">
           <PageHero
-            titleMain="Projetos &"
-            titleAccent="Soluções Reais"
-            subtitle="Cases pessoais e profissionais construídos com foco em arquitetura, performance e valor de negócio do briefing ao deploy."
+            titleMain={t('projects.heroMain')}
+            titleAccent={t('projects.heroAccent')}
+            subtitle={t('projects.heroSubtitle')}
             icon={<FiFolder size={22} />}
           />
 
