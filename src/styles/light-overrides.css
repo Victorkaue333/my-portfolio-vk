@@ -45,7 +45,16 @@ html.light .footer-action-link,
 html.light .project-tag-more,
 html.light .tech-filter-clear,
 html.light .approach-progress-count,
-html.light .contact-map-link {
+html.light .contact-map-link,
+html.light .about-featured-case,
+html.light .approach-evidence,
+html.light .approach-index,
+html.light .academic-kind,
+html.light .li-exp-related a:hover,
+html.light .svc-cta,
+html.light .svc-group-index,
+html.light .svc-related a:hover,
+html.light .pd-fact dd a:hover {
     color: var(--accent-text);
 }
 
