@@ -108,7 +108,7 @@ export const saberesInterculturais: Project = {
     ],
   },
   screenshots: [
-    '/images/fotos-projetos-reais/saberes-interculturais/cover.webp',
+    '/images/fotos-projetos-reais/saberes-interculturais/tela-inicial.webp',
     '/images/fotos-projetos-reais/saberes-interculturais/1.webp',
     '/images/fotos-projetos-reais/saberes-interculturais/2.webp',
     '/images/fotos-projetos-reais/saberes-interculturais/3.webp',
