@@ -66,7 +66,7 @@ export const vmedpharma: Project = {
     roadmap: ['Back-end com autenticação e catálogo real', 'Busca funcionando'],
   },
   screenshots: [
-    '/images/fotos-projetos-pessoais/vmedpharma/cover.webp',
+    '/images/fotos-projetos-pessoais/vmedpharma/tela-inicial.webp',
     '/images/fotos-projetos-pessoais/vmedpharma/1.webp',
     '/images/fotos-projetos-pessoais/vmedpharma/2.webp',
   ],

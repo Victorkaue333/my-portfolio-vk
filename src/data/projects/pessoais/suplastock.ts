@@ -101,7 +101,7 @@ export const suplastock: Project = {
     ],
   },
   screenshots: [
-    '/images/fotos-projetos-pessoais/suplastock/cover.webp',
+    '/images/fotos-projetos-pessoais/suplastock/tela-inicial.webp',
     '/images/fotos-projetos-pessoais/suplastock/1.webp',
     '/images/fotos-projetos-pessoais/suplastock/2.webp',
     '/images/fotos-projetos-pessoais/suplastock/3.webp',

@@ -87,7 +87,7 @@ export const dataSertao: Project = {
     roadmap: ['Formulário de inscrição integrado à página'],
   },
   screenshots: [
-    '/images/fotos-projetos-reais/data-sertao/cover.webp',
+    '/images/fotos-projetos-reais/data-sertao/tela-inicial.webp',
     '/images/fotos-projetos-reais/data-sertao/1.webp',
     '/images/fotos-projetos-reais/data-sertao/2.webp',
     '/images/fotos-projetos-reais/data-sertao/3.webp',
