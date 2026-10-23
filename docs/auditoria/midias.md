@@ -60,12 +60,18 @@ identidade usada nas capas deste portfólio.
 | Oliveira Kids | Luzes de largada | As três cores do painel do sistema: livre, rodando, encerrado. |
 | Transcritor de Entrevistas | Onda vira linhas | A fala (onda) vira texto (linhas). |
 | SuplaStock | Pote-gráfico | Pote de suplemento com o gráfico de gestão vazado. |
+| Saberes Interculturais de Itaparica | Roda e rio | O arco da roda (o Toré, a coletividade) sobre as ondas do São Francisco (o território). |
 
 Fontes em `docs/logos/` (`<slug>-symbol.svg`, `-lockup-dark-bg.svg`,
 `-lockup-light-bg.svg`). O nome nos lockups usa `<text>` com Segoe UI: serve
 para gerar a capa (raster); para uso fora do portfólio, converter em contorno.
-Marcas reais de terceiros (Caji, Henrique Energia Solar, Sertão Conecta,
-Saberes Interculturais) **não** receberam logo inventado.
+Marcas reais de terceiros (Caji, Henrique Energia Solar, Sertão Conecta)
+**não** receberam logo inventado. O Saberes Interculturais não tinha marca (o
+site usa um ícone genérico) e ganhou um logo a pedido do autor: o desenho evita
+grafismos e símbolos indígenas (cocar, penas, padrões) e se apoia no que o
+projeto documenta — a roda do Toré e o território às margens do São Francisco.
+Antes de usar fora do portfólio, vale validar com a coordenação da pesquisa e
+com a comunidade.
 
 ## Faixa "Quem confiou no meu trabalho" (`data/partners.ts`)
 

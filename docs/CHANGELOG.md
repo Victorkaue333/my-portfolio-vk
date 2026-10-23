@@ -10,6 +10,23 @@ Tipos: **Adicionado**, **Alterado**, **Corrigido**, **Removido**.
 
 ## [Não lançado]
 
+### Adicionado (identidade e prova social — 23/10/2026)
+- **Porta de entrada**: abertura com o logo VK (revelação, barra laranja e duas
+  portas se abrindo), uma vez por sessão, só CSS; clique ou tecla pulam; não
+  aparece com movimento reduzido nem para robôs (`components/Layout/IntroGate`).
+- **Faixa "Quem confiou no meu trabalho"** (`components/ui/TrustedBy`,
+  `data/partners.ts`): logos oficiais em silhueta monocromática; em /projetos
+  logo abaixo dos filtros e na Home depois dos projetos.
+- **Logos de projeto** criados para o portfólio (Dev Job Automation, Gerador de
+  Certificados, PetShop, Oliveira Kids, Transcritor, SuplaStock, Saberes
+  Interculturais) e logotipo como capa de Touch Speaker, VMED Pharma e
+  DataSertão. Fontes em `docs/logos/`.
+
+### Corrigido
+- Capa da VA Suplementos: o logo vertical era recortado pelo card 16:9; agora
+  fica inteiro e centralizado.
+- Print do README atualizado com o hero atual.
+
 ### Adicionado (auditoria de conteúdo — 23/10/2026)
 - Projeto **Touch Speaker** (ditado por voz em Electron), com case completo.
 - Case: seções **Engenharia e qualidade** e **Limitações e pendências**; custo
