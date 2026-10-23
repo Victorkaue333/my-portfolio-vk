@@ -32,7 +32,7 @@ const PROJECT_COVERS = [
   'images/fotos-projetos-reais/ntidi/NTIDI.webp',
   'images/fotos-projetos-reais/queelvra/queelvra.webp',
   'images/fotos-projetos-reais/sigref/sigrefsemfundo.webp',
-  'images/fotos-projetos-reais/va_suplementos/va_suplementos.webp',
+  'images/fotos-projetos-reais/va_suplementos/cover.webp',
   'images/fotos-projetos-reais/vksoftware/1.webp',
   'images/fotos-projetos-reais/caji-agent/cover.webp',
   'images/fotos-projetos-reais/sertao-conecta/cover.webp',
