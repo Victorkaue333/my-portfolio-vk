@@ -1,0 +1,76 @@
+/* Faixa "Quem confiou no meu trabalho" — logos monocromáticas em loop. */
+.trusted-by {
+    padding: var(--spacing-2xl, 4rem) 0;
+}
+
+.trusted-head {
+    margin-bottom: 1.75rem;
+    text-align: center;
+}
+
+.trusted-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim-color);
+}
+
+.trusted-subtitle {
+    max-width: 60ch;
+    margin: 0.5rem auto 0;
+    font-size: 0.95rem;
+    color: var(--text-muted-color);
+}
+
+/* Cada logo ocupa a mesma "caixa" de leitura: largura mínima fixa para a
+   faixa nunca ficar mais curta que a tela e o ritmo ficar regular. */
+.trusted-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
+    height: 88px;
+    padding: 0 2rem;
+    border-radius: var(--radius-md);
+    opacity: 0.6;
+    transition: opacity var(--transition-normal, 0.3s ease);
+}
+
+a.trusted-item:hover,
+a.trusted-item:focus-visible {
+    opacity: 1;
+}
+
+a.trusted-item:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.trusted-logo {
+    width: auto;
+    height: 40px;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+/* Logo quase quadrado (ex.: emblema): mais alto para ter o mesmo peso. */
+.trusted-logo.is-square {
+    height: 64px;
+}
+
+/* As silhuetas são brancas; no tema claro viram escuras. */
+html.light .trusted-logo {
+    filter: invert(1);
+}
+
+@media (max-width: 640px) {
+    .trusted-item {
+        min-width: 170px;
+        height: 72px;
+        padding: 0 1.25rem;
+    }
+
+    .trusted-logo { height: 32px; }
+    .trusted-logo.is-square { height: 52px; }
+}

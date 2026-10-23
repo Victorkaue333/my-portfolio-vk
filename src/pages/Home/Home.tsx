@@ -31,6 +31,7 @@ import { Spotlight } from '../../components/ui/Spotlight/Spotlight';
 import { GlowingEffect } from '../../components/ui/GlowingEffect/GlowingEffect';
 import { GlareCard } from '../../components/ui/GlareCard/GlareCard';
 import { ProjectMarquee } from '../../components/ui/ProjectMarquee/ProjectMarquee';
+import { TrustedBy } from '../../components/ui/TrustedBy/TrustedBy';
 import { srcFor, srcSetFor } from '../../utils/imageSrcSet';
 import './Home.css';
 
@@ -283,6 +284,8 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ========== QUEM CONFIOU — logos de data/partners.ts, depois dos cases ========== */}
+      <TrustedBy />
     </main>
   );
 }

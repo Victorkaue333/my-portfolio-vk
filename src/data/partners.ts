@@ -1,0 +1,114 @@
+import type { Partner } from '../types';
+
+/**
+ * "Quem confiou no meu trabalho": empresas, clientes e instituições com
+ * projeto real neste portfólio. As logos são as oficiais de cada organização,
+ * convertidas em silhueta monocromática para a faixa (origem de cada arquivo
+ * em docs/auditoria/midias.md).
+ */
+export const partners: Partner[] = [
+  {
+    id: 'caji-solutions',
+    name: 'Caji Solutions',
+    logo: '/images/parceiros/caji-solutions.webp',
+    width: 414,
+    height: 160,
+    projectId: 'caji-agent',
+    experienceId: 'caji-solutions',
+  },
+  {
+    id: 'aex-hub',
+    name: 'AEX Hub',
+    logo: '/images/parceiros/aex-hub.webp',
+    width: 175,
+    height: 160,
+    square: true,
+    projectId: 'mav-imob',
+  },
+  {
+    id: 'mavis-os',
+    name: 'Mavis OS',
+    logo: '/images/parceiros/mavis-os.webp',
+    width: 203,
+    height: 160,
+    square: true,
+  },
+  {
+    id: 'glipy',
+    name: 'Glipy Travel',
+    logo: '/images/parceiros/glipy.webp',
+    width: 566,
+    height: 160,
+  },
+  {
+    id: 'if-sertao',
+    name: 'Instituto Federal do Sertão Pernambucano — Campus Floresta',
+    logo: '/images/parceiros/if-sertao.webp',
+    width: 579,
+    height: 160,
+    experienceId: 'if-sertao',
+  },
+  {
+    id: 'sertao-conecta',
+    name: 'Sertão Conecta',
+    logo: '/images/parceiros/sertao-conecta.webp',
+    width: 600,
+    height: 160,
+    projectId: 'sertao-conecta',
+  },
+  {
+    id: 'maratonatech',
+    name: 'Maratona IFSertãoTech',
+    logo: '/images/parceiros/maratonatech.webp',
+    width: 678,
+    height: 160,
+    projectId: 'maratonatech',
+  },
+  {
+    id: 'ntidi',
+    name: 'NTIDI',
+    logo: '/images/parceiros/ntidi.webp',
+    width: 536,
+    height: 160,
+    projectId: 'ntidi',
+    experienceId: 'ntidi',
+  },
+  {
+    id: 'cnpq',
+    name: 'CNPq — Conselho Nacional de Desenvolvimento Científico e Tecnológico',
+    logo: '/images/parceiros/cnpq.webp',
+    width: 527,
+    height: 160,
+    projectId: 'saberes-interculturais',
+    experienceId: 'cnpq',
+  },
+  {
+    // Enquanto o arquivo da logo da GRE não chega, a faixa usa o SIGREF (sistema da GRE).
+    id: 'gre-sigref',
+    name: 'GRE Sertão do Submédio São Francisco — SIGREF',
+    logo: '/images/parceiros/sigref.webp',
+    width: 235,
+    height: 160,
+    square: true,
+    projectId: 'sigref',
+    experienceId: 'gre-estagio',
+  },
+  {
+    id: 'henrique-energia-solar',
+    name: 'Henrique Energia Solar',
+    logo: '/images/parceiros/henrique-energia-solar.webp',
+    width: 610,
+    height: 160,
+    projectId: 'henrique-energia-solar',
+    experienceId: 'henrique-energia-solar',
+  },
+  {
+    id: 'va-suplementos',
+    name: 'VA Suplementos',
+    logo: '/images/parceiros/va-suplementos.webp',
+    width: 166,
+    height: 160,
+    square: true,
+    projectId: 'va-suplementos',
+  },
+];

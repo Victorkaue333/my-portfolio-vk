@@ -2,6 +2,10 @@
 
 const common = {
   common: {
+    trustedBy: {
+      title: 'Quem confiou no meu trabalho',
+      subtitle: 'Empresas, clientes e instituições com quem desenvolvi projetos.',
+    },
     viewProjects: 'Ver meus projetos',
     viewAll: 'Ver todos',
     send: 'Enviar',

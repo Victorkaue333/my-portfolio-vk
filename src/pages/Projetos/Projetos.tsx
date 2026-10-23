@@ -5,6 +5,7 @@ import { AnimatedTabs } from '../../components/ui/AnimatedTabs/AnimatedTabs';
 import { ProjectCard } from '../../components/ui/ProjectCard/ProjectCard';
 import { TechGlyph } from '../../components/ui/TechIcon/TechIcon';
 import { PageHero } from '../../components/ui/PageHero/PageHero';
+import { TrustedBy } from '../../components/ui/TrustedBy/TrustedBy';
 import { projects } from '../../data/projects';
 import { LAST_PROJECT_KEY, readStorage, useLocalStorage } from '../../hooks/useLocalStorage';
 import { usePageSeo } from '../../hooks/useSeo';
@@ -154,6 +155,9 @@ export default function Projetos() {
           )}
         </div>
       </section>
+
+      {/* Abaixo de Pessoais e Profissionais: quem contratou ou participou do trabalho. */}
+      <TrustedBy />
     </main>
   );
 }

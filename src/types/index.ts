@@ -259,3 +259,22 @@ export interface ResultItem {
   value: string;
   label: string;
 }
+
+/**
+ * Organização com quem houve projeto real (empresa, cliente ou instituição).
+ * Só entra quem está em data/experiences.ts ou data/projects — nunca logo de
+ * quem não contratou ou não participou do trabalho.
+ */
+export interface Partner {
+  id: string;
+  name: string;
+  /** Silhueta branca com transparência em /images/parceiros/ (o tema claro inverte por CSS). */
+  logo: string;
+  width: number;
+  height: number;
+  /** Logo quase quadrado: exibido maior para ter o mesmo peso visual dos horizontais. */
+  square?: boolean;
+  /** Case que a logo abre. Sem ele, `experienceId` leva à experiência em /sobre. */
+  projectId?: string;
+  experienceId?: string;
+}
