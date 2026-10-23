@@ -42,3 +42,27 @@ Para adicionar uma mídia nova:
 2. Registrar em `media` do projeto: `src`, `type`, `alt` descritivo e `caption`.
 3. Se for capa nova, incluir em `PROJECT_COVERS`/`PROJECT_COVER_SLUGS` de
    `scripts/optimize-images.mjs` e rodar `npm run images:optimize`.
+
+## Logos criados para o portfólio (23/10/2026)
+
+Projetos pessoais sem identidade visual própria (ou com logo raster substituído
+a pedido do autor) ganharam um logo feito com o processo da skill
+[logo-design](https://github.com/kaankiziltug/logo-design-skill): brief,
+3 conceitos em cinza por projeto, auditoria de geometria (`svg_audit.py`) e
+direção recomendada em cor. **Não fazem parte dos produtos originais** — são a
+identidade usada nas capas deste portfólio.
+
+| Projeto | Direção | Ideia |
+| --- | --- | --- |
+| Dev Job Automation | Maleta-terminal | A busca de emprego dentro de um terminal (`›_` vazado). |
+| Gerador de Certificados | Lote selado | Pilha de certificados com selo: o lote sai de uma vez. |
+| E-commerce PetShop | Sacola-pata | Sacola de compras com uma pata vazada. |
+| Oliveira Kids | Luzes de largada | As três cores do painel do sistema: livre, rodando, encerrado. |
+| Transcritor de Entrevistas | Onda vira linhas | A fala (onda) vira texto (linhas). |
+| SuplaStock | Pote-gráfico | Pote de suplemento com o gráfico de gestão vazado. |
+
+Fontes em `docs/logos/` (`<slug>-symbol.svg`, `-lockup-dark-bg.svg`,
+`-lockup-light-bg.svg`). O nome nos lockups usa `<text>` com Segoe UI: serve
+para gerar a capa (raster); para uso fora do portfólio, converter em contorno.
+Marcas reais de terceiros (Caji, Henrique Energia Solar, Sertão Conecta,
+Saberes Interculturais) **não** receberam logo inventado.
