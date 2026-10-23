@@ -1,0 +1,107 @@
+/* Porta de entrada: logo VK → barra → duas portas se abrem.
+   Fundo sempre escuro (o "V" do logo é branco), nos dois temas. */
+.intro-gate {
+    --intro-bg: #050505;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+.intro-door {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50.5%; /* sobreposição de 1% evita fresta no meio */
+    background: var(--intro-bg);
+    animation-duration: 0.55s;
+    animation-delay: 1.1s;
+    animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+    animation-fill-mode: forwards;
+}
+
+.intro-door.is-left {
+    left: 0;
+    animation-name: intro-door-left;
+}
+
+.intro-door.is-right {
+    right: 0;
+    animation-name: intro-door-right;
+}
+
+.intro-brand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    animation: intro-brand-out 0.3s ease 1s forwards;
+}
+
+.intro-logo {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    clip-path: inset(0 100% 0 0);
+    animation: intro-logo-in 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.intro-bar {
+    position: relative;
+    width: 140px;
+    height: 2px;
+    overflow: hidden;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.intro-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #ff7a00;
+    box-shadow: 0 0 12px rgba(255, 122, 0, 0.6);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: intro-bar-fill 0.8s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+
+/* Pular (clique ou tecla): vai direto para as portas. */
+.intro-gate.is-skipping .intro-brand {
+    animation: intro-brand-out 0.15s ease forwards;
+}
+
+.intro-gate.is-skipping .intro-door {
+    animation-delay: 0s;
+    animation-duration: 0.4s;
+}
+
+@keyframes intro-logo-in {
+    from { clip-path: inset(0 100% 0 0); transform: scale(0.92); opacity: 0.4; }
+    to   { clip-path: inset(0 0 0 0); transform: scale(1); opacity: 1; }
+}
+
+@keyframes intro-bar-fill {
+    to { transform: scaleX(1); }
+}
+
+@keyframes intro-brand-out {
+    to { opacity: 0; transform: scale(1.06); }
+}
+
+@keyframes intro-door-left {
+    to { transform: translateX(-100%); }
+}
+
+@keyframes intro-door-right {
+    to { transform: translateX(100%); }
+}
+
+/* Garantia extra: o componente já não monta com movimento reduzido. */
+@media (prefers-reduced-motion: reduce) {
+    .intro-gate { display: none; }
+}

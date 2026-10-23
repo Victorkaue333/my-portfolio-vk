@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from './components/Layout/Navbar/Navbar';
 import { Footer } from './components/Layout/Footer/Footer';
 import { BackToTop } from './components/Layout/BackToTop/BackToTop';
+import { IntroGate } from './components/Layout/IntroGate/IntroGate';
 import ScrollToTop from './components/Layout/ScrollToTop/ScrollToTop';
 import { MobileNavbar } from './components/Layout/Navbar/MobileNavbar';
 import { ScrollReveal } from './components/Layout/ScrollReveal/ScrollReveal';
@@ -48,6 +49,8 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
+      {/* Porta de entrada com o logo VK — uma vez por sessão. */}
+      <IntroGate />
       <ScrollToTop />
       <ScrollReveal />
       <Navbar />
