@@ -66,3 +66,30 @@ Fontes em `docs/logos/` (`<slug>-symbol.svg`, `-lockup-dark-bg.svg`,
 para gerar a capa (raster); para uso fora do portfólio, converter em contorno.
 Marcas reais de terceiros (Caji, Henrique Energia Solar, Sertão Conecta,
 Saberes Interculturais) **não** receberam logo inventado.
+
+## Faixa "Quem confiou no meu trabalho" (`data/partners.ts`)
+
+Logos **oficiais** das organizações com projeto real no portfólio, convertidas
+em silhueta branca com transparência (`public/images/parceiros/`; o tema claro
+inverte por CSS). Fonte de cada uma:
+
+| Organização | Arquivo de origem |
+| --- | --- |
+| Caji Solutions | `CajiAgent/frontend/public/brand/caji-logo-light-bg.svg` |
+| AEX Hub | `aex-engineering/assets/logo.png` |
+| Mavis OS | `mavis-os/public/brand/mavis-os-full.png` |
+| Glipy Travel | `GlipyTravel/assets/imgs/marca/logo-escura.png` |
+| IF Sertão-PE — Campus Floresta | `sertao-conecta/frontend/public/logos/logotipo-campus-floresta.png` |
+| Sertão Conecta | `sertao-conecta/frontend/public/logos/logo-sertaoconecta-semfundo.webp` |
+| Maratona IFSertãoTech | `public/images/fotos-projetos-reais/maratonatech/MaratonaTech.webp` (máscara por saturação, para o foguete não virar bloco) |
+| NTIDI | `public/images/fotos-projetos-reais/ntidi/NTIDI.webp` |
+| CNPq | Wikipédia, `Ficheiro:Cnpq-logo.jpg` (símbolo + sigla; nome por extenso cortado para ler a 40 px) |
+| GRE (provisório: SIGREF) | `public/images/fotos-projetos-reais/sigref/sigrefsemfundo.webp` |
+| Henrique Energia Solar | `henrique-solar/apps/frontend/public/logo/logotipo-henrique-energia-solar.webp` |
+| VA Suplementos | `public/images/fotos-projetos-reais/va_suplementos/va_suplementos.webp` (sem a linha do @) |
+
+Pendentes: **Ye Vida** e a logo própria da **GRE** (o autor enviou as imagens
+no chat, mas é preciso o arquivo em `public/images/parceiros/originais/`).
+
+Usar logo de cliente em portfólio costuma ser aceito, mas vale confirmar com cada organização — principalmente com empresas sob
+contrato de confidencialidade.
