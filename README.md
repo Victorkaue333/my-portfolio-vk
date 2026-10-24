@@ -4,10 +4,6 @@
 
 ### Portfólio Full Stack de Victor Kauê
 
-SPA premium, em 4 idiomas (pt-BR, pt-PT, EN, ES) e responsiva, construída para demonstrar capacidade técnica em
-**desenvolvimento web full stack** — backend (Python/Django) como especialidade e
-**front-end React de alto acabamento** como vitrine.
-
 <br />
 
 [![Status](https://img.shields.io/badge/status-produção-2ea44f?style=for-the-badge)](https://victor-kaue.vercel.app/)
@@ -57,22 +53,10 @@ SPA premium, em 4 idiomas (pt-BR, pt-PT, EN, ES) e responsiva, construída para 
 ## 1. Sobre o projeto
 
 Este portfólio é uma **SPA React (single-page application) estática**, projetada
-para converter visitantes — recrutadores, clientes e comunidade técnica — em contatos
-qualificados. É um projeto **real e em produção**, e a própria aplicação funciona como prova
+para mostrar para visitantes — recrutadores, clientes e comunidade técnica — toda a trajetória de Victor Kauê. 
+É um projeto **real e em produção**, e a própria aplicação funciona como prova
 de competência: arquitetura por camadas, código TypeScript strict, i18n em 4 idiomas,
 animações fluidas, smoke E2E e deploy contínuo.
-
-Três públicos, três jornadas:
-
-- **Recrutadores** avaliam trajetória, stack e projetos em poucos minutos e baixam o **CV em PDF**.
-- **Clientes potenciais** conhecem os **serviços** e iniciam conversa direta via **WhatsApp**.
-- **Comunidade técnica** explora o detalhe de cada projeto: desafio, solução, impacto e decisões de arquitetura.
-
-Tecnicamente, **não há banco de dados nem backend de aplicação**: todo o conteúdo (projetos,
-experiências, certificados, serviços) vive como **módulos TypeScript tipados** em `src/data/`,
-validados em build e compilados no bundle. **O repositório é a fonte de verdade do conteúdo.**
-A única peça server-side é uma função serverless opcional (`api/spotify/now-playing.js`) que
-guarda as credenciais do Spotify fora do navegador — sem ela, o site funciona igual.
 
 > O contexto de negócio (problema, personas, métricas e escopo) está em
 > [`PROJECT_CONTEXT.md`](PROJECT_CONTEXT.md); os requisitos (RF/RNF), fluxos e critérios de
@@ -86,42 +70,29 @@ guarda as credenciais do Spotify fora do navegador — sem ela, o site funciona 
 
 ![Home — Hero](public/images/readme/hero.webp)
 
-<!--
-  Para adicionar mais screenshots: exportar em .webp, colocar em public/images/readme/
-  e referenciar aqui. Ex.:
-
-  ![Projetos](public/images/readme/projetos.webp)
-  ![Detalhe de projeto](public/images/readme/projeto-detalhe.webp)
--->
-
 ---
 
 ## 3. Principais funcionalidades
 
 ### 🧭 Navegação e experiência
 
-- [x] SPA com **transições entre rotas** em CSS (`page-enter`) — sem framer-motion no bundle inicial
-- [x] **Lazy loading por rota** com `Suspense` + prefetch no hover (sem tela de loader)
-- [x] Fundo animado do Hero em **Canvas 2D** (`FloatingLines`)
-- [x] Scroll gerenciado: volta ao topo ao trocar de rota + botão "voltar ao topo"
-- [x] Navbar desktop + **navbar mobile dedicada**, tema **claro/escuro** persistido, design tokens
-- [x] **Terminal interativo** em `/sobre` (comandos por whitelist, não é um shell)
+- SPA com **transições entre rotas** em CSS (`page-enter`) — sem framer-motion no bundle inicial
+- **Lazy loading por rota** com `Suspense` + prefetch no hover (sem tela de loader)
+- Fundo animado do Hero em **Canvas 2D** (`FloatingLines`)
+- Scroll gerenciado: volta ao topo ao trocar de rota + botão "voltar ao topo"
+- Navbar desktop + **navbar mobile dedicada**, tema **claro/escuro** persistido, design tokens
+- **Terminal interativo** em `/sobre` (comandos por whitelist, não é um shell)
 
 ### 🌐 Conteúdo e internacionalização
 
-- [x] **pt-BR, pt-PT, EN e ES** com i18next; seletor com bandeiras; idioma detectado e **persistido em `localStorage`**
-- [x] **Atividade pública do GitHub** (repositórios recentes e contribuições) e bloco de **Spotify**
-- [x] Catálogo de projetos com **filtro por categoria** (Todos / Pessoais / Profissionais)
-- [x] Página de **detalhe por projeto**: desafio, solução, impacto, arquitetura, stack e screenshots
-- [x] Experiências, formação, expertise e serviços renderizados a partir de **dados tipados**
-- [x] **Certificados** com visualização e PDFs para download
-- [x] **Download do currículo** em PDF
+- **pt-BR, pt-PT, EN e ES** com i18next; seletor com bandeiras; idioma detectado e **persistido em `localStorage`**
+- **Atividade pública do GitHub** (repositórios recentes e contribuições) e bloco de **Spotify**
+- Catálogo de projetos com **filtro por categoria** (Todos / Pessoais / Profissionais)
+- Página de **detalhe por projeto**: desafio, solução, impacto, arquitetura, stack e screenshots
+- Experiências, formação, expertise e serviços renderizados a partir de **dados tipados**
+- **Certificados** com visualização e PDFs para download
+- **Download do currículo** em PDF
 
-### 📬 Conversão
-
-- [x] Formulário de contato com barra de progresso e validação
-- [x] Envio via **deep-link do WhatsApp** com mensagem pré-formatada (sem backend)
-- [x] Links sociais (GitHub, LinkedIn, e-mail, WhatsApp) em toda a aplicação
 
 ---
 
@@ -385,43 +356,7 @@ npm run dev
 
 ---
 
-## 13. Variáveis de ambiente
-
-**Nenhuma obrigatória.** O bundle não lê `import.meta.env.VITE_*` — todo o conteúdo é
-estático e compilado. Clonou, instalou, rodou.
-
-As três variáveis abaixo são **opcionais** e ativam o "Now Playing" do Spotify. São lidas
-**só** pela função `api/spotify/now-playing.js`, no servidor (sem prefixo `VITE_`, nunca
-chegam ao navegador). Sem elas, o endpoint responde `501` e o site usa o Spotify Embed.
-
-| Variável | Obrigatória | Observação |
-|---|---|---|
-| `SPOTIFY_CLIENT_ID` | Não | App no Spotify Developer Dashboard |
-| `SPOTIFY_CLIENT_SECRET` | Não | **Segredo** — só na Vercel / `.env` local |
-| `SPOTIFY_REFRESH_TOKEN` | Não | **Segredo** — passo a passo no [`.env.example`](.env.example) |
-
-Detalhes em [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md).
-
----
-
-## 14. Comandos úteis
-
-Scripts reais de [`package.json`](package.json):
-
-| Comando | Descrição |
-|---|---|
-| `npm run dev` | Inicia o Vite em modo desenvolvimento (porta 5173) |
-| `npm run build` | `tsc -b && vite build` + `prerender-meta.mjs` (tipos + bundle + `<head>`/sitemap) |
-| `npm run preview` | Serve o build de produção localmente |
-| `npm run prerender` | Só o prerender de `<head>` por rota e `sitemap.xml` |
-| `npm run images:optimize` | Gera variantes `.webp` responsivas + `src/data/image-variants.json` |
-| `npm run test:e2e` | Build + smoke Playwright |
-| `npm run test:e2e:ui` | Playwright em modo interativo (sem rebuild) |
-| `npm run doctor` | Diagnóstico do react-doctor (`doctor:supply-chain` inclui dependências) |
-
----
-
-## 15. Deploy
+## 13. Deploy
 
 Produção na **Vercel** com deploy contínuo por push. Guia completo em
 [`docs/DEPLOY.md`](docs/DEPLOY.md).
@@ -446,7 +381,7 @@ flowchart LR
 ---
 
 
-## 16. Documentação complementar
+## 14. Documentação complementar
 
 Este repositório segue o padrão de **11 documentos obrigatórios**: documentos vivos,
 versionados junto ao código.
@@ -475,7 +410,7 @@ versionados junto ao código.
 ---
 
 
-## 17. Contato
+## 15. Contato
 
 [![GitHub](https://img.shields.io/badge/GitHub-Victorkaue333-181717?style=for-the-badge&logo=github)](https://github.com/Victorkaue333)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Victor%20Kaue-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/victor-kaue-419926364/)
@@ -486,6 +421,6 @@ versionados junto ao código.
 
 <div align="center">
 
-> 🚀 Documento vivo — mantido junto ao código. Última revisão alinhada à v2.0.0.
+> Última revisão alinhada à v2.0.0.
 
 </div>
