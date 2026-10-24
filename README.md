@@ -526,29 +526,8 @@ versionados junto ao código.
 
 ---
 
-## 20. Autor
 
-<table>
-  <tr>
-    <td align="center" width="220">
-      <a href="https://github.com/Victorkaue333">
-        <img src="https://github.com/Victorkaue333.png" width="100px" alt="Victor Kauê" />
-      </a>
-      <br /><sub><b>Victor Kauê</b></sub>
-      <br /><sub>Full Stack · Backend (Python/Django) · APIs</sub>
-    </td>
-  </tr>
-</table>
-
-Desenvolvedor full stack com foco em backend, APIs e sistemas web escaláveis. Formado em
-Desenvolvimento de Sistemas e graduando em Gestão da Tecnologia da Informação. Este portfólio
-é, ele próprio, uma demonstração do compromisso com excelência técnica e experiência do usuário.
-
-Convenção de commits: **Conventional Commits** (`feat:`, `fix:`, `docs:`, …).
-
----
-
-## 21. Contato
+## 20. Contato
 
 [![GitHub](https://img.shields.io/badge/GitHub-Victorkaue333-181717?style=for-the-badge&logo=github)](https://github.com/Victorkaue333)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Victor%20Kaue-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/victor-kaue-419926364/)
