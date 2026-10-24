@@ -474,31 +474,8 @@ flowchart LR
 
 ---
 
-## 17. SEO, performance e acessibilidade
 
-- **SEO:** meta description/keywords, **Open Graph** e **Twitter Card** em
-  [`index.html`](index.html); `<head>` por rota e `sitemap.xml` gerados no build
-  (`scripts/prerender-meta.mjs`) e atualizados em runtime por `useSeo`/`usePageSeo`.
-- **Performance:** lazy loading por rota, `manualChunks` para vendors, imagens `.webp`
-  responsivas, Manrope self-hosted com preload e fundo do Hero em Canvas 2D (sem WebGL).
-- **Acessibilidade:** `aria-*` em ícones e controles, navegação por teclado e contraste nos
-  temas claro e escuro.
-- **Alvo:** Lighthouse ≥ 90 em Performance e SEO (aferição manual — ver [`docs/PRD.md`](docs/PRD.md), RNF-02).
-
----
-
-## 18. Roadmap
-
-Itens em evolução — **não** são funcionalidades já concluídas:
-
-- Testes unitários (ex.: Vitest) — hoje só há o smoke E2E;
-- Eventos de conversão (cliques no WhatsApp, download do CV) — hoje o Vercel Analytics mede só visitas;
-- Novos projetos no catálogo e screenshots adicionais no README;
-- Melhorias contínuas de acessibilidade.
-
----
-
-## 19. Documentação complementar
+## 17. Documentação complementar
 
 Este repositório segue o padrão de **11 documentos obrigatórios**: documentos vivos,
 versionados junto ao código.
@@ -527,7 +504,7 @@ versionados junto ao código.
 ---
 
 
-## 20. Contato
+## 18. Contato
 
 [![GitHub](https://img.shields.io/badge/GitHub-Victorkaue333-181717?style=for-the-badge&logo=github)](https://github.com/Victorkaue333)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Victor%20Kaue-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/victor-kaue-419926364/)
