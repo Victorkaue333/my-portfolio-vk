@@ -421,36 +421,7 @@ Scripts reais de [`package.json`](package.json):
 
 ---
 
-## 15. Testes
-
-**Smoke E2E com Playwright** ([`tests/e2e/smoke.spec.ts`](tests/e2e/smoke.spec.ts)), rodando
-contra o build de produção (`vite preview`), onde existem o prerender e os chunks por rota.
-Projetos: Chromium desktop e Pixel 5.
-
-```bash
-npx playwright install chromium   # só na primeira vez
-npm run test:e2e
-```
-
-O que o smoke cobre:
-
-- cada rota do sitemap responde `200`, tem `<title>` e não emite erro no console — as rotas
-  saem de `src/config/pages.ts`, então página nova entra no teste sozinha;
-- rota inexistente cai na 404 do app, não em erro do servidor;
-- Manrope carrega do próprio domínio, sem requisição ao Google Fonts;
-- o tema alternado sobrevive a um reload (só desktop).
-
-Não há testes unitários. As outras camadas de validação:
-
-| Camada | Ferramenta | Como rodar |
-|---|---|---|
-| Contratos de dados / tipos | **TypeScript strict** (`tsc -b`) | `npm run build` — erro de tipo quebra o build |
-| Validação visual | Dev server / preview | `npm run dev` · `npm run preview` |
-| Performance / SEO | **Lighthouse** (manual) | DevTools sobre a URL de produção |
-
----
-
-## 16. Deploy
+## 15. Deploy
 
 Produção na **Vercel** com deploy contínuo por push. Guia completo em
 [`docs/DEPLOY.md`](docs/DEPLOY.md).
@@ -475,7 +446,7 @@ flowchart LR
 ---
 
 
-## 17. Documentação complementar
+## 16. Documentação complementar
 
 Este repositório segue o padrão de **11 documentos obrigatórios**: documentos vivos,
 versionados junto ao código.
@@ -504,7 +475,7 @@ versionados junto ao código.
 ---
 
 
-## 18. Contato
+## 17. Contato
 
 [![GitHub](https://img.shields.io/badge/GitHub-Victorkaue333-181717?style=for-the-badge&logo=github)](https://github.com/Victorkaue333)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Victor%20Kaue-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/victor-kaue-419926364/)
