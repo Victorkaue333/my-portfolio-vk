@@ -48,6 +48,7 @@ const sobre: typeof base = {
       selfEmployed: 'Self-employed',
       internship: 'Internship',
       temporary: 'Temporary',
+      partTime: 'Part-time',
     },
     workMode: {
       remote: 'Remote',

@@ -14,6 +14,7 @@ export const mavImob: Project = {
   technologies: ['NestJS', 'React', 'TypeScript', 'PostgreSQL', 'Redis'],
   stack: ['NestJS', 'React', 'TypeScript', 'PostgreSQL', 'Redis'],
   category: 'real',
+  experienceId: 'mavis-imob',
   status: 'mvp',
   privateCode: true,
   teamType: 'team',

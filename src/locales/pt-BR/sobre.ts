@@ -47,6 +47,7 @@ const sobre = {
       selfEmployed: 'Autônomo',
       internship: 'Estágio',
       temporary: 'Temporário',
+      partTime: 'Meio período',
     },
     workMode: {
       remote: 'Remoto',

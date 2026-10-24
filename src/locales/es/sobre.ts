@@ -50,6 +50,7 @@ const sobre: typeof base = {
       selfEmployed: 'Autónomo',
       internship: 'Prácticas',
       temporary: 'Temporal',
+      partTime: 'Media jornada',
     },
     workMode: {
       remote: 'Remoto',

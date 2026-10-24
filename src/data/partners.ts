@@ -32,6 +32,7 @@ export const partners: Partner[] = [
     width: 203,
     height: 160,
     square: true,
+    experienceId: 'mavis-imob',
   },
   {
     id: 'glipy',
@@ -39,6 +40,7 @@ export const partners: Partner[] = [
     logo: '/images/parceiros/glipy.webp',
     width: 566,
     height: 160,
+    experienceId: 'grupo-glipy',
   },
   {
     id: 'if-sertao',

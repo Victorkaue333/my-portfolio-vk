@@ -75,6 +75,7 @@ const EMPLOYMENT_KEYS: Record<string, string> = {
   'Autônomo': 'selfEmployed',
   'Estágio': 'internship',
   'Temporário': 'temporary',
+  'Meio período': 'partTime',
 };
 const WORK_MODE_KEYS: Record<string, string> = {
   Remoto: 'remote',

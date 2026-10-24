@@ -13,6 +13,7 @@ export const vaSuplementos: Project = {
   technologies: ['Django', 'PostgreSQL', 'Bootstrap', 'Controle de Estoque'],
   stack: ['Python', 'Django', 'PostgreSQL'],
   category: 'real',
+  experienceId: 'va-suplementos',
   privateCode: true,
   caseStudy: {
     overview: [
