@@ -35,6 +35,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'henrique-energia-solar',
     company: 'Henrique Energia Solar',
+    logo: '/images/experiencias/henrique-energia-solar.webp',
     roles: [
       {
         title: 'Desenvolvedor Full Stack e Gestor de Projeto',
@@ -59,6 +60,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'caji-solutions',
     company: 'Caji Solutions',
+    logo: '/images/experiencias/caji-solutions.webp',
     roles: [
       {
         title: 'Desenvolvedor Full Stack Júnior',
@@ -83,6 +85,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'if-sertao',
     company: 'Instituto Federal do Sertão Pernambucano',
+    logo: '/images/experiencias/if-sertao.webp',
     employmentType: 'Autônomo',
     totalDuration: '1 ano',
     location: 'Floresta, Pernambuco, Brasil · Híbrido',
@@ -122,7 +125,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'vk-software',
     company: 'VK Software',
-    logo: '/images/fotos-projetos-pessoais/vk-portifolio/logotipo-vk.webp',
+    logo: '/images/experiencias/vk-software.webp',
     roles: [
       {
         title: 'Fundador e Desenvolvedor Full Stack',
@@ -148,6 +151,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'freelancer',
     company: 'Freelancer',
+    logo: '/images/experiencias/freelancer.webp',
     roles: [
       {
         title: 'Desenvolvedor Full Stack',
@@ -171,6 +175,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'ifpe-monitor',
     company: 'Instituto Federal de Ciência e Tecnologia de Pernambuco (IFPE)',
+    logo: '/images/experiencias/ifpe-monitor.webp',
     roles: [
       {
         title: 'Monitor Voluntário — Machine Learning e Python',
@@ -195,7 +200,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'ntidi',
     company: 'NTIDI — Next Technology Innovations Digital',
-    logo: '/images/fotos-projetos-reais/ntidi/NTIDI.webp',
+    logo: '/images/experiencias/ntidi.webp',
     employmentType: 'Freelance',
     totalDuration: '1 ano',
     location: 'Brasília, Distrito Federal, Brasil · Remoto',
@@ -251,6 +256,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'cnpq',
     company: 'CNPq',
+    logo: '/images/experiencias/cnpq.webp',
     roles: [
       {
         title: 'Bolsista de Pesquisa (Projeto Financiado)',
@@ -275,6 +281,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'gre-estagio',
     company: 'GRE do Sertão do Submédio do São Francisco',
+    logo: '/images/experiencias/gre-estagio.webp',
     roles: [
       {
         title: 'Estagiário — Desenvolvimento Web Full Stack Django e Suporte Técnico',

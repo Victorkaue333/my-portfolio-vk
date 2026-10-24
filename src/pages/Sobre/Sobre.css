@@ -308,11 +308,12 @@
     justify-content: center;
 }
 
+/* Avatar da empresa (public/images/experiencias/): o quadrado já vem com a
+   cor da marca, então a imagem preenche tudo, como no LinkedIn. */
 .li-exp-logo img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    padding: 5px;
+    object-fit: cover;
 }
 
 .li-exp-monogram {

@@ -180,7 +180,7 @@ function ExperienceCard({ group }: { group: ExperienceGroup }) {
       <div className="li-exp-head">
         <div className="li-exp-logo">
           {group.logo ? (
-            <img src={group.logo} alt={group.company} loading="lazy" decoding="async" />
+            <img src={group.logo} alt={group.company} width={48} height={48} loading="lazy" decoding="async" />
           ) : (
             <span className="li-exp-monogram" aria-hidden="true">{companyInitials(group.company)}</span>
           )}
