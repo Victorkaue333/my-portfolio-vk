@@ -11,6 +11,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'aex-hub',
     company: 'AEX Hub',
+    logo: '/images/experiencias/aex-hub.webp',
     roles: [
       {
         title: 'Full Stack Developer',
@@ -34,6 +35,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'grupo-glipy',
     company: 'Grupo Glipy',
+    logo: '/images/experiencias/grupo-glipy.webp',
     roles: [
       {
         title: 'Full Stack Developer',
@@ -57,6 +59,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'mavis-imob',
     company: 'Mavis Imob',
+    logo: '/images/experiencias/mavis-imob.webp',
     roles: [
       {
         title: 'Partner & Backend Developer',
@@ -81,6 +84,7 @@ export const experiences: ExperienceGroup[] = [
   {
     id: 'ye-vida',
     company: 'Ye Vida',
+    logo: '/images/experiencias/ye-vida.webp',
     roles: [
       {
         title: 'Full Stack Developer',
